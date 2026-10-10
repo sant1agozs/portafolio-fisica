@@ -184,7 +184,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <div class="eyebrow">Universidad CENFOTEC · Física I (FUN-18) · 2026-C3</div>
   <h1>Física en el Software</h1>
   <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura y gatillos que fingen ser resortes.</p>
-  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron hechos por mí y se calculan en esta misma página.</p>
+  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron elaborados para este portafolio (ninguno es descargado) y se calculan en esta misma página.</p>
   <div class="meta">
     <span class="chip">Autor: Santiago Hernández Quirós</span>
     <span class="chip">Docente: Andrés Castro Núñez</span>
@@ -230,7 +230,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </div>
 
   <h3><span class="lbl">(b)</span> Visualización de datos: perfiles de una ruta de reparto</h3>
-  <p><b>Fuente de los datos:</b> datos generados por mí a partir de la siguiente ruta declarada (plano local este-norte con origen en el centro de distribución; distancias en metros). Cada tramo usa el perfil de jerk mínimo de arriba y el dron se detiene brevemente en cada vértice, como hace un multirrotor en modo misión al girar 90°.</p>
+  <p><b>Fuente de los datos:</b> datos generados para este portafolio a partir de la siguiente ruta declarada (plano local este-norte con origen en el centro de distribución; distancias en metros). Cada tramo usa el perfil de jerk mínimo de arriba y el dron se detiene brevemente en cada vértice, como hace un multirrotor en modo misión al girar 90°.</p>
   <table class="data">
     <thead><tr><th>Tramo</th><th>Desde (m)</th><th>Hasta (m)</th><th>Longitud</th><th>Duración</th><th>v pico</th></tr></thead>
     <tbody id="routeTable"></tbody>
@@ -360,10 +360,10 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
     <div class="cost"><b>Qué cuesta</b><ul><li>El MCU no captura los efectos de Coriolis al moverse dentro del anillo, que requieren un modelo en marco rotatorio.</li><li>Los límites de confort son empíricos y discutidos.</li></ul></div>
   </div>
 
-  <h3><span class="lbl">(b)</span> Diagrama propio del hábitat</h3>
+  <h3><span class="lbl">(b)</span> Diagrama del hábitat</h3>
   <div class="card diagram">
     <div class="card-title">Hábitat toroidal visto desde el eje de giro</div>
-    <div class="card-sub">Esquema de elaboración propia. El eje de giro sale perpendicular a la página por el centro (⊙). Las ecuaciones están anotadas junto a la magnitud que describen.</div>
+    <div class="card-sub">Esquema elaborado para este portafolio (no descargado). El eje de giro sale perpendicular a la página por el centro (⊙). Las ecuaciones están anotadas junto a la magnitud que describen.</div>
     <svg viewBox="0 0 780 560" role="img" aria-label="Diagrama de un hábitat giratorio con radio, eje de giro, velocidad tangencial, aceleración centrípeta y ecuaciones">
       <defs>
         <marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
@@ -524,7 +524,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <h3><span class="lbl">(b)</span> Visualización de datos</h3>
   <div class="card">
     <div class="card-title">Factor de agarre λ(T) según la temperatura, compuestos C1–C5</div>
-    <div class="card-sub">Ventanas de trabajo publicadas por Pirelli para 2019 (ver tabla). La meseta de cada curva es la ventana real; la caída fuera de ella es un modelo mío (gaussiano, más brusco al sobrecalentar), porque la curva completa no es pública.</div>
+    <div class="card-sub">Ventanas de trabajo publicadas por Pirelli para 2019 (ver tabla). La meseta de cada curva es la ventana real; la caída fuera de ella es un modelo construido para esta gráfica (gaussiano, más brusco al sobrecalentar), porque la curva completa no es pública.</div>
     <div class="chart-box tall"><canvas id="cTemp"></canvas></div>
     <table class="data">
       <thead><tr><th>Compuesto</th><th>Dureza</th><th>T<sub>mín</sub> (°C)</th><th>T<sub>máx</sub> (°C)</th></tr></thead>
@@ -616,7 +616,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </div>
   <div class="card">
     <div class="card-title">Curva de fuerza vs desplazamiento que produce el efecto</div>
-    <div class="card-sub">Modelo propio de los modos de la API, con recorrido y fuerza normalizados (0 = suelto, 1 = a fondo). El área bajo la curva es el trabajo que hace el dedo.</div>
+    <div class="card-sub">Modelo de los modos de la API, construido para esta gráfica, con recorrido y fuerza normalizados (0 = suelto, 1 = a fondo). El área bajo la curva es el trabajo que hace el dedo.</div>
     <div class="btns">
       <button class="b primary" data-mode="slope">slopeFeedback (Hooke)</button>
       <button class="b" data-mode="feedback">feedback</button>
@@ -662,7 +662,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
 <footer>
   Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 1, octubre de 2026.<br>
-  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas de elaboración propia; los videos pertenecen a sus autores y se citan en el Tema 5.
+  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas elaborados para este portafolio; los videos pertenecen a sus autores y se citan en el Tema 5.
 </footer>
 </main>
 </div>
