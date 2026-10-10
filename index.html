@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Física en el Software — Portafolio</title>
+<meta name="description" content="Portafolio de evidencias de Física I (FUN-18, CENFOTEC): aplicaciones de la mecánica clásica al desarrollo de software. Santiago Hernández Quirós.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1; --surface:#ffffff; --surface-2:#efede7; --ink:#1b1d22; --ink-2:#4a4f5a; --ink-3:#7b808b;
+  --line:#dedbd2; --accent:#d2491f; --accent-soft:#fbe7df; --blue:#1f6fd2; --green:#1d8a5b; --violet:#7a4bd1; --amber:#c98a0b;
+  --code:#f1efe9; --shadow:0 1px 2px rgba(20,20,30,.05),0 6px 24px rgba(20,20,30,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121317; --surface:#1a1c22; --surface-2:#22252d; --ink:#ecebe7; --ink-2:#b5b8c0; --ink-3:#8a8e98;
+    --line:#2e323b; --accent:#ff7a4d; --accent-soft:#3a2219; --blue:#5ea3ff; --green:#4cc78f; --violet:#a98bff; --amber:#f0b440;
+    --code:#22252d; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121317; --surface:#1a1c22; --surface-2:#22252d; --ink:#ecebe7; --ink-2:#b5b8c0; --ink-3:#8a8e98;
+  --line:#2e323b; --accent:#ff7a4d; --accent-soft:#3a2219; --blue:#5ea3ff; --green:#4cc78f; --violet:#a98bff; --amber:#f0b440;
+  --code:#22252d; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-underline-offset:2px}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;line-height:1.2;margin:0}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.88em}
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+/* Sidebar */
+.side{position:sticky;top:0;height:100vh;overflow:auto;border-right:1px solid var(--line);padding:28px 22px;background:var(--surface)}
+.brand{font-family:"Source Serif 4",serif;font-weight:700;font-size:1.25rem;line-height:1.2}
+.brand small{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:.78rem;color:var(--ink-3);margin-top:6px;letter-spacing:.02em}
+.nav-group{margin-top:22px}
+.nav-group h4{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3);margin:0 0 8px}
+.nav-group ol{list-style:none;margin:0;padding:0}
+.nav-group li a{display:flex;gap:10px;padding:7px 10px;border-radius:8px;color:var(--ink-2);text-decoration:none;font-size:.88rem;line-height:1.35}
+.nav-group li a:hover{background:var(--surface-2);color:var(--ink)}
+.nav-group li a.active{background:var(--accent-soft);color:var(--ink)}
+.nav-group li a .n{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--accent);min-width:18px;padding-top:1px}
+.nav-group li.soon a{color:var(--ink-3);cursor:default}
+.nav-group li.soon a .n{color:var(--ink-3)}
+.nav-group li.soon a:hover{background:none}
+.theme-btn{margin-top:22px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:8px;padding:6px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+.menu-btn{display:none}
+/* Main */
+main{min-width:0;padding:48px clamp(16px,5vw,72px) 80px;max-width:1080px}
+.hero{padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h1{font-size:clamp(2rem,4.4vw,3rem);margin:10px 0 14px}
+.hero p{color:var(--ink-2);max-width:68ch;margin:0 0 10px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 11px;font-size:.78rem;color:var(--ink-2)}
+.howto{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:22px}
+.howto div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:.88rem;color:var(--ink-2)}
+.howto b{display:block;color:var(--ink);font-size:.92rem;margin-bottom:2px}
+section.topic{padding:56px 0 36px;border-bottom:1px solid var(--line)}
+.topic-head .num{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:.85rem;font-weight:600}
+.topic-head h2{font-size:clamp(1.5rem,3vw,2.1rem);margin:6px 0 12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.tag{font-size:.75rem;border-radius:6px;padding:3px 9px;background:var(--surface-2);color:var(--ink-2)}
+.tag.res{background:var(--accent-soft);color:var(--accent);font-weight:600;letter-spacing:.04em}
+h3{font-size:1.2rem;margin:30px 0 10px;display:flex;align-items:center;gap:10px}
+h3 .lbl{font-family:"JetBrains Mono",monospace;font-size:.72rem;background:var(--ink);color:var(--bg);border-radius:5px;padding:2px 7px}
+h4.sub{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-3);margin:20px 0 6px;font-family:Inter,sans-serif}
+p{margin:0 0 12px}
+.lead{font-size:1.04rem}
+.eq{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:10px 16px;margin:12px 0;overflow-x:auto}
+.eq .katex-display{margin:.5em 0}
+.eq-note{font-size:.84rem;color:var(--ink-2);margin-top:-2px}
+.tradeoff{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.tradeoff div{border-radius:12px;padding:14px 16px;font-size:.9rem;border:1px solid var(--line);background:var(--surface)}
+.tradeoff .gain{border-top:3px solid var(--green)}
+.tradeoff .cost{border-top:3px solid var(--amber)}
+.tradeoff b{display:block;margin-bottom:4px}
+.tradeoff ul{margin:0;padding-left:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);margin:14px 0}
+.card-title{font-weight:600;font-size:.95rem;margin-bottom:4px}
+.card-sub{font-size:.82rem;color:var(--ink-3);margin-bottom:12px}
+.chart-box{position:relative;height:280px}
+.chart-box.tall{height:340px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 20px;margin:6px 0 14px}
+.ctl label{display:block;font-size:.82rem;color:var(--ink-2);margin-bottom:2px}
+.ctl label output{float:right;margin-left:8px;font-family:"JetBrains Mono",monospace;color:var(--ink);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+button.b{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:8px;padding:6px 12px;font:inherit;font-size:.83rem;cursor:pointer}
+button.b:hover{border-color:var(--ink-3)}
+button.b.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.readout div{background:var(--surface-2);border-radius:10px;padding:8px 12px}
+.readout span{display:block;font-size:.72rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.readout b{font-family:"JetBrains Mono",monospace;font-size:1rem}
+canvas#jumpCanvas{width:100%;height:340px;display:block;border-radius:10px;background:var(--surface-2)}
+table.data{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+table.data th,table.data td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:right}
+table.data th:first-child,table.data td:first-child{text-align:left}
+table.data th{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);font-weight:600}
+table.data tr.hl td{background:var(--accent-soft)}
+.diagram svg{width:100%;height:auto;display:block}
+.video{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.timeline{border-left:2px solid var(--line);margin:12px 0 12px 6px;padding-left:18px}
+.timeline div{position:relative;margin-bottom:12px;font-size:.92rem}
+.timeline div::before{content:"";position:absolute;left:-25px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline .ts{font-family:"JetBrains Mono",monospace;font-weight:600;color:var(--accent);margin-right:6px}
+.links{background:var(--surface-2);border-radius:12px;padding:12px 16px;font-size:.88rem;margin:16px 0}
+.links b{display:block;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.links ul{margin:0;padding-left:18px}
+.sources{font-size:.82rem;color:var(--ink-2)}
+.sources ol{padding-left:20px;margin:6px 0}
+.sources li{margin-bottom:4px}
+.callout{border:1px dashed var(--ink-3);border-radius:10px;padding:10px 14px;font-size:.86rem;color:var(--ink-2);margin:12px 0}
+.soon-sec{padding:48px 0;color:var(--ink-2)}
+.soon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:14px}
+.soon-grid div{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:.88rem}
+.soon-grid .n{font-family:"JetBrains Mono",monospace;color:var(--ink-3);font-size:.75rem}
+footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .side{position:sticky;top:0;height:auto;max-height:100vh;z-index:10;padding:12px 16px;border-right:0;border-bottom:1px solid var(--line)}
+  .side .nav-wrap{display:none}
+  .side.open .nav-wrap{display:block;max-height:75vh;overflow:auto}
+  .side-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .menu-btn{display:inline-block;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:8px;padding:6px 12px;font:inherit;font-size:.85rem}
+  .brand small{display:none}
+  main{padding:28px 16px 60px}
+  .grid2,.tradeoff{grid-template-columns:1fr}
+  html{scroll-padding-top:70px}
+  table.data{display:block;overflow-x:auto;white-space:nowrap}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="side" id="side">
+  <div class="side-top">
+    <div class="brand">Física en el Software<small>Portafolio de evidencias · FUN-18</small></div>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false">Temas</button>
+  </div>
+  <div class="nav-wrap">
+    <div class="nav-group">
+      <h4>Avance 1 · Cinemática y Dinámica</h4>
+      <ol>
+        <li><a href="#tema-1"><span class="n">01</span>Rastreo y navegación de un dron de reparto</a></li>
+        <li><a href="#tema-2"><span class="n">02</span>El salto del personaje: cómo los motores de juego falsean la gravedad</a></li>
+        <li><a href="#tema-3"><span class="n">03</span>Gravedad artificial por rotación en hábitats espaciales</a></li>
+        <li><a href="#tema-4"><span class="n">04</span>Llantas de Fórmula 1: la ventana de temperatura y el agarre</a></li>
+        <li><a href="#tema-5"><span class="n">05</span>El resorte virtual detrás de un control háptico</a></li>
+      </ol>
+    </div>
+    <div class="nav-group">
+      <h4>Avance 2 · próximamente</h4>
+      <ol>
+        <li class="soon"><a><span class="n">06</span>Frenado regenerativo en un vehículo eléctrico</a></li>
+        <li class="soon"><a><span class="n">07</span>El coeficiente de restitución en un motor de videojuego</a></li>
+        <li class="soon"><a><span class="n">08</span>Ruedas de reacción en satélites</a></li>
+        <li class="soon"><a><span class="n">09</span>Asistencia gravitatoria de la Voyager</a></li>
+      </ol>
+    </div>
+    <div class="nav-group">
+      <h4>Entrega final · próximamente</h4>
+      <ol>
+        <li class="soon"><a><span class="n">10</span>Spring animations en interfaces</a></li>
+        <li class="soon"><a><span class="n">11</span>Síntesis de sonido y armónicos</a></li>
+        <li class="soon"><a><span class="n">12</span>Resonancia estructural y Tacoma Narrows</a></li>
+        <li class="soon"><a><span class="n">13</span>Enfriamiento líquido de un centro de datos</a></li>
+      </ol>
+    </div>
+    <button class="theme-btn" id="themeBtn">Cambiar tema claro/oscuro</button>
+  </div>
+</aside>
+
+<main>
+<header class="hero">
+  <div class="eyebrow">Universidad CENFOTEC · Física I (FUN-18) · 2026-C3</div>
+  <h1>Física en el Software</h1>
+  <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura y gatillos que fingen ser resortes.</p>
+  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron hechos por mí y se calculan en esta misma página.</p>
+  <div class="meta">
+    <span class="chip">Autor: Santiago Hernández Quirós</span>
+    <span class="chip">Docente: Andrés Castro Núñez</span>
+    <span class="chip">Sección FCV1</span>
+    <span class="chip">Avance 1 de 3 · 10 oct 2026</span>
+  </div>
+  <div class="howto">
+    <div><b>(a) Caso de uso</b>Producto o sistema concreto, la ecuación explícita y la justificación frente a alternativas no físicas.</div>
+    <div><b>(b) Recurso de apoyo</b>El tipo prescrito por la consigna para cada tema: visualización, simulación, diagrama o multimedia con análisis.</div>
+    <div><b>Conexiones</b>Al final de cada tema enlazo con otros temas del portafolio y con lo visto en clase.</div>
+  </div>
+</header>
+
+<!-- ============================ TEMA 1 ============================ -->
+<section class="topic" id="tema-1">
+  <div class="topic-head">
+    <div class="num">TEMA 01</div>
+    <h2>Rastreo y navegación de un dron de reparto</h2>
+    <div class="tags"><span class="tag">Cinemática en 2D</span><span class="tag">Vectores r, v, a</span><span class="tag">Componentes</span><span class="tag res">RECURSO: VISUALIZACIÓN DE DATOS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Los drones multirrotor de reparto (como los que operan Wing, de Alphabet, o los basados en el piloto automático de código abierto <b>PX4</b>) no vuelan "de punto a punto" saltando entre coordenadas GPS. El planificador de PX4 genera una <b>trayectoria con jerk limitado</b> (<em>jerk-limited trajectory</em>): para cada tramo calcula, instante a instante, el vector posición deseado y sus derivadas, la velocidad y la aceleración, respetando límites configurables de velocidad, aceleración y jerk (parámetros <code>MPC_XY_VEL_MAX</code>, <code>MPC_ACC_HOR</code>, <code>MPC_JERK_AUTO</code>). Además, el estimador de estado usa un modelo cinemático para predecir dónde estará el dron entre una lectura de GPS y la siguiente.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <p>La posición del dron en el plano horizontal es un vector que se descompone en componentes este (x) y norte (y). Velocidad y aceleración son sus derivadas:</p>
+  <div class="eq">
+  \[\vec r(t)=x(t)\,\,\hat{i}+y(t)\,\,\hat{j},\qquad \vec v=\frac{d\vec r}{dt}=v_x\,\hat{i}+v_y\,\hat{j},\qquad \vec a=\frac{d\vec v}{dt}=a_x\,\hat{i}+a_y\,\hat{j}\]
+  \[|\vec v|=\sqrt{v_x^2+v_y^2},\qquad v_x=|\vec v|\cos\theta,\quad v_y=|\vec v|\sin\theta\]
+  </div>
+  <p>Para cada tramo recto de longitud <i>L</i> y duración <i>T</i> uso un perfil de jerk mínimo (la misma familia de curvas suaves que usan los planificadores de multirrotores), con \(\tau=t/T\):</p>
+  <div class="eq">
+  \[s(\tau)=L\,(10\tau^3-15\tau^4+6\tau^5),\quad v(\tau)=\tfrac{L}{T}(30\tau^2-60\tau^3+30\tau^4),\quad a(\tau)=\tfrac{L}{T^2}(60\tau-180\tau^2+120\tau^3)\]
+  </div>
+  <p class="eq-note">Y entre muestras de GPS, el estimador predice con la ecuación de MRUA vectorial vista en clase: \(\vec r_{k+1}=\vec r_k+\vec v_k\,\Delta t+\tfrac12\vec a_k\,\Delta t^2\).</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física sería enviar al dron una lista de coordenadas y "saltar" de una a otra (o interpolar linealmente). Eso implica velocidad constante que aparece de golpe y aceleración infinita en cada esquina: los motores no pueden seguirla, el paquete se balancea y el controlador se satura. Al modelar \(\vec r,\vec v,\vec a\) explícitamente, el software puede <b>garantizar</b> que la aceleración nunca supere lo que los rotores entregan, frenar antes de cada giro y anticipar dónde estará el dron si la señal de GPS se pierde unos segundos.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Vuelo suave y seguible por los motores.</li><li>Límites físicos garantizados (v, a, jerk).</li><li>Predicción de posición sin GPS (dead reckoning).</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Más cómputo a bordo en cada ciclo de control.</li><li>Ajuste de parámetros por modelo de dron.</li><li>Rutas un poco más lentas: hay que frenar en las esquinas.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Visualización de datos: perfiles de una ruta de reparto</h3>
+  <p><b>Fuente de los datos:</b> datos generados por mí a partir de la siguiente ruta declarada (plano local este-norte con origen en el centro de distribución; distancias en metros). Cada tramo usa el perfil de jerk mínimo de arriba y el dron se detiene brevemente en cada vértice, como hace un multirrotor en modo misión al girar 90°.</p>
+  <table class="data">
+    <thead><tr><th>Tramo</th><th>Desde (m)</th><th>Hasta (m)</th><th>Longitud</th><th>Duración</th><th>v pico</th></tr></thead>
+    <tbody id="routeTable"></tbody>
+  </table>
+
+  <div class="card">
+    <div class="card-title">Ruta en el plano y vectores en un instante</div>
+    <div class="card-sub">Mueva el tiempo: la flecha azul es el vector velocidad (escala: 1 m/s equivale a 20 m del mapa) y la naranja es el vector aceleración (1 m/s² equivale a 200 m).</div>
+    <div class="ctl"><label>Tiempo t <output id="tOut">60 s</output></label><input type="range" id="tSlider" min="0" max="245" step="1" value="60"></div>
+    <div class="chart-box tall"><canvas id="cMap"></canvas></div>
+    <div class="readout" id="droneReadout"></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="card-title">Posición vs tiempo</div><div class="card-sub">Componentes x(t), y(t) en metros</div><div class="chart-box"><canvas id="cPos"></canvas></div></div>
+    <div class="card"><div class="card-title">Velocidad vs tiempo</div><div class="card-sub">v<sub>x</sub>, v<sub>y</sub> y rapidez |v| en m/s</div><div class="chart-box"><canvas id="cVel"></canvas></div></div>
+  </div>
+  <div class="card"><div class="card-title">Aceleración vs tiempo</div><div class="card-sub">a<sub>x</sub>, a<sub>y</sub> en m/s². Observe que la aceleración arranca y termina en cero en cada tramo: eso es lo que hace "suave" la trayectoria.</div><div class="chart-box"><canvas id="cAcc"></canvas></div>
+    <div class="btns" style="margin-top:12px"><button class="b" id="csvBtn">Descargar los datos (CSV)</button></div>
+  </div>
+  <p><b>Lectura de las gráficas.</b> En el tramo 1 el dron vuela solo hacia el este, así que toda la física está en la componente x y \(v_y=a_y=0\). En el tramo 2 ocurre lo contrario. En el tramo 3 (diagonal a 36,9°) ambas componentes trabajan a la vez y se cumple \(v_y/v_x=600/800=\tan 36{,}9^\circ\) en todo momento: la descomposición en componentes es exactamente lo que el planificador calcula para mandar consignas a los motores en cada eje.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-2">Tema 2</a>: la misma cinemática en 2D, pero con aceleración constante en y (tiro parabólico) en vez de un perfil suave.</li>
+    <li>Con el <a href="#tema-3">Tema 3</a>: si el dron girara en curva en lugar de detenerse, aparecería una aceleración centrípeta \(v^2/r\) perpendicular a \(\vec v\).</li>
+    <li>Con la clase: derivada de la posición = velocidad, derivada de la velocidad = aceleración; el área bajo v(t) es el desplazamiento de cada tramo.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>PX4 Autopilot. <a href="https://docs.px4.io/main/en/config_mc/mc_jerk_limited_type_trajectory" target="_blank" rel="noopener">Jerk-limited Type Trajectory for Multicopters</a>. Documentación oficial de PX4.</li>
+    <li>Flash, T. y Hogan, N. (1985). The coordination of arm movements: an experimentally confirmed mathematical model. <i>Journal of Neuroscience</i>, 5(7), 1688–1703 (origen del perfil de jerk mínimo).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 2 ============================ -->
+<section class="topic" id="tema-2">
+  <div class="topic-head">
+    <div class="num">TEMA 02</div>
+    <h2>El salto del personaje: cómo los motores de juego falsean la gravedad</h2>
+    <div class="tags"><span class="tag">Caída libre</span><span class="tag">Tiro parabólico</span><span class="tag res">RECURSO: SIMULACIÓN INTERACTIVA</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>En los juegos de plataformas, la gravedad casi nunca es 9,81 m/s². En la charla <b>"Math for Game Programmers: Building a Better Jump"</b> (GDC 2016), Kyle Pittman mostró cómo se diseña el salto al revés: el diseñador de niveles decide <i>qué tan alto</i> salta el personaje y <i>cuánto tarda</i> en llegar a la cima, y el código despeja la gravedad y la velocidad inicial que hacen falta. Pittman también documentó el truco de usar una gravedad mayor al caer (en <i>Super Mario Bros.</i>, la gravedad aumenta después del punto más alto), algo que ningún objeto real hace pero que se siente "más preciso" en el control.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[y(t)=v_0t-\tfrac12 g t^2,\qquad x(t)=v_x t,\qquad h=\frac{v_0^2}{2g},\qquad t_h=\frac{v_0}{g}\]
+  </div>
+  <p>Despejando para diseñar desde la altura <i>h</i> y el tiempo a la cima \(t_h\) (el método de Pittman):</p>
+  <div class="eq">
+  \[g=\frac{2h}{t_h^2},\qquad v_0=\frac{2h}{t_h}\qquad\Longrightarrow\qquad\text{con } h=2{,}5\text{ m y } t_h=0{,}35\text{ s: } g\approx 40{,}8\ \text{m/s}^2\approx 4{,}2\text{ veces la } g\text{ real}\]
+  </div>
+  <p class="eq-note">Con la gravedad real, ese mismo salto de 2,5 m tardaría \(t_h=\sqrt{2h/g}=0{,}71\) s en subir: el doble. El personaje se sentiría como un globo.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es una animación guionizada del salto: una curva fija que se reproduce siempre igual. Funciona hasta que el jugador suelta el botón antes de tiempo, choca con un techo, salta desde una plataforma móvil o recibe un empujón: cada caso necesitaría su propia animación. Al calcular \(y(t)\) con la ecuación de caída libre, <b>cualquier</b> combinación de impulso, gravedad y velocidad horizontal produce un arco coherente, y la colisión con el techo o el suelo se resuelve sola. La clave es que se usa la <i>forma</i> de la física (una parábola) pero se eligen los <i>parámetros</i> por diseño, no por realismo.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Un solo modelo cubre todos los saltos posibles.</li><li>El diseñador ajusta h y t<sub>h</sub>, valores que entiende.</li><li>Respuesta inmediata a la entrada del jugador.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Ya no es física real: una g de 4 veces la real rompería otros sistemas (proyectiles, ragdolls) si se comparte.</li><li>Gravedad asimétrica (subida/caída) obliga a manejar dos fases.</li><li>Depende del paso de tiempo: sin integración a paso fijo, el salto cambia según los FPS.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Simulación interactiva</h3>
+  <div class="card">
+    <div class="card-title">Laboratorio de salto</div>
+    <div class="card-sub">La trayectoria se recalcula en vivo con \(y=v_0t-\tfrac12gt^2\). La curva gris es el salto que alcanzaría <i>la misma altura</i> con g = 9,81 m/s². Barra espaciadora o botón para saltar.</div>
+    <div class="controls">
+      <div class="ctl"><label>Impulso de salto v<sub>0</sub> <output id="v0Out"></output></label><input type="range" id="v0" min="2" max="20" step="0.1" value="14.3"></div>
+      <div class="ctl"><label>Gravedad g <output id="gOut"></output></label><input type="range" id="gSl" min="1" max="60" step="0.1" value="40.8"></div>
+      <div class="ctl"><label>Multiplicador de gravedad al caer <output id="fmOut"></output></label><input type="range" id="fm" min="1" max="3" step="0.1" value="1"></div>
+      <div class="ctl"><label>Velocidad horizontal v<sub>x</sub> <output id="vxOut"></output></label><input type="range" id="vx" min="2" max="10" step="0.1" value="6"></div>
+    </div>
+    <div class="btns">
+      <button class="b primary" id="jumpBtn">Saltar</button>
+      <button class="b" data-preset="earth">Tierra real (9,81)</button>
+      <button class="b" data-preset="game">Plataformero típico</button>
+      <button class="b" data-preset="mario">Caída pesada ×3</button>
+      <button class="b" data-preset="moon">Luna (1,62)</button>
+    </div>
+    <canvas id="jumpCanvas"></canvas>
+    <div class="readout" id="jumpReadout"></div>
+    <div class="card" style="margin-top:14px;background:var(--surface-2);box-shadow:none">
+      <div class="card-title">Diseñar el salto al estilo Pittman</div>
+      <div class="card-sub">Escriba la altura y el tiempo a la cima que quiere el diseñador; el código despeja g y v<sub>0</sub> y actualiza la simulación.</div>
+      <div class="controls">
+        <div class="ctl"><label>Altura deseada h <output id="hDOut"></output></label><input type="range" id="hD" min="0.5" max="6" step="0.1" value="2.5"></div>
+        <div class="ctl"><label>Tiempo a la cima t<sub>h</sub> <output id="thOut"></output></label><input type="range" id="thD" min="0.15" max="1" step="0.01" value="0.35"></div>
+      </div>
+      <button class="b" id="designBtn">Aplicar diseño</button>
+    </div>
+  </div>
+  <p><b>Qué observar.</b> Con el preset "Tierra real" el salto de 2,5 m se vuelve lento y flotante. Con "Plataformero típico" el arco es corto y rápido. Al subir el multiplicador de caída la parábola deja de ser simétrica: la bajada es más corta que la subida, que es justo lo que hace que el salto se sienta "con peso". El tiempo total en el aire es \(t_{aire}=t_h+\sqrt{2h/(m\,g)}\), donde <i>m</i> es el multiplicador.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-1">Tema 1</a>: es cinemática 2D con componentes independientes; x avanza con MRU y y con MRUA.</li>
+    <li>Con el <a href="#tema-3">Tema 3</a>: en un hábitat giratorio la "gravedad" también es un parámetro de diseño, solo que se obtiene con \(\omega^2r\) en vez de elegirse a mano.</li>
+    <li>Con la clase: caída libre y tiro parabólico; h y t<sub>h</sub> salen de igualar \(v_y=0\) en la cima.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Pittman, K. (2016). <a href="https://gdcvault.com/play/1023148/Math-for-Game-Programmers-Building" target="_blank" rel="noopener">Math for Game Programmers: Building a Better Jump</a>. Game Developers Conference, GDC Vault.</li>
+    <li>Patterson, D. (2016). <a href="https://blogs.jccc.edu/dpatter/2016/03/15" target="_blank" rel="noopener">GDC16 – Day 1</a> (resumen de la charla con las fórmulas de g y v<sub>0</sub>).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 3 ============================ -->
+<section class="topic" id="tema-3">
+  <div class="topic-head">
+    <div class="num">TEMA 03</div>
+    <h2>Gravedad artificial por rotación en hábitats espaciales</h2>
+    <div class="tags"><span class="tag">Movimiento circular uniforme</span><span class="tag">Aceleración centrípeta</span><span class="tag">Período y ω</span><span class="tag res">RECURSO: DIAGRAMA</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p><b>SpinCalc</b> es una calculadora web publicada en <i>artificial-gravity.com</i>, el sitio de Theodore W. Hall, arquitecto que hizo su tesis doctoral en la Universidad de Michigan sobre la arquitectura de la gravedad artificial. La herramienta relaciona cuatro variables de un hábitat giratorio (radio, velocidad angular, velocidad tangencial y aceleración centrípeta): el usuario fija dos, el programa calcula las otras dos y marca con un semáforo de colores si cada valor cae dentro de los límites de confort humano reportados en la literatura (por ejemplo, los estudios de Graybiel de 1977, donde 1 rpm resultó casi sin síntomas y 10 rpm fue muy difícil de tolerar).</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[a_c=\omega^2 r=\frac{v^2}{r},\qquad v=\omega r,\qquad \omega=\frac{2\pi}{T}=\frac{2\pi n}{60}\ \ (n\text{ en rpm})\]
+  \[\text{Para gravedad aparente } a_c=g:\qquad r=\frac{g}{\omega^2}\qquad\text{o}\qquad \omega=\sqrt{\frac{g}{r}}\]
+  </div>
+  <p>El piso del anillo empuja a la persona hacia el centro con la fuerza normal \(N=m\omega^2r\); esa normal es la que la persona percibe como su "peso".</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>Un simulador o una herramienta de diseño podría simplemente fijar "gravedad = 1 g" en todo el hábitat, como hace un motor de juego con un vector de gravedad constante. Pero eso esconde justo las decisiones de ingeniería: la gravedad cambia con la altura (la cabeza está a menor radio que los pies), girar rápido marea y un radio grande encarece la estructura. Modelar \(a_c=\omega^2r\) convierte esos compromisos en números que se pueden comparar; un valor fijo los vuelve invisibles.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Ver el compromiso radio ↔ rpm ↔ confort.</li><li>Calcular el gradiente cabeza-pies.</li><li>Evaluar diseños antes de construir nada.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>El MCU no captura los efectos de Coriolis al moverse dentro del anillo, que requieren un modelo en marco rotatorio.</li><li>Los límites de confort son empíricos y discutidos.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Diagrama propio del hábitat</h3>
+  <div class="card diagram">
+    <div class="card-title">Hábitat toroidal visto desde el eje de giro</div>
+    <div class="card-sub">Esquema de elaboración propia. El eje de giro sale perpendicular a la página por el centro (⊙). Las ecuaciones están anotadas junto a la magnitud que describen.</div>
+    <svg viewBox="0 0 780 560" role="img" aria-label="Diagrama de un hábitat giratorio con radio, eje de giro, velocidad tangencial, aceleración centrípeta y ecuaciones">
+      <defs>
+        <marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+        <marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--blue)"/></marker>
+        <marker id="arG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+        <marker id="arV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--violet)"/></marker>
+        <marker id="arI" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-3)"/></marker>
+      </defs>
+      <g font-family="Inter,sans-serif" fill="var(--ink)">
+      <!-- ring -->
+      <circle cx="270" cy="270" r="215" fill="none" stroke="var(--ink-2)" stroke-width="2"/>
+      <circle cx="270" cy="270" r="185" fill="none" stroke="var(--ink-2)" stroke-width="2"/>
+      <path d="M270,55 a215,215 0 1,1 -0.1,0 M270,85 a185,185 0 1,0 0.1,0" fill="var(--surface-2)" fill-rule="evenodd" opacity=".9"/>
+      <!-- spokes -->
+      <g stroke="var(--ink-3)" stroke-width="7" stroke-linecap="round" opacity=".55">
+        <line x1="270" y1="238" x2="270" y2="88"/><line x1="270" y1="302" x2="270" y2="452"/>
+        <line x1="238" y1="270" x2="88" y2="270"/><line x1="302" y1="270" x2="452" y2="270"/>
+      </g>
+      <circle cx="270" cy="270" r="30" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"/>
+      <!-- axis symbol -->
+      <circle cx="270" cy="270" r="9" fill="none" stroke="var(--ink)" stroke-width="2"/><circle cx="270" cy="270" r="2.6" fill="var(--ink)"/>
+      <line x1="200" y1="190" x2="262" y2="262" stroke="var(--ink-3)" stroke-width="1"/>
+      <text x="196" y="170" font-size="12" fill="var(--ink-2)" text-anchor="end">Eje de giro ⊙</text>
+      <text x="196" y="185" font-size="11" fill="var(--ink-3)" text-anchor="end">(sale de la página)</text>
+      <!-- omega arrow -->
+      <path d="M326,214 A80,80 0 0,0 214,214" fill="none" stroke="var(--green)" stroke-width="2.5" marker-end="url(#arG)"/>
+      <text x="300" y="180" font-size="15" fill="var(--green)" font-weight="600">ω</text>
+      <text x="318" y="197" font-size="12" fill="var(--green)">ω = 2π/T = 2πn/60</text>
+      <!-- radius line to person at angle 90deg bottom-right (person at 45deg) -->
+      <line x1="270" y1="270" x2="400" y2="400" stroke="var(--ink)" stroke-width="1.6" stroke-dasharray="6 5"/>
+      <text x="312" y="352" font-size="17" font-style="italic" font-weight="700" font-family="Source Serif 4,serif">r</text>
+      <!-- person standing on outer floor at 45deg: floor point ~ (422,422); head toward center -->
+      <g transform="rotate(-45 413 413)">
+        <rect x="406" y="395" width="14" height="26" rx="5" fill="var(--accent)"/>
+        <circle cx="413" cy="388" r="7" fill="var(--accent)"/>
+      </g>
+      <!-- a_c arrow toward center -->
+      <line x1="380" y1="380" x2="318" y2="318" stroke="var(--accent)" stroke-width="3" marker-end="url(#arA)"/>
+      <text x="350" y="300" font-size="13" fill="var(--accent)" font-weight="600">a꜀ = ω²r = v²/r</text>
+      <text x="350" y="316" font-size="11" fill="var(--accent)">(hacia el centro)</text>
+      <!-- N arrow from floor -->
+      <line x1="440" y1="440" x2="424" y2="424" stroke="var(--blue)" stroke-width="3" marker-end="url(#arB)"/>
+      <line x1="462" y1="462" x2="440" y2="440" stroke="var(--blue)" stroke-width="3"/>
+      <text x="452" y="484" font-size="13" fill="var(--blue)" font-weight="600">N = mω²r</text>
+      <text x="452" y="499" font-size="11" fill="var(--blue)">(normal del piso)</text>
+      <!-- v tangential, CCW at 45deg bottom-right: direction (1,-1)/√2 in screen -->
+      <line x1="430" y1="398" x2="492" y2="336" stroke="var(--violet)" stroke-width="3" marker-end="url(#arV)"/>
+      <text x="497" y="336" font-size="13" fill="var(--violet)" font-weight="600">v = ωr</text>
+      <!-- apparent gravity dashed outward -->
+      <line x1="398" y1="430" x2="368" y2="460" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arI)"/>
+      <text x="160" y="520" font-size="11" fill="var(--ink-3)">"gravedad" percibida: hacia afuera (línea punteada)</text>
+      <!-- right panel -->
+      <g transform="translate(560,40)">
+        <rect x="0" y="0" width="205" height="300" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="14" y="26" font-size="13" font-weight="700">Ecuaciones del sistema</text>
+        <text x="14" y="54" font-size="13" font-family="JetBrains Mono,monospace">a꜀ = ω² · r</text>
+        <text x="14" y="78" font-size="13" font-family="JetBrains Mono,monospace">v  = ω · r</text>
+        <text x="14" y="102" font-size="13" font-family="JetBrains Mono,monospace">T  = 2π / ω</text>
+        <text x="14" y="126" font-size="13" font-family="JetBrains Mono,monospace">n  = 60 / T  [rpm]</text>
+        <line x1="14" y1="140" x2="190" y2="140" stroke="var(--line)"/>
+        <text x="14" y="162" font-size="12" font-weight="700">Para 1 g (g = 9,81 m/s²)</text>
+        <text x="14" y="184" font-size="13" font-family="JetBrains Mono,monospace">r = g / ω²</text>
+        <text x="14" y="208" font-size="12" fill="var(--ink-2)">n = 2 rpm → ω = 0,209 rad/s</text>
+        <text x="14" y="228" font-size="12" fill="var(--ink-2)">r = 9,81 / 0,0439</text>
+        <text x="14" y="250" font-size="14" font-weight="700" fill="var(--accent)">r ≈ 224 m</text>
+        <text x="14" y="272" font-size="12" fill="var(--ink-2)">T = 30 s · v ≈ 46,8 m/s</text>
+      </g>
+      <!-- gradient inset -->
+      <g transform="translate(560,360)">
+        <rect x="0" y="0" width="205" height="170" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="14" y="24" font-size="13" font-weight="700">Gradiente cabeza–pies</text>
+        <line x1="40" y1="44" x2="40" y2="140" stroke="var(--ink-3)" stroke-dasharray="3 3"/>
+        <rect x="64" y="70" width="12" height="58" rx="4" fill="var(--accent)"/><circle cx="70" cy="62" r="7" fill="var(--accent)"/>
+        <line x1="56" y1="56" x2="56" y2="132" stroke="var(--ink)" stroke-width="1"/>
+        <text x="20" y="98" font-size="11" fill="var(--ink-2)">1,8 m</text>
+        <rect x="20" y="138" width="80" height="6" fill="var(--ink-2)"/>
+        <text x="90" y="62" font-size="11" fill="var(--ink-2)">cabeza: r − 1,8</text>
+        <text x="90" y="134" font-size="11" fill="var(--ink-2)">pies: r</text>
+        <text x="90" y="86" font-size="11" font-family="JetBrains Mono,monospace">Δa/a = h/r</text>
+        <text x="90" y="104" font-size="11" fill="var(--ink-2)">r=224 m → 0,8 %</text>
+        <text x="90" y="120" font-size="11" fill="var(--ink-2)">r=56 m → 3,2 %</text>
+        <text x="14" y="162" font-size="10" fill="var(--ink-3)">↑ hacia el eje de giro</text>
+      </g>
+      </g>
+    </svg>
+  </div>
+
+  <h4 class="sub">Caso numérico trabajado: ¿qué radio y qué rpm dan 1 g?</h4>
+  <p>Hay infinitas combinaciones; la condición es \(\omega^2r=9{,}81\). Elegí como criterio de diseño <b>2 rpm</b>, un valor conservador dentro de lo que la literatura que cita SpinCalc considera tolerable sin adaptación larga.</p>
+  <div class="eq">
+  \[\omega=\frac{2\pi(2)}{60}=0{,}2094\ \text{rad/s},\qquad \omega^2=0{,}04386\ \text{s}^{-2}\]
+  \[r=\frac{g}{\omega^2}=\frac{9{,}81}{0{,}04386}\approx 223{,}6\ \text{m},\qquad T=\frac{2\pi}{\omega}=30\ \text{s},\qquad v=\omega r\approx 46{,}8\ \text{m/s}\]
+  \[\text{Comprobación: } a_c=\omega^2r=0{,}04386\times223{,}6=9{,}81\ \text{m/s}^2\ \checkmark\]
+  </div>
+  <table class="data">
+    <thead><tr><th>Velocidad de giro</th><th>ω (rad/s)</th><th>Radio para 1 g</th><th>Período T</th><th>v en el piso</th><th>Gradiente (1,8 m)</th></tr></thead>
+    <tbody id="habTable"></tbody>
+  </table>
+  <div class="card">
+    <div class="card-title">Calculadora rápida (complemento al diagrama)</div>
+    <div class="card-sub">Ajuste la velocidad de giro y la gravedad deseada; el radio se recalcula con r = g/ω².</div>
+    <div class="controls">
+      <div class="ctl"><label>Velocidad de giro n <output id="rpmOut"></output></label><input type="range" id="rpm" min="0.5" max="10" step="0.1" value="2"></div>
+      <div class="ctl"><label>Gravedad deseada <output id="gTOut"></output></label><input type="range" id="gT" min="0.1" max="1.2" step="0.01" value="1"></div>
+    </div>
+    <div class="readout" id="habReadout"></div>
+  </div>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-4">Tema 4</a>: en una curva, la fuerza centrípeta \(mv^2/r\) del auto la aporta la fricción de las llantas; aquí la aporta el piso del anillo.</li>
+    <li>Con el <a href="#tema-2">Tema 2</a>: en ambos casos la "gravedad" que siente un personaje es una decisión de diseño.</li>
+    <li>Con la clase: MCU, período, frecuencia y relación entre velocidad lineal y angular.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Hall, T. W. <a href="https://www.artificial-gravity.com/sw/SpinCalc/" target="_blank" rel="noopener">SpinCalc: An Artificial-Gravity Calculator in JavaScript</a>. artificial-gravity.com.</li>
+    <li>Hall, T. W. (1994). <a href="https://artificial-gravity.com/Dissertation/FrontMatter.htm" target="_blank" rel="noopener">The Architecture of Artificial Gravity</a>. Tesis doctoral, Universidad de Michigan.</li>
+    <li>Graybiel, A. (1977). Some physiological effects of alternation between zero gravity and one gravity. En <i>Space Manufacturing Facilities</i>, AIAA (citado en SpinCalc).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 4 ============================ -->
+<section class="topic" id="tema-4">
+  <div class="topic-head">
+    <div class="num">TEMA 04</div>
+    <h2>Llantas de Fórmula 1: la ventana de temperatura y el agarre</h2>
+    <div class="tags"><span class="tag">Fricción estática y cinética</span><span class="tag">Fuerza normal</span><span class="tag">Sensibilidad a la carga</span><span class="tag res">RECURSO: VISUALIZACIÓN DE DATOS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Los simuladores de conducción, desde los simuladores de los equipos de F1 hasta juegos como <b>Assetto Corsa</b>, no usan un coeficiente de fricción fijo. En Assetto Corsa, el archivo de datos de cada llanta (<code>tyres.ini</code>) apunta a una <b>curva de rendimiento térmico</b> (<code>PERFORMANCE_CURVE</code>, un archivo <code>.lut</code>) que multiplica el agarre según la temperatura de la banda de rodadura, y el modelo térmico calcula esa temperatura vuelta a vuelta. En la industria, el software de dinámica vehicular (por ejemplo, los modelos de llanta de MSC Adams) usa la "Magic Formula" de Pacejka, que incluye explícitamente que el coeficiente de agarre <b>baja</b> cuando sube la carga vertical.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[f_s\le\mu_s N,\qquad f_k=\mu_k N\qquad\text{(modelo simple de clase: el agarre es proporcional a la carga)}\]
+  \[\mu(F_z)=\mu_0-k\,F_z\quad\Longrightarrow\quad F_{y,\max}=\mu(F_z)\,F_z=\mu_0F_z-kF_z^2\qquad\text{(sensibilidad a la carga)}\]
+  \[\mu(T,F_z)=\mu(F_z)\cdot\lambda(T),\qquad \lambda(T)=1\ \text{dentro de la ventana } [T_{\min},T_{\max}]\]
+  </div>
+  <p>Como \(F_{y,\max}\) es cóncava en \(F_z\), duplicar la carga <b>no</b> duplica el agarre. Por eso la transferencia de peso en una curva (más carga en la llanta exterior, menos en la interior) reduce el agarre total del eje, aunque la carga total sea la misma.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>Con un μ fijo, un simulador no puede reproducir lo que define una carrera de F1 real: calentar las llantas en la vuelta de salida, perder rendimiento por sobrecalentamiento en una serie de curvas rápidas, o el subviraje que aparece cuando se carga demasiado un eje. Los equipos usan estos modelos para decidir estrategias y reglajes antes de llegar al circuito; un juego que los omite se siente "sobre rieles". El modelo simple \(f\le\mu N\) sigue siendo la base, pero con \(\mu\) como función de la temperatura y la carga.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Comportamiento emergente: calentamiento, degradación, subviraje.</li><li>Decisiones de estrategia y reglaje basadas en datos.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Decenas de parámetros por llanta que hay que medir o ajustar.</li><li>Los fabricantes no publican sus curvas reales de agarre: los modelos se calibran con pruebas.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Visualización de datos</h3>
+  <div class="card">
+    <div class="card-title">Factor de agarre λ(T) según la temperatura, compuestos C1–C5</div>
+    <div class="card-sub">Ventanas de trabajo publicadas por Pirelli para 2019 (ver tabla). La meseta de cada curva es la ventana real; la caída fuera de ella es un modelo mío (gaussiano, más brusco al sobrecalentar), porque la curva completa no es pública.</div>
+    <div class="chart-box tall"><canvas id="cTemp"></canvas></div>
+    <table class="data">
+      <thead><tr><th>Compuesto</th><th>Dureza</th><th>T<sub>mín</sub> (°C)</th><th>T<sub>máx</sub> (°C)</th></tr></thead>
+      <tbody>
+        <tr><td>C1</td><td>Más duro</td><td>110</td><td>140</td></tr>
+        <tr><td>C2</td><td>Duro</td><td>110</td><td>135</td></tr>
+        <tr><td>C3</td><td>Medio</td><td>105</td><td>135</td></tr>
+        <tr><td>C4</td><td>Blando</td><td>90</td><td>120</td></tr>
+        <tr><td>C5</td><td>Más blando</td><td>85</td><td>115</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Fuerza lateral máxima vs carga vertical</div>
+    <div class="card-sub">Calculada con \(\mu_0=2{,}0\) y \(k=0{,}075\ \text{kN}^{-1}\) (valores ilustrativos del orden de una llanta de competición). La línea punteada es el modelo simple \(f=\mu N\) con μ = 1,8.</div>
+    <div class="chart-box tall"><canvas id="cLoad"></canvas></div>
+  </div>
+  <p><b>Ejemplo numérico de transferencia de carga.</b> Dos llantas de un eje con 4 kN cada una: \(2\times(2{,}0-0{,}075\cdot4)\cdot4=13{,}6\) kN de agarre lateral. En la curva, la carga pasa a 6 kN fuera y 2 kN dentro: \((2{,}0-0{,}45)\cdot6+(2{,}0-0{,}15)\cdot2=9{,}3+3{,}7=13{,}0\) kN, un <b>4,4 % menos</b> con la misma carga total. El modelo simple de clase predice 14,4 kN en ambos casos y no ve la pérdida.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-3">Tema 3</a>: en una curva de radio r, la fricción es la fuerza centrípeta: \(\mu mg=mv^2/r\Rightarrow v_{\max}=\sqrt{\mu g r}\). Más μ, más velocidad de curva.</li>
+    <li>Con el <a href="#tema-5">Tema 5</a>: la fuerza normal es una fuerza de reacción (tercera ley), igual que la del gatillo sobre el dedo.</li>
+    <li>Con la clase: fricción estática vs cinética, fuerza normal y diagrama de cuerpo libre de un auto en curva.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Pirelli, ventanas de trabajo 2019 de C1–C5, reportadas en: SAL Racing (2019). <a href="https://www.salracing.com/story/2019/2/whats-new-with-pirellis-2019-formula-1-tires" target="_blank" rel="noopener">What's new with Pirelli's 2019 Formula 1 tires?</a></li>
+    <li>Pacejka, H. B. (2012). <i>Tire and Vehicle Dynamics</i> (3.ª ed.). Butterworth-Heinemann (Magic Formula y sensibilidad a la carga).</li>
+    <li>Milliken, W. F. y Milliken, D. L. (1995). <i>Race Car Vehicle Dynamics</i>. SAE International (transferencia de carga y agarre).</li>
+    <li>Custom Shaders Patch, wiki de Assetto Corsa. <a href="https://github-wiki-see.page/m/ac-custom-shaders-patch/acc-extension-config/wiki/Cars-%E2%80%93-Tyre-Thermal-Models" target="_blank" rel="noopener">Cars – Tyre Thermal Models</a>.</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 5 ============================ -->
+<section class="topic" id="tema-5">
+  <div class="topic-head">
+    <div class="num">TEMA 05</div>
+    <h2>El resorte virtual detrás de un control háptico</h2>
+    <div class="tags"><span class="tag">Ley de Hooke</span><span class="tag">Fuerza elástica</span><span class="tag">Tercera ley de Newton</span><span class="tag res">RECURSO: MULTIMEDIA CON ANÁLISIS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Los <b>gatillos adaptativos del control DualSense</b> de PlayStation 5 tienen un pequeño motor que, mediante un engranaje en espiral, mueve una pieza que empuja contra el brazo del gatillo. No hay un resorte con rigidez variable: hay software que le dice al motor cuánta fuerza aplicar según dónde esté el gatillo. La API pública de Apple para este control (<code>GCDualSenseAdaptiveTrigger</code>, en el framework Game Controller) expone los modos: <code>feedback</code> (resistencia desde una posición), <code>weapon</code> (resistencia entre dos posiciones que luego "cede", como un gatillo de arma), <code>vibration</code> y <code>slopeFeedback</code>, en el que la resistencia crece de forma lineal entre una posición inicial y una final. Ese último es, literalmente, un resorte de Hooke programado.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[F_{\text{resorte}}=-k\,(x-x_0)\qquad\text{(ley de Hooke, para } x\ge x_0\text{)}\]
+  \[\vec F_{\text{gatillo}\to\text{dedo}}=-\vec F_{\text{dedo}\to\text{gatillo}}\qquad\text{(tercera ley de Newton)}\]
+  \[W=\int_{x_0}^{x}k\,(x'-x_0)\,dx'=\tfrac12k\,(x-x_0)^2\qquad\text{(trabajo que hace el dedo)}\]
+  </div>
+  <p>En el modo <code>slopeFeedback</code>, el software convierte la posición del gatillo en una consigna de fuerza: \(F(x)=F_{ini}+\frac{F_{fin}-F_{ini}}{x_{fin}-x_0}(x-x_0)\). Con \(F_{ini}=0\), la pendiente es la constante \(k\) del resorte virtual. Por la tercera ley, la fuerza con la que el gatillo empuja el dedo es igual y opuesta a la que el dedo aplica: eso es lo que el jugador siente como "tensar" algo.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es un efecto háptico pregrabado: una vibración de duración fija que se reproduce al disparar. Pero una vibración no puede oponerse al dedo; solo avisa. Para que tensar un arco (como en <i>Horizon Forbidden West</i>) se sienta como tensar un arco, la resistencia tiene que <b>depender de cuánto se ha tirado</b>, que es exactamente lo que dice \(F=-kx\). Y como la fuerza la produce un motor y no un resorte físico, el juego puede cambiar <i>k</i> en cada escena: un arco ligero, una ballesta dura, un freno que se bloquea.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Un solo hardware simula infinitos "resortes".</li><li>La fuerza responde a la posición del dedo en tiempo real.</li><li>Más inmersión y accesibilidad (se puede desactivar o suavizar).</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Consumo de batería del motor.</li><li>Desgaste mecánico del engranaje.</li><li>Resistencia mal calibrada cansa la mano del jugador.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Multimedia con análisis</h3>
+  <div class="card">
+    <div class="card-title">Desmontaje del DualSense: el mecanismo del gatillo adaptativo</div>
+    <div class="card-sub">Video de TronicsFix (YouTube, 2020). Empieza en el análisis del gatillo.</div>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/4rNITneXnCo?start=559" title="PS5 DualSense teardown — TronicsFix" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+  </div>
+  <h4 class="sub">Análisis: dónde se ve la fuerza restauradora</h4>
+  <div class="timeline">
+    <div><span class="ts">≈ 9:19</span>Empieza el análisis del módulo del gatillo. Se ve el brazo del gatillo, el motor y el engranaje en espiral que mueve la pieza de bloqueo. Esta pieza es el "resorte": el motor la empuja contra el brazo del gatillo, que es lo que produce la fuerza \(F\) sobre el dedo.</div>
+    <div><span class="ts">Momento clave</span>Cuando el gatillo se presiona y su brazo toca la pieza movida por el engranaje, empieza la resistencia: esa es la <b>posición inicial</b> \(x_0\) de la API. Antes de ese contacto, la fuerza es cero (el gatillo se mueve libre); a partir de él, el motor empuja de vuelta. Ese es el instante en el que aparece la fuerza restauradora de la gráfica de abajo.</div>
+    <div><span class="ts">Tercera ley</span>En el mismo contacto se ven las dos fuerzas del par acción-reacción: el brazo del gatillo empuja la pieza (y el motor tiene que sostenerla), y la pieza empuja el brazo y, a través de él, el dedo. Si el motor gira la pieza hacia el gatillo, \(x_0\) cambia; por eso el mismo hardware puede imitar resortes con distinto punto de inicio.</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Curva de fuerza vs desplazamiento que produce el efecto</div>
+    <div class="card-sub">Modelo propio de los modos de la API, con recorrido y fuerza normalizados (0 = suelto, 1 = a fondo). El área bajo la curva es el trabajo que hace el dedo.</div>
+    <div class="btns">
+      <button class="b primary" data-mode="slope">slopeFeedback (Hooke)</button>
+      <button class="b" data-mode="feedback">feedback</button>
+      <button class="b" data-mode="weapon">weapon</button>
+    </div>
+    <div class="controls">
+      <div class="ctl"><label>Posición inicial x<sub>0</sub> <output id="x0Out"></output></label><input type="range" id="x0" min="0" max="0.6" step="0.01" value="0.2"></div>
+      <div class="ctl"><label>Fuerza máxima / rigidez <output id="sOut"></output></label><input type="range" id="sF" min="0.1" max="1" step="0.01" value="0.8"></div>
+    </div>
+    <div class="chart-box tall"><canvas id="cHooke"></canvas></div>
+    <div class="readout" id="hookeReadout"></div>
+  </div>
+  <p><b>Cómo se conecta el video con la curva.</b> En el modo <code>slopeFeedback</code>, la curva es una recta que arranca en \(x_0\), justo donde en el video el brazo del gatillo se encuentra con la pieza que mueve el engranaje: es la ley de Hooke con \(k\) igual a la pendiente. En el modo <code>weapon</code>, la fuerza se mantiene hasta un punto y luego cae a cero: el motor retira la pieza y el gatillo "cede", como un disparo.</p>
+  <div class="callout">El análisis se basa en el segmento del video indicado; la consigna de fuerza se modela con los modos documentados por Apple. Sony no publica valores de fuerza en newtons, por eso la gráfica usa magnitudes normalizadas.</div>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con la entrega final (<i>spring animations en interfaces</i>): las animaciones de resorte de iOS y Android usan la misma \(F=-kx\), más un término de amortiguamiento.</li>
+    <li>Con el <a href="#tema-4">Tema 4</a>: igual que la fuerza normal, la fuerza del gatillo es una reacción que aparece solo cuando hay contacto.</li>
+    <li>Con la clase: ley de Hooke, trabajo de una fuerza variable (área bajo F vs x) y pares acción-reacción.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>TronicsFix (2020). PS5 DualSense controller teardown [video]. YouTube. <a href="https://www.youtube.com/watch?v=4rNITneXnCo" target="_blank" rel="noopener">youtube.com/watch?v=4rNITneXnCo</a></li>
+    <li>Tom's Guide (2020). <a href="https://www.tomsguide.com/news/ps5-dualsense-video-reveals-how-its-coolest-feature-works" target="_blank" rel="noopener">PS5 DualSense video reveals how its coolest feature works</a> (ubica el análisis del gatillo en el minuto 9:19).</li>
+    <li>Apple Developer. <a href="https://developer.apple.com/documentation/gamecontroller/gcdualsenseadaptivetrigger" target="_blank" rel="noopener">GCDualSenseAdaptiveTrigger</a> y <a href="https://developer.apple.com/documentation/gamecontroller/gcdualsenseadaptivetrigger/mode-swift.enum" target="_blank" rel="noopener">GCDualSenseAdaptiveTrigger.Mode</a>.</li>
+  </ol></div>
+</section>
+
+<section class="soon-sec" id="proximos">
+  <h2 style="font-size:1.4rem">Próximos temas</h2>
+  <p>El portafolio es acumulativo. Estas secciones se completarán en los siguientes avances.</p>
+  <div class="soon-grid">
+    <div><span class="n">06 · Avance 2</span><br>Frenado regenerativo en un vehículo eléctrico</div>
+    <div><span class="n">07 · Avance 2</span><br>El coeficiente de restitución en un motor de videojuego</div>
+    <div><span class="n">08 · Avance 2</span><br>Ruedas de reacción en satélites</div>
+    <div><span class="n">09 · Avance 2</span><br>Asistencia gravitatoria de la Voyager</div>
+    <div><span class="n">10 · Final</span><br>Spring animations en interfaces</div>
+    <div><span class="n">11 · Final</span><br>Síntesis de sonido y armónicos</div>
+    <div><span class="n">12 · Final</span><br>Resonancia estructural y Tacoma Narrows</div>
+    <div><span class="n">13 · Final</span><br>Enfriamiento líquido de un centro de datos</div>
+  </div>
+</section>
+
+<footer>
+  Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 1, octubre de 2026.<br>
+  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas de elaboración propia; el video pertenece a su autor y se cita en el Tema 5.
+</footer>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt=(n,d=1)=>Number(n).toLocaleString('es-CR',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+/* ---------- theme + nav ---------- */
+try{const t=localStorage.getItem('theme'); if(t) document.documentElement.dataset.theme=t;}catch(e){}
+$('themeBtn').onclick=()=>{
+  const dark=document.documentElement.dataset.theme? document.documentElement.dataset.theme==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const nt=dark?'light':'dark'; document.documentElement.dataset.theme=nt;
+  try{localStorage.setItem('theme',nt);}catch(e){}
+  refreshCharts(); drawJump();
+};
+$('menuBtn').onclick=()=>{const s=$('side');s.classList.toggle('open');$('menuBtn').setAttribute('aria-expanded',s.classList.contains('open'));};
+document.querySelectorAll('.side a[href^="#"]').forEach(a=>a.addEventListener('click',()=>$('side').classList.remove('open')));
+const navLinks=[...document.querySelectorAll('.side a[href^="#tema"]')];
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}})},{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('section.topic').forEach(s=>obs.observe(s));
+
+/* ---------- KaTeX ---------- */
+function renderMath(){ if(window.renderMathInElement){ renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false}); } }
+renderMath();
+
+if(!window.Chart){ console.warn('Chart.js no cargó'); }
+const charts=[];
+function baseOpts(xTitle,yTitle){
+  const ink=css('--ink-2'), grid=css('--line');
+  return {responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'nearest',intersect:false},
+    plugins:{legend:{labels:{color:ink,boxWidth:14,usePointStyle:true}},tooltip:{}},
+    scales:{x:{type:'linear',title:{display:true,text:xTitle,color:ink},ticks:{color:ink},grid:{color:grid}},
+            y:{title:{display:true,text:yTitle,color:ink},ticks:{color:ink},grid:{color:grid}}}};
+}
+function mk(id,cfg){ if(!window.Chart) return null; const c=new Chart($(id),cfg); charts.push({c,build:cfg._build}); return c; }
+function refreshCharts(){ charts.forEach(o=>{ if(o.build){ const n=o.build(); o.c.options=n.options; o.c.data.datasets.forEach((d,i)=>{ if(n.data.datasets[i]){ d.borderColor=n.data.datasets[i].borderColor; d.backgroundColor=n.data.datasets[i].backgroundColor; } }); o.c.update(); } }); }
+
+/* =============== TEMA 1: dron =============== */
+const legs=[{p0:[0,0],p1:[1200,0],T:90},{p0:[1200,0],p1:[1200,900],T:75},{p0:[1200,900],p1:[2000,1500],T:80}];
+const totalT=legs.reduce((s,l)=>s+l.T,0);
+function drone(t){
+  let t0=0;
+  for(let i=0;i<legs.length;i++){const L=legs[i];
+    if(t<=t0+L.T || i===legs.length-1){
+      const T=L.T, tau=Math.min(Math.max((t-t0)/T,0),1);
+      const dx=L.p1[0]-L.p0[0], dy=L.p1[1]-L.p0[1];
+      const s=10*tau**3-15*tau**4+6*tau**5, sd=(30*tau**2-60*tau**3+30*tau**4)/T, sdd=(60*tau-180*tau**2+120*tau**3)/(T*T);
+      return {t,leg:i+1,x:L.p0[0]+dx*s,y:L.p0[1]+dy*s,vx:dx*sd,vy:dy*sd,ax:dx*sdd,ay:dy*sdd};
+    } t0+=L.T; }
+}
+const D=[]; for(let t=0;t<=totalT;t+=1) D.push(drone(t));
+$('routeTable').innerHTML=legs.map((L,i)=>{const len=Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]);return `<tr><td>${i+1}</td><td>(${L.p0.join(', ')})</td><td>(${L.p1.join(', ')})</td><td>${fmt(len,0)} m</td><td>${L.T} s</td><td>${fmt(1.875*len/L.T,1)} m/s</td></tr>`}).join('')+
+  `<tr><td><b>Total</b></td><td></td><td></td><td><b>${fmt(legs.reduce((s,L)=>s+Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]),0),0)} m</b></td><td><b>${totalT} s</b></td><td></td></tr>`;
+$('tSlider').max=totalT;
+let tSel=60;
+const vecPlugin={id:'vecs',afterDatasetsDraw(chart){
+  const st=drone(tSel), xs=chart.scales.x, ys=chart.scales.y, ctx=chart.ctx;
+  const px=xs.getPixelForValue(st.x), py=ys.getPixelForValue(st.y);
+  function arrow(dx,dy,col){const ex=xs.getPixelForValue(st.x+dx), ey=ys.getPixelForValue(st.y+dy);
+    if(Math.hypot(ex-px,ey-py)<2) return;
+    ctx.save();ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(ex,ey);ctx.stroke();
+    const ang=Math.atan2(ey-py,ex-px);ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-10*Math.cos(ang-0.4),ey-10*Math.sin(ang-0.4));ctx.lineTo(ex-10*Math.cos(ang+0.4),ey-10*Math.sin(ang+0.4));ctx.closePath();ctx.fill();ctx.restore();}
+  arrow(st.vx*20,st.vy*20,css('--blue')); arrow(st.ax*200,st.ay*200,css('--accent'));
+  ctx.save();ctx.fillStyle=css('--ink');ctx.beginPath();ctx.arc(px,py,6,0,7);ctx.fill();ctx.restore();
+}};
+function mapCfg(){const o=baseOpts('x (este) [m]','y (norte) [m]'); o.scales.x.min=-100;o.scales.x.max=2300;o.scales.y.min=-150;o.scales.y.max=1700;
+  o.plugins.tooltip={callbacks:{label:c=>`(${fmt(c.parsed.x,0)} m, ${fmt(c.parsed.y,0)} m)`}};
+  return {type:'scatter',data:{datasets:[{label:'Trayectoria',data:D.map(d=>({x:d.x,y:d.y})),showLine:true,pointRadius:0,borderColor:css('--ink-3'),borderWidth:2},
+    {label:'Depósito, vértices y cliente',data:[{x:0,y:0},{x:1200,y:0},{x:1200,y:900},{x:2000,y:1500}],pointRadius:6,backgroundColor:css('--green'),borderColor:css('--green')}]},options:o,plugins:[vecPlugin]};}
+const mc=mapCfg(); mc._build=mapCfg; const cMap=mk('cMap',mc);
+function lineCfg(id,keys,labels,cols,yT){return ()=>{const o=baseOpts('Tiempo t [s]',yT);o.scales.x.max=totalT;
+  return {type:'line',data:{datasets:keys.map((k,i)=>({label:labels[i],data:D.map(d=>({x:d.t,y:typeof k==='function'?k(d):d[k]})),borderColor:css(cols[i]),backgroundColor:css(cols[i]),pointRadius:0,borderWidth:2,borderDash:i===2?[6,4]:[]}))},options:o,plugins:[tLine]};};}
+const tLine={id:'tline',afterDatasetsDraw(chart){const x=chart.scales.x.getPixelForValue(tSel),a=chart.chartArea,ctx=chart.ctx;ctx.save();ctx.strokeStyle=css('--ink-3');ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(x,a.top);ctx.lineTo(x,a.bottom);ctx.stroke();ctx.restore();}};
+const pB=lineCfg('cPos',['x','y'],['x(t)','y(t)'],['--blue','--accent'],'Posición [m]'); const pc=pB(); pc._build=pB; const cPos=mk('cPos',pc);
+const vB=lineCfg('cVel',['vx','vy',d=>Math.hypot(d.vx,d.vy)],['vx','vy','|v|'],['--blue','--accent','--ink-2'],'Velocidad [m/s]'); const vc=vB(); vc._build=vB; const cVel=mk('cVel',vc);
+const aB=lineCfg('cAcc',['ax','ay',d=>Math.hypot(d.ax,d.ay)],['ax','ay','|a|'],['--blue','--accent','--ink-2'],'Aceleración [m/s²]'); const ac=aB(); ac._build=aB; const cAcc=mk('cAcc',ac);
+function updDrone(){tSel=+$('tSlider').value; $('tOut').textContent=tSel+' s'; const s=drone(tSel);
+  $('droneReadout').innerHTML=`<div><span>Tramo</span><b>${s.leg}</b></div><div><span>r = (x, y)</span><b>(${fmt(s.x,0)}, ${fmt(s.y,0)}) m</b></div><div><span>v = (vx, vy)</span><b>(${fmt(s.vx)}, ${fmt(s.vy)}) m/s</b></div><div><span>|v|</span><b>${fmt(Math.hypot(s.vx,s.vy))} m/s</b></div><div><span>a = (ax, ay)</span><b>(${fmt(s.ax,2)}, ${fmt(s.ay,2)}) m/s²</b></div><div><span>|a|</span><b>${fmt(Math.hypot(s.ax,s.ay),2)} m/s²</b></div>`;
+  [cMap,cPos,cVel,cAcc].forEach(c=>c&&c.update('none'));}
+$('tSlider').addEventListener('input',updDrone); updDrone();
+$('csvBtn').onclick=()=>{const rows=['t_s,x_m,y_m,vx_ms,vy_ms,speed_ms,ax_ms2,ay_ms2'].concat(D.map(d=>[d.t,d.x.toFixed(3),d.y.toFixed(3),d.vx.toFixed(4),d.vy.toFixed(4),Math.hypot(d.vx,d.vy).toFixed(4),d.ax.toFixed(5),d.ay.toFixed(5)].join(',')));
+  const b=new Blob([rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ruta_dron.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+
+/* =============== TEMA 2: salto =============== */
+const cv=$('jumpCanvas'), cx=cv.getContext('2d');
+let anim=null, animT=0;
+function J(){return {v0:+$('v0').value,g:+$('gSl').value,m:+$('fm').value,vx:+$('vx').value};}
+function jumpY(p,t,g){ const th=p.v0/g, h=p.v0*p.v0/(2*g); if(t<=th) return p.v0*t-0.5*g*t*t; const gf=g*p.m, tf=t-th; return Math.max(h-0.5*gf*tf*tf,0); }
+function jumpStats(p,g,mult){const th=p.v0/g,h=p.v0*p.v0/(2*g),tf=Math.sqrt(2*h/(g*mult));return {th,h,tf,tair:th+tf,range:p.vx*(th+tf)};}
+function drawJump(){
+  const dpr=window.devicePixelRatio||1, W=cv.clientWidth, H=cv.clientHeight; cv.width=W*dpr; cv.height=H*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+  const p=J(), s=jumpStats(p,p.g,p.m);
+  const gv0=Math.sqrt(2*9.81*s.h), ghost={v0:gv0,vx:p.vx,m:1}, gs=jumpStats(ghost,9.81,1);
+  const maxX=Math.max(s.range,gs.range)*1.08+1, maxY=s.h*1.25+1.2;
+  const padL=46,padB=34,padT=14,padR=14, sc=Math.min((W-padL-padR)/maxX,(H-padB-padT)/maxY);
+  const X=x=>padL+x*sc, Y=y=>H-padB-y*sc;
+  cx.clearRect(0,0,W,H);
+  // grid
+  cx.strokeStyle=css('--line');cx.fillStyle=css('--ink-3');cx.font='11px Inter';cx.lineWidth=1;
+  const stepY=maxY>12?2:maxY>6?1:0.5;
+  for(let y=0;y<=maxY;y+=stepY){cx.beginPath();cx.moveTo(padL,Y(y));cx.lineTo(W-padR,Y(y));cx.stroke();cx.fillText(fmt(y,stepY<1?1:0)+' m',4,Y(y)+4);}
+  const stepX=maxX>40?10:maxX>16?4:2;
+  for(let x=0;x<=maxX;x+=stepX){cx.fillText(fmt(x,0)+' m',X(x)-8,H-12);}
+  cx.strokeStyle=css('--ink-2');cx.lineWidth=2;cx.beginPath();cx.moveTo(padL,Y(0));cx.lineTo(W-padR,Y(0));cx.stroke();
+  // ghost
+  cx.setLineDash([6,5]);cx.strokeStyle=css('--ink-3');cx.lineWidth=2;cx.beginPath();
+  for(let i=0;i<=200;i++){const t=gs.tair*i/200;const y=jumpY(ghost,t,9.81);i?cx.lineTo(X(p.vx*t),Y(y)):cx.moveTo(X(0),Y(0));}cx.stroke();cx.setLineDash([]);
+  // main
+  cx.strokeStyle=css('--accent');cx.lineWidth=3;cx.beginPath();
+  for(let i=0;i<=200;i++){const t=s.tair*i/200;const y=jumpY(p,t,p.g);i?cx.lineTo(X(p.vx*t),Y(y)):cx.moveTo(X(0),Y(0));}cx.stroke();
+  // apex marker
+  cx.fillStyle=css('--accent');cx.beginPath();cx.arc(X(p.vx*s.th),Y(s.h),4,0,7);cx.fill();
+  cx.fillStyle=css('--ink-2');cx.fillText('h = '+fmt(s.h,2)+' m',X(p.vx*s.th)+8,Y(s.h)-6);
+  // character(s)
+  const pw=Math.min(Math.max(0.35*sc,8),18), ph=Math.min(Math.max(0.6*sc,14),30);
+  function chr(x,y,col){cx.fillStyle=col;cx.fillRect(X(x)-pw/2,Y(y)-ph,pw,ph);}
+  if(anim!==null){ chr(p.vx*Math.min(animT,gs.tair),jumpY(ghost,Math.min(animT,gs.tair),9.81),css('--ink-3')); chr(p.vx*Math.min(animT,s.tair),jumpY(p,Math.min(animT,s.tair),p.g),css('--accent')); }
+  else { chr(0,0,css('--accent')); }
+  // legend
+  cx.font='12px Inter';const lx=W<520?padL+6:W-170;cx.fillStyle=css('--accent');cx.fillText('— salto del juego',lx,22);cx.fillStyle=css('--ink-3');cx.fillText('- - misma h con g = 9,81',lx,40);
+  $('jumpReadout').innerHTML=`<div><span>Altura máx. h</span><b>${fmt(s.h,2)} m</b></div><div><span>t a la cima</span><b>${fmt(s.th,2)} s</b></div><div><span>t de caída</span><b>${fmt(s.tf,2)} s</b></div><div><span>t en el aire</span><b>${fmt(s.tair,2)} s</b></div><div><span>Alcance</span><b>${fmt(s.range,1)} m</b></div><div><span>g / g real</span><b>${fmt(p.g/9.81,2)}×</b></div><div><span>Aire con g real</span><b>${fmt(gs.tair,2)} s</b></div>`;
+}
+function syncJumpOut(){const p=J();$('v0Out').textContent=fmt(p.v0)+' m/s';$('gOut').textContent=fmt(p.g)+' m/s²';$('fmOut').textContent=fmt(p.m)+'×';$('vxOut').textContent=fmt(p.vx)+' m/s';}
+['v0','gSl','fm','vx'].forEach(id=>$(id).addEventListener('input',()=>{syncJumpOut();drawJump();}));
+function doJump(){ const p=J(), s=jumpStats(p,p.g,p.m), gs=jumpStats({v0:Math.sqrt(2*9.81*s.h),vx:p.vx},9.81,1); const end=Math.max(s.tair,gs.tair)+0.3; let last=null; animT=0; if(anim) cancelAnimationFrame(anim);
+  const step=ts=>{ if(last===null) last=ts; animT+=(ts-last)/1000; last=ts; drawJump(); if(animT<end) anim=requestAnimationFrame(step); else {anim=null; drawJump();} }; anim=requestAnimationFrame(step); }
+$('jumpBtn').onclick=doJump;
+document.addEventListener('keydown',e=>{ if(e.code==='Space'){ const r=cv.getBoundingClientRect(); if(r.top<innerHeight&&r.bottom>0){ e.preventDefault(); doJump(); } } });
+const presets={earth:{v0:7.0,g:9.81,fm:1,vx:6},game:{v0:14.3,g:40.8,fm:1,vx:6},mario:{v0:14.3,g:40.8,fm:3,vx:6},moon:{v0:7.0,g:1.62,fm:1,vx:6}};
+document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{const P=presets[b.dataset.preset];$('v0').value=P.v0;$('gSl').value=P.g;$('fm').value=P.fm;$('vx').value=P.vx;syncJumpOut();drawJump();});
+function syncDesign(){$('hDOut').textContent=fmt(+$('hD').value,1)+' m';$('thOut').textContent=fmt(+$('thD').value,2)+' s';}
+['hD','thD'].forEach(id=>$(id).addEventListener('input',syncDesign));
+$('designBtn').onclick=()=>{const h=+$('hD').value,th=+$('thD').value;const g=2*h/(th*th),v0=2*h/th;
+  $('gSl').value=Math.min(60,Math.max(1,g));$('v0').value=Math.min(20,Math.max(2,v0));$('fm').value=1;syncJumpOut();drawJump();};
+syncDesign(); syncJumpOut(); drawJump(); addEventListener('resize',drawJump);
+
+/* =============== TEMA 3: hábitat =============== */
+$('habTable').innerHTML=[1,2,3,4,6].map(n=>{const w=2*Math.PI*n/60,r=9.81/(w*w);return `<tr class="${n===2?'hl':''}"><td>${n} rpm</td><td>${fmt(w,4)}</td><td>${fmt(r,1)} m</td><td>${fmt(60/n,0)} s</td><td>${fmt(w*r,1)} m/s</td><td>${fmt(1.8/r*100,1)} %</td></tr>`}).join('');
+function updHab(){const n=+$('rpm').value,gt=+$('gT').value;const w=2*Math.PI*n/60,r=gt*9.81/(w*w);
+  $('rpmOut').textContent=fmt(n,1)+' rpm';$('gTOut').textContent=fmt(gt,2)+' g';
+  const comfort=n<=2?'Cómodo':n<=4?'Tolerable con adaptación':n<=6?'Exigente':'Muy difícil';
+  $('habReadout').innerHTML=`<div><span>ω</span><b>${fmt(w,3)} rad/s</b></div><div><span>Radio necesario</span><b>${fmt(r,1)} m</b></div><div><span>Diámetro</span><b>${fmt(2*r,0)} m</b></div><div><span>Período</span><b>${fmt(60/n,1)} s</b></div><div><span>v en el piso</span><b>${fmt(w*r,1)} m/s</b></div><div><span>Confort (aprox.)</span><b>${comfort}</b></div>`;}
+['rpm','gT'].forEach(id=>$(id).addEventListener('input',updHab)); updHab();
+
+/* =============== TEMA 4: llantas =============== */
+const comps=[{n:'C1',a:110,b:140,peak:0.94,c:'--ink-2'},{n:'C2',a:110,b:135,peak:0.96,c:'--blue'},{n:'C3',a:105,b:135,peak:0.98,c:'--amber'},{n:'C4',a:90,b:120,peak:1.00,c:'--green'},{n:'C5',a:85,b:115,peak:1.02,c:'--accent'}];
+function lam(T,cmp){ if(T<cmp.a) return cmp.peak*(0.62+0.38*Math.exp(-(((cmp.a-T)/22)**2))); if(T>cmp.b) return cmp.peak*(0.55+0.45*Math.exp(-(((T-cmp.b)/12)**2))); return cmp.peak; }
+function tempCfg(){const o=baseOpts('Temperatura de la banda de rodadura [°C]','Factor de agarre relativo λ(T) [–]');o.scales.x.min=50;o.scales.x.max=170;o.scales.y.min=0.5;o.scales.y.max=1.08;
+  o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: λ = ${fmt(c.parsed.y,3)} a ${c.parsed.x} °C`}};
+  const ds=comps.map(cm=>{const pts=[];for(let T=50;T<=170;T+=1)pts.push({x:T,y:lam(T,cm)});return {label:`${cm.n} (${cm.a}–${cm.b} °C)`,data:pts,borderColor:css(cm.c),backgroundColor:css(cm.c),pointRadius:0,borderWidth:2.2};});
+  return {type:'line',data:{datasets:ds},options:o};}
+const tc=tempCfg(); tc._build=tempCfg; mk('cTemp',tc);
+function loadCfg(){const o=baseOpts('Carga vertical F_z [kN]','Fuerza lateral máxima F_y,max [kN]');o.scales.x.min=0;o.scales.x.max=10;
+  const a=[],b=[],m=[];for(let f=0;f<=10.001;f+=0.25){a.push({x:f,y:(2.0-0.075*f)*f});b.push({x:f,y:1.8*f});m.push({x:f,y:2.0-0.075*f});}
+  o.scales.y2={position:'right',min:1,max:2.2,title:{display:true,text:'μ(F_z) [–]',color:css('--ink-2')},ticks:{color:css('--ink-2')},grid:{drawOnChartArea:false}};
+  o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,2)}`}};
+  return {type:'line',data:{datasets:[{label:'Con sensibilidad a la carga',data:a,borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:3},
+    {label:'Modelo simple f = μN (μ = 1,8)',data:b,borderColor:css('--ink-3'),backgroundColor:css('--ink-3'),pointRadius:0,borderWidth:2,borderDash:[6,5]},
+    {label:'μ(F_z) (eje derecho)',data:m,yAxisID:'y2',borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:1.6,borderDash:[2,3]}]},options:o};}
+const lc=loadCfg(); lc._build=loadCfg; mk('cLoad',lc);
+
+/* =============== TEMA 5: Hooke =============== */
+let hMode='slope';
+function Fx(x,mode,x0,S){ if(x<x0) return 0;
+  if(mode==='slope'){ return S*(x-x0)/(1-x0); }
+  if(mode==='feedback'){ return S; }
+  if(mode==='weapon'){ const x1=Math.min(x0+0.3,0.95); return x<=x1?S:0; } }
+function hookeCfg(){const x0=+$('x0').value,S=+$('sF').value;const o=baseOpts('Recorrido del gatillo x (normalizado)','Fuerza sobre el dedo F (normalizada)');o.scales.x.min=0;o.scales.x.max=1;o.scales.y.min=0;o.scales.y.max=1.05;
+  const pts=[];for(let i=0;i<=400;i++){const x=i/400;pts.push({x,y:Fx(x,hMode,x0,S)});}
+  return {type:'line',data:{datasets:[{label:'F(x) del modo '+hMode,data:pts,borderColor:css('--accent'),backgroundColor:css('--accent-soft'),fill:'origin',pointRadius:0,borderWidth:3,stepped:false}]},options:o};}
+const hc=hookeCfg(); hc._build=hookeCfg; const cH=mk('cHooke',hc);
+function updHooke(){const x0=+$('x0').value,S=+$('sF').value;$('x0Out').textContent=fmt(x0,2);$('sOut').textContent=fmt(S,2);
+  if(cH){const n=hookeCfg();cH.data.datasets[0].data=n.data.datasets[0].data;cH.data.datasets[0].label=n.data.datasets[0].label;cH.update('none');}
+  let W=0;for(let i=0;i<1000;i++){const x=(i+0.5)/1000;W+=Fx(x,hMode,x0,S)/1000;}
+  const k=hMode==='slope'?S/(1-x0):0;
+  $('hookeReadout').innerHTML=`<div><span>Modo</span><b>${hMode}</b></div><div><span>x₀</span><b>${fmt(x0,2)}</b></div><div><span>k (pendiente)</span><b>${hMode==='slope'?fmt(k,2):'— (no lineal)'}</b></div><div><span>Trabajo W = área</span><b>${fmt(W,3)}</b></div>${hMode==='slope'?`<div><span>½k(1−x₀)²</span><b>${fmt(0.5*k*(1-x0)**2,3)}</b></div>`:''}`;}
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{hMode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('primary',x===b));updHooke();});
+['x0','sF'].forEach(id=>$(id).addEventListener('input',updHooke)); updHooke();
+})();
+</script>
+</body>
+</html>
