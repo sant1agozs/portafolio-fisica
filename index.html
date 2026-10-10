@@ -344,7 +344,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
   <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
   <h4 class="sub">El caso concreto</h4>
-  <p><b>SpinCalc</b> es una calculadora web publicada en <i>artificial-gravity.com</i>, el sitio de Theodore W. Hall, arquitecto que hizo su tesis doctoral en la Universidad de Michigan sobre la arquitectura de la gravedad artificial. La herramienta relaciona cuatro variables de un hábitat giratorio (radio, velocidad angular, velocidad tangencial y aceleración centrípeta): el usuario fija dos, el programa calcula las otras dos y marca con un semáforo de colores si cada valor cae dentro de los límites de confort humano reportados en la literatura (por ejemplo, los estudios de Graybiel de 1977, donde 1 rpm resultó casi sin síntomas y 10 rpm fue muy difícil de tolerar).</p>
+  <p><b>SpinCalc</b> es una calculadora web publicada en <i>artificial-gravity.com</i>, el sitio de Theodore W. Hall, arquitecto que hizo su tesis doctoral en la Universidad de Michigan sobre la arquitectura de la gravedad artificial. La herramienta relaciona cuatro variables de un hábitat giratorio (radio, velocidad angular, velocidad tangencial y aceleración centrípeta): el usuario fija dos, el programa calcula las otras dos y marca con un semáforo de colores si cada valor cae dentro de los límites de confort humano reportados en la literatura (por ejemplo, los estudios de Graybiel de 1977: a 1 rpm incluso los sujetos más susceptibles casi no tuvieron síntomas, a 3 rpm hubo síntomas sin limitación importante y a 10 rpm la adaptación fue un reto considerable).</p>
 
   <h4 class="sub">El concepto físico, como ecuación</h4>
   <div class="eq">
@@ -478,9 +478,9 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
     <li>Con la clase: MCU, período, frecuencia y relación entre velocidad lineal y angular.</li>
   </ul></div>
   <div class="sources"><b>Fuentes</b><ol>
-    <li>Hall, T. W. <a href="https://www.artificial-gravity.com/sw/SpinCalc/" target="_blank" rel="noopener">SpinCalc: An Artificial-Gravity Calculator in JavaScript</a>. artificial-gravity.com.</li>
-    <li>Hall, T. W. (1994). <a href="https://artificial-gravity.com/Dissertation/FrontMatter.htm" target="_blank" rel="noopener">The Architecture of Artificial Gravity</a>. Tesis doctoral, Universidad de Michigan.</li>
-    <li>Graybiel, A. (1977). Some physiological effects of alternation between zero gravity and one gravity. En <i>Space Manufacturing Facilities</i>, AIAA (citado en SpinCalc).</li>
+    <li><a href="https://www.artificial-gravity.com/sw/SpinCalc/" target="_blank" rel="noopener">SpinCalc</a> [calculadora web de gravedad artificial]. artificial-gravity.com (sitio de T. W. Hall). Consultado el 10 de octubre de 2026.</li>
+    <li>Hall, T. W. (1994). <a href="https://artificial-gravity.com/Dissertation/FrontMatter.htm" target="_blank" rel="noopener"><i>The Architecture of Artificial-Gravity Environments for Long-Duration Space Habitation</i></a> [Tesis de Doctorado en Arquitectura]. University of Michigan.</li>
+    <li>Graybiel, A. (1977). Some physiological effects of alternation between zero gravity and one gravity. En J. Grey (Ed.), <i>Space Manufacturing Facilities (Space Colonies): Proceedings of the Princeton/AIAA/NASA Conference, May 7–9, 1975</i> (pp. 137–149). American Institute of Aeronautics and Astronautics.</li>
   </ol></div>
 </section>
 
@@ -503,6 +503,16 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   \[\mu(T,F_z)=\mu(F_z)\cdot\lambda(T),\qquad \lambda(T)=1\ \text{dentro de la ventana } [T_{\min},T_{\max}]\]
   </div>
   <p>Como \(F_{y,\max}\) es cóncava en \(F_z\), duplicar la carga <b>no</b> duplica el agarre. Por eso la transferencia de peso en una curva (más carga en la llanta exterior, menos en la interior) reduce el agarre total del eje, aunque la carga total sea la misma.</p>
+
+  <h4 class="sub">Fricción estática vs cinética en una llanta</h4>
+  <p>Una llanta que rueda sin patinar trabaja con <b>fricción estática</b>: el parche de contacto no se desliza respecto al asfalto, sino que se apoya y se levanta, así que el agarre máximo disponible es \(\mu_sN\). Si la llanta se bloquea al frenar o patina al acelerar, el parche se desliza y pasa a <b>fricción cinética</b>, con \(\mu_k&lt;\mu_s\): el agarre cae justo cuando más se necesita. Por eso un piloto de F1, que no tiene ABS, dosifica el freno para quedarse al borde del bloqueo, y una llanta bloqueada deja además un "plano" que arruina el resto del stint.</p>
+  <div class="eq">
+  \[d_{\text{frenado}}=\frac{v^2}{2\mu g}\qquad v=50\ \text{m/s}\ (180\ \text{km/h}):\quad \mu_s=1{,}7\Rightarrow d=75{,}0\ \text{m};\qquad \mu_k=1{,}3\Rightarrow d=98{,}0\ \text{m}\ \ (+31\,\%)\]
+  </div>
+  <p class="eq-note">Valores de μ ilustrativos y sin carga aerodinámica, para aislar el efecto: con la misma llanta, bloquear añade casi un tercio a la distancia de frenado. En curva el matiz es más fino: la llanta trabaja con un pequeño ángulo de deriva, parte del parche se adhiere y parte se desliza, y la fuerza lateral crece hasta un pico (el paso de "mayormente estático" a "mayormente cinético") y luego cae. Esa es la forma que modela la curva de Pacejka.</p>
+
+  <h4 class="sub">Por qué existe una ventana de temperatura</h4>
+  <p>El caucho es viscoelástico. Buena parte de su agarre viene de la <b>histéresis</b>: al pasar sobre las rugosidades del asfalto, el caucho se deforma y disipa energía, y esa pérdida es la que frena el deslizamiento. La disipación es máxima en un rango de temperatura que depende del compuesto: frío, el caucho está rígido y casi "vidrioso" y agarra poco; demasiado caliente, se ablanda en exceso y se degrada (graining, ampollas). Los compuestos blandos (C4, C5) tienen ese rango más abajo que los duros (C1, C2), que es exactamente lo que muestran las ventanas de Pirelli en la gráfica.</p>
 
   <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
   <p>Con un μ fijo, un simulador no puede reproducir lo que define una carrera de F1 real: calentar las llantas en la vuelta de salida, perder rendimiento por sobrecalentamiento en una serie de curvas rápidas, o el subviraje que aparece cuando se carga demasiado un eje. Los equipos usan estos modelos para decidir estrategias y reglajes antes de llegar al circuito; un juego que los omite se siente "sobre rieles". El modelo simple \(f\le\mu N\) sigue siendo la base, pero con \(\mu\) como función de la temperatura y la carga.</p>
@@ -537,7 +547,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <div class="links"><b>Conexiones</b><ul>
     <li>Con el <a href="#tema-3">Tema 3</a>: en una curva de radio r, la fricción es la fuerza centrípeta: \(\mu mg=mv^2/r\Rightarrow v_{\max}=\sqrt{\mu g r}\). Más μ, más velocidad de curva.</li>
     <li>Con el <a href="#tema-5">Tema 5</a>: la fuerza normal es una fuerza de reacción (tercera ley), igual que la del gatillo sobre el dedo.</li>
-    <li>Con la clase: fricción estática vs cinética, fuerza normal y diagrama de cuerpo libre de un auto en curva.</li>
+    <li>Con la clase: fricción estática vs cinética (\(\mu_k&lt;\mu_s\) explica por qué bloquear alarga el frenado), fuerza normal y diagrama de cuerpo libre de un auto en curva; la distancia de frenado sale de MRUA: \(v^2=v_0^2-2ad\) con \(a=\mu g\).</li>
   </ul></div>
   <div class="sources"><b>Fuentes</b><ol>
     <li>Pirelli, ventanas de trabajo 2019 de C1–C5, reportadas en: SAL Racing (2019). <a href="https://www.salracing.com/story/2019/2/whats-new-with-pirellis-2019-formula-1-tires" target="_blank" rel="noopener">What's new with Pirelli's 2019 Formula 1 tires?</a></li>
@@ -557,7 +567,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
   <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
   <h4 class="sub">El caso concreto</h4>
-  <p>Los <b>gatillos adaptativos del control DualSense</b> de PlayStation 5 tienen un pequeño motor que, mediante un engranaje en espiral, mueve una pieza que empuja contra el brazo del gatillo. No hay un resorte con rigidez variable: hay software que le dice al motor cuánta fuerza aplicar según dónde esté el gatillo. La API pública de Apple para este control (<code>GCDualSenseAdaptiveTrigger</code>, en el framework Game Controller) expone los modos: <code>feedback</code> (resistencia desde una posición), <code>weapon</code> (resistencia entre dos posiciones que luego "cede", como un gatillo de arma), <code>vibration</code> y <code>slopeFeedback</code>, en el que la resistencia crece de forma lineal entre una posición inicial y una final. Ese último es, literalmente, un resorte de Hooke programado.</p>
+  <p>Los <b>gatillos adaptativos del control DualSense</b> de PlayStation 5 tienen un pequeño motor que, mediante un engranaje en espiral, mueve una pieza que empuja contra el brazo del gatillo. Un potenciómetro le reporta al firmware la posición exacta de ese mecanismo. No hay un resorte con rigidez variable: hay software que, con esa lectura, le dice al motor dónde colocar la pieza y cuánta fuerza oponer según dónde esté el gatillo. El gatillo sí tiene además un pequeño resorte de torsión real, que solo lo devuelve a su posición de reposo. La API pública de Apple para este control (<code>GCDualSenseAdaptiveTrigger</code>, en el framework Game Controller) expone los modos: <code>feedback</code> (resistencia desde una posición), <code>weapon</code> (resistencia entre dos posiciones que luego "cede", como un gatillo de arma), <code>vibration</code> y <code>slopeFeedback</code>, en el que la resistencia crece de forma lineal entre una posición inicial y una final. Ese último es, literalmente, un resorte de Hooke programado.</p>
 
   <h4 class="sub">El concepto físico, como ecuación</h4>
   <div class="eq">
@@ -575,16 +585,34 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </div>
 
   <h3><span class="lbl">(b)</span> Multimedia con análisis</h3>
+  <p>Uso dos videos: el primero muestra el <b>efecto en uso</b> (el gatillo desarmado mientras se juega, con el mecanismo a la vista), y el segundo explica con narración <b>cómo</b> el mecanismo cambia la resistencia. Los tiempos se verificaron viendo cada video y, en el segundo, contrastando con su transcripción.</p>
+
   <div class="card">
-    <div class="card-title">Desmontaje del DualSense: el mecanismo del gatillo adaptativo</div>
-    <div class="card-sub">Video de TronicsFix (YouTube, 2020). Empieza en el análisis del gatillo.</div>
-    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/4rNITneXnCo?start=559" title="PS5 DualSense teardown — TronicsFix" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+    <div class="card-title">Video 1 · El gatillo adaptativo funcionando dentro de un juego</div>
+    <div class="card-sub">Restore Technique (YouTube, 2020). Empieza en 3:04, cuando inicia la demostración en juego.</div>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/8VBZ1upH93w?start=184" title="PS5 Adaptive Trigger Live Mechanics in Game — Restore Technique" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
   </div>
-  <h4 class="sub">Análisis: dónde se ve la fuerza restauradora</h4>
+  <h4 class="sub">Análisis del video 1: dónde se percibe la fuerza restauradora</h4>
   <div class="timeline">
-    <div><span class="ts">≈ 9:19</span>Empieza el análisis del módulo del gatillo. Se ve el brazo del gatillo, el motor y el engranaje en espiral que mueve la pieza de bloqueo. Esta pieza es el "resorte": el motor la empuja contra el brazo del gatillo, que es lo que produce la fuerza \(F\) sobre el dedo.</div>
-    <div><span class="ts">Momento clave</span>Cuando el gatillo se presiona y su brazo toca la pieza movida por el engranaje, empieza la resistencia: esa es la <b>posición inicial</b> \(x_0\) de la API. Antes de ese contacto, la fuerza es cero (el gatillo se mueve libre); a partir de él, el motor empuja de vuelta. Ese es el instante en el que aparece la fuerza restauradora de la gráfica de abajo.</div>
-    <div><span class="ts">Tercera ley</span>En el mismo contacto se ven las dos fuerzas del par acción-reacción: el brazo del gatillo empuja la pieza (y el motor tiene que sostenerla), y la pieza empuja el brazo y, a través de él, el dedo. Si el motor gira la pieza hacia el gatillo, \(x_0\) cambia; por eso el mismo hardware puede imitar resortes con distinto punto de inicio.</div>
+    <div><span class="ts">1:08 – 1:40</span>El eje del engranaje entra en un potenciómetro; el propio video lo rotula: el potenciómetro le dice al control la posición exacta del engranaje. Es el <b>sensor</b> del lazo: el software lee dónde está la pieza para decidir la fuerza.</div>
+    <div><span class="ts">2:15</span>Capítulo "L2 Trigger spring": se retira el pequeño resorte de torsión del gatillo. Es un resorte de Hooke <b>real</b> y pasivo, que solo devuelve el gatillo a su reposo; la resistencia variable no viene de él, sino del motor.</div>
+    <div><span class="ts">3:04</span>Rótulo "Let's look at it in action!": el control, aún desarmado, se usa dentro de un juego. A la izquierda se ve el juego; abajo, el mecanismo.</div>
+    <div><span class="ts">3:08 → 3:13</span>Con la pantalla "ADAPTIVE TRIGGERS" del juego, el engranaje helicoidal blanco gira y la pieza dentada negra rota hacia el brazo del gatillo. Aquí el software está <b>moviendo la posición inicial \(x_0\)</b> antes de que el dedo llegue.</div>
+    <div><span class="ts">3:13 → 3:21</span><b>Momento clave.</b> El dedo presiona el gatillo y su brazo llega a la pieza colocada por el motor, que no cede: a partir de ese contacto el gatillo empuja de vuelta al dedo. Esa es la <b>fuerza restauradora</b> que el jugador percibe, y es un par acción-reacción (tercera ley): el dedo empuja la pieza a través del gatillo y la pieza empuja el dedo con la misma magnitud. En el juego, el propulsor del control dibujado en pantalla se enciende a medida que se presiona.</div>
+    <div><span class="ts">3:32 → 3:45</span>Otro tramo de juego: la pieza aparece en otra posición, más girada hacia el gatillo, así que el tope llega antes en el recorrido. Mismo hardware, otro "resorte": el juego cambió \(x_0\) y la fuerza.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Video 2 · Explicación del mecanismo en un desmontaje</div>
+    <div class="card-sub">TronicsFix, "PS5 DualSense Controller Teardown – A Repairability Perspective" (YouTube, 2020). Empieza en 9:31.</div>
+    <div class="video"><iframe src="https://www.youtube-nocookie.com/embed/4rNITneXnCo?start=571" title="PS5 DualSense Controller Teardown – A Repairability Perspective — TronicsFix" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+  </div>
+  <h4 class="sub">Análisis del video 2</h4>
+  <div class="timeline">
+    <div><span class="ts">9:12</span>Termina la parte de los motores de vibración y empieza la de los gatillos adaptativos.</div>
+    <div><span class="ts">9:31 – 9:42</span>Primer plano del módulo: el narrador muestra el engranaje en espiral y explica que, al girar, cambia el ángulo de la pieza que está junto al gatillo.</div>
+    <div><span class="ts">9:43 – 9:51</span>Al cambiar ese ángulo cambia qué tan cerca está la pieza del gatillo, "y eso cambia la resistencia del gatillo" (se ve también el motor). En la notación de la API, es cambiar \(x_0\): dónde empieza la fuerza.</div>
+    <div><span class="ts">9:53 – 10:04</span>El potenciómetro del otro lado le indica al control la posición de la pieza y, con ello, cuánta resistencia está aplicando: el lazo sensor → software → motor que convierte la posición en fuerza.</div>
   </div>
   <div class="card">
     <div class="card-title">Curva de fuerza vs desplazamiento que produce el efecto</div>
@@ -601,8 +629,8 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
     <div class="chart-box tall"><canvas id="cHooke"></canvas></div>
     <div class="readout" id="hookeReadout"></div>
   </div>
-  <p><b>Cómo se conecta el video con la curva.</b> En el modo <code>slopeFeedback</code>, la curva es una recta que arranca en \(x_0\), justo donde en el video el brazo del gatillo se encuentra con la pieza que mueve el engranaje: es la ley de Hooke con \(k\) igual a la pendiente. En el modo <code>weapon</code>, la fuerza se mantiene hasta un punto y luego cae a cero: el motor retira la pieza y el gatillo "cede", como un disparo.</p>
-  <div class="callout">El análisis se basa en el segmento del video indicado; la consigna de fuerza se modela con los modos documentados por Apple. Sony no publica valores de fuerza en newtons, por eso la gráfica usa magnitudes normalizadas.</div>
+  <p><b>Cómo se conectan los videos con la curva.</b> El punto donde la curva deja de ser cero es \(x_0\): en el video 1 (3:13 → 3:21) es el instante en que el brazo del gatillo toca la pieza que colocó el motor. En el modo <code>slopeFeedback</code>, a partir de ahí la fuerza crece en línea recta, la ley de Hooke con \(k\) igual a la pendiente. Cuando el juego gira la pieza (3:08 → 3:13 y 3:32 → 3:45 en el video 1; 9:43 en el video 2), la curva se desplaza: cambia \(x_0\). En el modo <code>weapon</code>, la fuerza se mantiene hasta un punto y luego cae a cero: el motor retira la pieza y el gatillo "cede", como un disparo.</p>
+  <div class="callout">Tiempos verificados viendo los videos (capítulos y rótulos del video 1; transcripción del video 2). La consigna de fuerza se modela con los modos documentados por Apple; Sony no publica valores de fuerza en newtons, por eso la gráfica usa magnitudes normalizadas.</div>
 
   <div class="links"><b>Conexiones</b><ul>
     <li>Con la entrega final (<i>spring animations en interfaces</i>): las animaciones de resorte de iOS y Android usan la misma \(F=-kx\), más un término de amortiguamiento.</li>
@@ -610,8 +638,9 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
     <li>Con la clase: ley de Hooke, trabajo de una fuerza variable (área bajo F vs x) y pares acción-reacción.</li>
   </ul></div>
   <div class="sources"><b>Fuentes</b><ol>
-    <li>TronicsFix (2020). PS5 DualSense controller teardown [video]. YouTube. <a href="https://www.youtube.com/watch?v=4rNITneXnCo" target="_blank" rel="noopener">youtube.com/watch?v=4rNITneXnCo</a></li>
-    <li>Tom's Guide (2020). <a href="https://www.tomsguide.com/news/ps5-dualsense-video-reveals-how-its-coolest-feature-works" target="_blank" rel="noopener">PS5 DualSense video reveals how its coolest feature works</a> (ubica el análisis del gatillo en el minuto 9:19).</li>
+    <li>Restore Technique (2020, 20 de noviembre). <i>PS5 Adaptive Trigger Live Mechanics in Game – Full Teardown</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=8VBZ1upH93w" target="_blank" rel="noopener">youtube.com/watch?v=8VBZ1upH93w</a></li>
+    <li>TronicsFix (2020). <i>PS5 DualSense Controller Teardown – A Repairability Perspective</i> [Video]. YouTube. <a href="https://www.youtube.com/watch?v=4rNITneXnCo" target="_blank" rel="noopener">youtube.com/watch?v=4rNITneXnCo</a></li>
+    <li>Tom's Guide (2020). <a href="https://www.tomsguide.com/news/ps5-dualsense-video-reveals-how-its-coolest-feature-works" target="_blank" rel="noopener">PS5 DualSense video reveals how its coolest feature works</a> (nota sobre el desmontaje de TronicsFix).</li>
     <li>Apple Developer. <a href="https://developer.apple.com/documentation/gamecontroller/gcdualsenseadaptivetrigger" target="_blank" rel="noopener">GCDualSenseAdaptiveTrigger</a> y <a href="https://developer.apple.com/documentation/gamecontroller/gcdualsenseadaptivetrigger/mode-swift.enum" target="_blank" rel="noopener">GCDualSenseAdaptiveTrigger.Mode</a>.</li>
   </ol></div>
 </section>
@@ -633,7 +662,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
 <footer>
   Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 1, octubre de 2026.<br>
-  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas de elaboración propia; el video pertenece a su autor y se cita en el Tema 5.
+  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas de elaboración propia; los videos pertenecen a sus autores y se citan en el Tema 5.
 </footer>
 </main>
 </div>
