@@ -1,0 +1,5 @@
+model_year,make,model,test_vehicle_id,test_number,test_procedure,equivalent_test_weight_lb,target_coef_A_lbf,target_coef_B_lbf_per_mph,target_coef_C_lbf_per_mph2,rnd_adj_fe_mpge
+2025,Tesla,Model 3 Long Range RWD,3R124-782214,RTSL10086702,Charge Depleting UDDS,4250,27.02,0.2873,0.0122,207
+2025,Tesla,Model 3 Long Range RWD,3R124-782214,RTSL10086700,Charge Depleting Highway,4250,27.02,0.2873,0.0122,183
+2025,NISSAN,LEAF,KWB115,JNSX10050525,Charge Depleting UDDS,3875,25.89,0.3449,0.01945,174
+2025,NISSAN,LEAF,KWB115,JNSX10050513,Charge Depleting Highway,3875,25.89,0.3449,0.01945,141.1
