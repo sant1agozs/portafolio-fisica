@@ -86,6 +86,25 @@ p{margin:0 0 12px}
 .card-sub{font-size:.82rem;color:var(--ink-3);margin-bottom:12px}
 .chart-box{position:relative;height:280px}
 .chart-box.tall{height:340px}
+.chart-box.short{height:170px}
+.chart-box.xtall{height:430px}
+.seg-label{font-size:.78rem;color:var(--ink-3);align-self:center;text-transform:uppercase;letter-spacing:.08em}
+select.sel{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 8px;font:inherit;font-size:.85rem;margin-top:2px}
+.ctl label.chk{display:flex;gap:8px;align-items:center;cursor:pointer;padding-top:20px;color:var(--ink)}
+.ctl label.chk input{accent-color:var(--accent);width:16px;height:16px}
+canvas#t7canvas{width:100%;height:330px;display:block;border-radius:10px;background:var(--surface-2);margin:6px 0 4px}
+canvas#t7canvas2{width:100%;height:150px;display:block;border-radius:10px;background:var(--surface-2);margin:6px 0 4px}
+.delta-pos{color:var(--green);font-weight:600}
+.delta-neg{color:var(--accent);font-weight:600}
+.thread{margin-top:22px}
+.thread h2{font-size:1.15rem;margin:0 0 4px}
+.thread p{font-size:.88rem;color:var(--ink-2);margin:0 0 6px}
+.eq{background:linear-gradient(90deg,var(--surface) 30%,transparent) left center/28px 100% no-repeat local,linear-gradient(270deg,var(--surface) 30%,transparent) right center/28px 100% no-repeat local,radial-gradient(farthest-side at 0 50%,color-mix(in srgb,var(--ink) 30%,transparent),transparent) left center/14px 100% no-repeat scroll,radial-gradient(farthest-side at 100% 50%,color-mix(in srgb,var(--ink) 30%,transparent),transparent) right center/14px 100% no-repeat scroll,var(--surface)}
+table.data td.l{text-align:left}
+table.data th.nc{text-transform:none;letter-spacing:.02em}
+.muted{color:var(--ink-3);font-size:.85em}
+#t6Readout{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}
+
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px 20px;margin:6px 0 14px}
 .ctl label{display:block;font-size:.82rem;color:var(--ink-2);margin-bottom:2px}
@@ -97,7 +116,7 @@ button.b:hover{border-color:var(--ink-3)}
 button.b.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
 .readout div{background:var(--surface-2);border-radius:10px;padding:8px 12px}
-.readout span{display:block;font-size:.72rem;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+.readout span{display:block;font-size:.76rem;color:var(--ink-3);letter-spacing:.01em}
 .readout b{font-family:"JetBrains Mono",monospace;font-size:1rem}
 canvas#jumpCanvas{width:100%;height:340px;display:block;border-radius:10px;background:var(--surface-2)}
 table.data{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
@@ -158,12 +177,12 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
       </ol>
     </div>
     <div class="nav-group">
-      <h4>Avance 2 · próximamente</h4>
+      <h4>Avance 2 · Leyes de conservación y Gravitación</h4>
       <ol>
-        <li class="soon"><a><span class="n">06</span>Frenado regenerativo en un vehículo eléctrico</a></li>
-        <li class="soon"><a><span class="n">07</span>El coeficiente de restitución en un motor de videojuego</a></li>
-        <li class="soon"><a><span class="n">08</span>Ruedas de reacción en satélites</a></li>
-        <li class="soon"><a><span class="n">09</span>Asistencia gravitatoria de la Voyager</a></li>
+        <li><a href="#tema-6"><span class="n">06</span>Frenado regenerativo en un vehículo eléctrico</a></li>
+        <li><a href="#tema-7"><span class="n">07</span>El coeficiente de restitución en un motor de videojuego: por qué la pelota rebota mal</a></li>
+        <li><a href="#tema-8"><span class="n">08</span>Ruedas de reacción: cómo un satélite se gira sin empujarse contra nada</a></li>
+        <li><a href="#tema-9"><span class="n">09</span>Asistencia gravitatoria: cómo la Voyager ganó velocidad sin gastar combustible</a></li>
       </ol>
     </div>
     <div class="nav-group">
@@ -183,18 +202,34 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 <header class="hero">
   <div class="eyebrow">Universidad CENFOTEC · Física I (FUN-18) · 2026-C3</div>
   <h1>Física en el Software</h1>
-  <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura y gatillos que fingen ser resortes.</p>
-  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron elaborados para este portafolio (ninguno es descargado) y se calculan en esta misma página.</p>
+  <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura, gatillos que fingen ser resortes, autos eléctricos que recuperan energía al frenar, pelotas que rebotan mal, satélites que giran sin empujarse contra nada y una sonda que les «robó» velocidad a los planetas.</p>
+  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron elaborados para este portafolio (ninguno es descargado) y se calculan en esta misma página. Los datos de terceros (EPA, NASA/JPL, reglamentos deportivos, documentación de motores de juego) están citados en cada tema, y los datos crudos están en la carpeta <code>data/</code> del repositorio.</p>
   <div class="meta">
     <span class="chip">Autor: Santiago Hernández Quirós</span>
     <span class="chip">Docente: Andrés Castro Núñez</span>
     <span class="chip">Sección FCV1</span>
-    <span class="chip">Avance 1 de 3 · 10 oct 2026</span>
+    <span class="chip">Avance 2 de 3 · 31 oct 2026</span>
   </div>
   <div class="howto">
     <div><b>(a) Caso de uso</b>Producto o sistema concreto, la ecuación explícita y la justificación frente a alternativas no físicas.</div>
     <div><b>(b) Recurso de apoyo</b>El tipo prescrito por la consigna para cada tema: visualización, simulación, diagrama o multimedia con análisis.</div>
     <div><b>Conexiones</b>Al final de cada tema enlazo con otros temas del portafolio y con lo visto en clase.</div>
+  </div>
+  <div class="thread">
+    <h2>Hilo conductor: las mismas leyes en nueve casos</h2>
+    <p>Cada tema enlaza con otros en su recuadro de «Conexiones». Esta tabla muestra el mapa completo.</p>
+    <table class="data">
+      <thead><tr><th>Idea de la clase</th><th>Temas</th><th>Dónde aparece</th></tr></thead>
+      <tbody>
+        <tr><td>Cinemática: \(\vec r\), \(\vec v\), \(\vec a\)</td><td class="l"><a href="#tema-1">1</a> · <a href="#tema-2">2</a> · <a href="#tema-6">6</a></td><td class="l">Perfiles del dron, arco del salto y velocidad segundo a segundo del ciclo UDDS</td></tr>
+        <tr><td>Fricción y segunda ley</td><td class="l"><a href="#tema-4">4</a> · <a href="#tema-6">6</a></td><td class="l">Agarre de la llanta y frenos de fricción que disipan lo que el motor no recupera</td></tr>
+        <tr><td>Tercera ley (acción y reacción)</td><td class="l"><a href="#tema-5">5</a> · <a href="#tema-8">8</a></td><td class="l">Gatillo contra dedo, y rueda de reacción contra satélite (τ y −τ)</td></tr>
+        <tr><td>Conservación de la energía</td><td class="l"><a href="#tema-2">2</a> · <a href="#tema-5">5</a> · <a href="#tema-6">6</a> · <a href="#tema-9">9</a></td><td class="l">Altura del salto, energía del resorte ½kx², balance de un ciclo de manejo y velocidad de escape</td></tr>
+        <tr><td>Conservación del momento lineal</td><td class="l"><a href="#tema-7">7</a> · <a href="#tema-9">9</a></td><td class="l">Choques con coeficiente de restitución, y el sobrevuelo como choque elástico con un planeta</td></tr>
+        <tr><td>Rotación y momento angular</td><td class="l"><a href="#tema-3">3</a> · <a href="#tema-8">8</a></td><td class="l">MCU del hábitat giratorio, e intercambio de L entre rueda y satélite</td></tr>
+        <tr><td>Gravitación</td><td class="l"><a href="#tema-2">2</a> · <a href="#tema-3">3</a> · <a href="#tema-9">9</a></td><td class="l">Gravedad como parámetro de diseño, gravedad aparente y la ley de Newton completa</td></tr>
+      </tbody>
+    </table>
   </div>
 </header>
 
@@ -645,14 +680,424 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </ol></div>
 </section>
 
+<!-- ============================ TEMA 6 ============================ -->
+<section class="topic" id="tema-6">
+  <div class="topic-head">
+    <div class="num">TEMA 06</div>
+    <h2>Frenado regenerativo en un vehículo eléctrico</h2>
+    <div class="tags"><span class="tag">Trabajo y energía cinética</span><span class="tag">Transformación de energía</span><span class="tag">Potencia</span><span class="tag res">RECURSO: VISUALIZACIÓN DE DATOS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>En un auto eléctrico como el <b>Tesla Model 3</b>, cuando el conductor suelta el acelerador el motor deja de empujar y pasa a frenar el auto como generador, devolviendo energía a la batería. El manual del Model 3 lo describe así: con el auto en movimiento y el pie fuera del acelerador, «el freno regenerativo reducirá la velocidad del vehículo y llevará el excedente de energía a la batería». También advierte que puede estar limitado «si la batería está fría o si ya está completamente cargada». Cuánto par de frenado regenerativo se aplica en cada instante, y cuándo hay que completar con los frenos de fricción, lo decide el control electrónico del tren motriz.</p>
+  <p>Del lado de la ingeniería, simuladores como <b>FASTSim</b>, del laboratorio nacional NREL de EE. UU., recorren segundo a segundo un ciclo de manejo estandarizado y calculan cuánta energía llega a las ruedas, cuánta se pierde y cuánta se recupera, para estimar consumo y autonomía antes de construir el vehículo. Los ciclos que uso abajo, el urbano UDDS y el de carretera HWFET, son los mismos con los que la EPA certifica el rendimiento de los autos en EE. UU.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[K=\tfrac12\,m\,v^2,\qquad W_{\text{neto}}=\Delta K\qquad\text{(teorema del trabajo y la energía)}\]
+  \[P_{\text{rueda}}(t)=\big(m\,a+F_{\text{RL}}(v)\big)\,v,\qquad F_{\text{RL}}(v)=A+B\,v+C\,v^2\]
+  \[\text{En un ciclo que empieza y termina detenido }(\Delta K=0):\qquad \underbrace{\int P^{+}\,dt}_{E_{\text{tracción}}}\;=\;\underbrace{\int F_{\text{RL}}\,v\,dt}_{E_{\text{rodadura + aire}}}\;+\;\underbrace{\int |P^{-}|\,dt}_{E_{\text{frenado}}}\]
+  \[E_{\text{recuperada}}=\rho\,E_{\text{frenado}},\qquad E_{\text{disipada}}=(1-\rho)\,E_{\text{frenado}},\qquad E_{\text{red}}=\frac{1}{\eta_c}\left(\frac{E_{\text{tracción}}}{\eta_d}-\rho\,E_{\text{frenado}}\right)\]
+  </div>
+  <p class="eq-note">\(F_{\text{RL}}\) es la fuerza de resistencia al avance (rodadura y aire) medida en pruebas de desaceleración libre; \(A\), \(B\) y \(C\) son los coeficientes que la EPA publica para cada vehículo. \(P^{+}\) es la potencia cuando el motor empuja y \(P^{-}\) cuando hay que frenar. \(\rho\) es la fracción de la energía de frenado que vuelve a la batería, \(\eta_d\) la eficiencia batería → ruedas y \(\eta_c\) la eficiencia de carga desde la red.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es un consumo fijo por kilómetro (por ejemplo, «15 kWh cada 100 km»), o un porcentaje fijo de recuperación. Con eso no se puede explicar algo que los datos de la EPA muestran para el mismo Model 3: rinde <b>207 MPGe en ciudad y 183 en carretera</b>. En un auto de gasolina la ciudad sale más cara; en un eléctrico sale más barata. Solo el balance de energía lo explica: en ciudad el auto frena muchísimo, pero esa energía cinética vuelve en buena parte a la batería, y además a baja velocidad la resistencia del aire (\(C\,v^2\)) casi no pesa. El modelo físico permite estimar la autonomía según el tipo de ruta y dimensionar el motor y el inversor para la potencia que hay que absorber al frenar.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Consumo y autonomía que dependen de la ruta, no un promedio fijo.</li><li>Saber cuánta potencia debe absorber el sistema al frenar.</li><li>Explicar con datos por qué un eléctrico rinde más en ciudad.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Requiere parámetros medidos: masa, coeficientes A, B, C y eficiencias.</li><li>La recuperación real varía con la temperatura y la carga de la batería, como advierte el manual.</li><li>Usar una sola eficiencia promedio ignora cómo cambia según la potencia del motor.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Visualización de datos: balance de energía en un ciclo de manejo</h3>
+  <p><b>Fuentes de los datos.</b> (1) Velocidad segundo a segundo de los ciclos <b>UDDS</b> (ciudad, 1369 s, 11,99 km) y <b>HWFET</b> (carretera, 765 s, 16,51 km) de la EPA. (2) Peso de prueba y coeficientes de carga \(A\), \(B\), \(C\) del archivo de vehículos de prueba de la EPA (año modelo 2025), con el consumo que la EPA midió en cada ciclo. (3) Pérdidas de carga desde la red de alrededor de 10 %, según el sitio oficial de rendimiento de combustible del gobierno de EE. UU. Las gráficas se calculan aquí mismo con la ecuación de \(P_{\text{rueda}}\), integrando segundo a segundo. Los datos crudos están en la carpeta <code>data/</code> del repositorio.</p>
+  <table class="data" id="t6Tabla">
+    <thead><tr><th>Vehículo (EPA, año modelo 2025)</th><th class="nc">Peso de prueba (kg)</th><th class="nc">A (lbf)</th><th class="nc">B (lbf/mph)</th><th class="nc">C (lbf/mph²)</th><th class="nc">UDDS medido (MPGe · Wh/km)</th><th class="nc">HWFET medido (MPGe · Wh/km)</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="card">
+    <div class="card-title">Energía a lo largo del ciclo</div>
+    <div class="card-sub">Arriba, la velocidad del ciclo. Abajo, la energía acumulada en las ruedas: la que entrega el motor, la que se lleva la resistencia al avance y la de frenado, separada en recuperada y disipada.</div>
+    <div class="btns">
+      <span class="seg-label">Ciclo:</span>
+      <button class="b primary" data-t6ciclo="udds">UDDS · ciudad</button>
+      <button class="b" data-t6ciclo="hwfet">HWFET · carretera</button>
+      <span class="seg-label" style="margin-left:10px">Vehículo:</span>
+      <button class="b primary" data-t6veh="m3">Tesla Model 3</button>
+      <button class="b" data-t6veh="leaf">Nissan LEAF</button>
+    </div>
+    <div class="controls">
+      <div class="ctl"><label>Eficiencia de carga desde la red η<sub>c</sub> <output id="t6EtaOut"></output></label><input type="range" id="t6Eta" min="0.85" max="0.95" step="0.01" value="0.90"></div>
+    </div>
+    <div class="chart-box short"><canvas id="cT6vel"></canvas></div>
+    <div class="chart-box tall"><canvas id="cT6energia"></canvas></div>
+    <div class="readout" id="t6Readout"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Balance por kilómetro: ciudad frente a carretera</div>
+    <div class="card-sub">Cada barra es la energía que el motor entrega a las ruedas por kilómetro, repartida según su destino. Pasa el cursor para ver los valores.</div>
+    <div class="chart-box"><canvas id="cT6balance"></canvas></div>
+  </div>
+
+  <h4 class="sub">Cómo se calibró la recuperación con las mediciones de la EPA</h4>
+  <p>La última ecuación de arriba tiene dos incógnitas, \(\eta_d\) y \(\rho\), y la EPA midió dos consumos para cada vehículo (ciudad y carretera). Con \(\eta_c\) fija, quedan dos ecuaciones lineales con dos incógnitas, que la página resuelve cada vez que mueves el control. Para el Model 3, con \(\eta_c=0{,}90\), el resultado es \(\eta_d\approx 0{,}93\) y \(\rho\approx 0{,}72\): de cada 100 Wh que hay que quitarle al auto al frenar, unos 72 vuelven a la batería y 28 se pierden en calor (frenos de fricción, motor, inversor y batería). Si \(\eta_c\) se mueve entre 0,85 y 0,95, \(\rho\) queda entre 0,68 y 0,76, así que la conclusión no depende mucho de ese supuesto. Las mediciones incluso descartan los valores más bajos de \(\eta_c\): con 0,87 o menos, el ajuste del Model 3 exige \(\eta_d\) mayor que 0,96, un tren motriz casi sin pérdidas, y la página lo advierte. Como el modelo se ajustó con esas mismas dos mediciones, reproducirlas no lo valida. Lo que sí lo respalda es que \(\eta_d\) y \(\rho\) salen físicamente razonables, y que el resultado coincide con una fuente independiente. En el modelo, lo recuperado equivale a entre el 26 % (LEAF) y el 36 % (Model 3) de la energía que sale de la batería en ciudad, y a entre el 6 % y el 11 % en carretera; estos porcentajes no cambian con \(\eta_c\). El sitio del gobierno de EE. UU. da, para un eléctrico típico, alrededor de 32 % en ciudad y 6 % en carretera, con una definición parecida pero no idéntica.</p>
+  <p id="t6Hallazgo" class="callout"></p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-1">Tema 1</a>: el ciclo UDDS es un perfil de velocidad v(t) igual al del dron. De él salen la aceleración \(a=dv/dt\) y la potencia segundo a segundo.</li>
+    <li>Con el <a href="#tema-4">Tema 4</a>: la energía que no recupera el motor la convierten en calor los frenos de fricción, la misma fricción de las llantas, pero esta vez en los discos.</li>
+    <li>Con el <a href="#tema-9">Tema 9</a>: en ambos casos la energía cinética se transforma sin «gastar» combustible. Aquí vuelve a la batería; en la Voyager la intercambia con un planeta.</li>
+    <li>Con la clase: teorema del trabajo y la energía, potencia \(P=Fv\) y conservación de la energía en un ciclo cerrado (\(\Delta K=0\)).</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>U.S. EPA. <a href="https://www.epa.gov/compliance-and-fuel-economy-data/data-cars-used-testing-fuel-economy" target="_blank" rel="noopener">Data on Cars used for Testing Fuel Economy</a>, archivo del año modelo 2025 (pruebas RTSL10086702, RTSL10086700, JNSX10050525 y JNSX10050513).</li>
+    <li>Code of Federal Regulations. <a href="https://www.ecfr.gov/current/title-40/chapter-I/subchapter-C/part-86/appendix-Appendix%20I%20to%20Part%2086" target="_blank" rel="noopener">40 CFR Parte 86, Apéndice I: Dynamometer Schedules</a> (UDDS) y 40 CFR Parte 600, Apéndice I (HWFET).</li>
+    <li>NREL. <a href="https://www.nrel.gov/fastsim" target="_blank" rel="noopener">FASTSim: Future Automotive Systems Technology Simulator</a>; archivos de ciclos en su <a href="https://github.com/NREL/fastsim" target="_blank" rel="noopener">repositorio público</a>.</li>
+    <li>U.S. DOE y EPA. <a href="https://fueleconomy.gov/feg/atv-ev.shtml" target="_blank" rel="noopener">Where the Energy Goes: Electric Cars</a>, fueleconomy.gov.</li>
+    <li>Tesla. <a href="https://www.tesla.com/ownersmanual/model3/es_mx/GUID-3DFFB071-C0F6-474D-8A45-17BE1A006365.html" target="_blank" rel="noopener">Manual del propietario del Model 3: Frenado y parada</a> (edición en español).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 7 ============================ -->
+<section class="topic" id="tema-7">
+  <div class="topic-head">
+    <div class="num">TEMA 07</div>
+    <h2>El coeficiente de restitución en un motor de videojuego: por qué la pelota rebota mal</h2>
+    <div class="tags"><span class="tag">Choques elásticos e inelásticos</span><span class="tag">Conservación del momento lineal</span><span class="tag">Coeficiente de restitución</span><span class="tag res">RECURSO: SIMULACIÓN INTERACTIVA</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>En <b>Unity</b>, cada objeto que choca lleva un <i>Physics Material</i> con una propiedad <b>Bounciness</b>. Según su manual, es el coeficiente de restitución: un número entre 0 (choque completamente inelástico, sin rebote) y 1 (choque perfectamente elástico). El detalle que hace que «la pelota rebote mal» es que en un choque hay <b>dos</b> materiales, el de la pelota y el del piso, y el motor tiene que combinarlos en uno solo. Unity ofrece cuatro modos (<i>Average</i>, <i>Minimum</i>, <i>Multiply</i> y <i>Maximum</i>), y si los dos objetos piden modos distintos gana el de mayor prioridad: Average &lt; Minimum &lt; Multiply &lt; Maximum. <b>Unreal Engine</b> funciona igual, con <i>Restitution</i> y un <i>Restitution Combine Mode</i> que por defecto es el promedio, y en <b>Box2D</b> la <code>restitution</code> va «normalmente en el rango [0, 1]».</p>
+  <p>Hay además un ajuste global de Unity, <b>Bounce Threshold</b>: según la documentación, dos objetos que chocan con velocidad relativa menor que ese valor (2 por defecto) no rebotan. Box2D tiene el equivalente, <code>restitutionThreshold</code>, en m/s. Los tres «rebotes raros» más típicos salen de aquí: una pelota con <i>bounciness</i> 0,77 sobre un piso con el valor por defecto de Unity (0) y modo promedio (el predeterminado en Unreal) rebota como si tuviera 0,385; una pelota que deja de rebotar de golpe cuando su rebote baja de cierta altura; y una pelota con \(e=1\) que no pierde altura nunca, o hasta la gana.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[e=-\,\frac{v_2'-v_1'}{v_2-v_1}\qquad\big(e=1\ \text{elástico};\ 0&lt;e&lt;1\ \text{inelástico};\ e=0\ \text{perfectamente inelástico}\big)\]
+  \[m_1v_1+m_2v_2=m_1v_1'+m_2v_2'\qquad\text{(conservación del momento lineal)}\]
+  \[v_1'=\frac{m_1v_1+m_2v_2-m_2\,e\,(v_1-v_2)}{m_1+m_2},\qquad v_2'=\frac{m_1v_1+m_2v_2+m_1\,e\,(v_1-v_2)}{m_1+m_2}\]
+  \[\Delta K=-\tfrac12\,\frac{m_1m_2}{m_1+m_2}\,(1-e^2)\,(v_1-v_2)^2\]
+  </div>
+  <p>Para una pelota contra el piso (\(m_2\to\infty\), \(v_2=0\)) la segunda fila se reduce a \(v'=-e\,v\). Como la altura de cada rebote es \(h=v^2/2g\), queda la regla que usan los reglamentos para medir pelotas:</p>
+  <div class="eq">
+  \[h_{n}=e^{2n}\,h_0\qquad\Longrightarrow\qquad e=\sqrt{\frac{h_{\text{rebote}}}{h_{\text{caída}}}},\qquad T_{\text{total}}=\sqrt{\frac{2h_0}{g}}\;\frac{1+e}{1-e}\]
+  </div>
+  <p class="eq-note">\(T_{\text{total}}\) suma una serie geométrica: con \(0&lt;e&lt;1\) hay <b>infinitos rebotes en un tiempo finito</b>. Un programa que avanza en pasos de tiempo no puede simular infinitos choques. Esa es la razón física de que los motores tengan un umbral de rebote.</p>
+  <p><b>Datos reales de \(e\).</b> El reglamento de equipamiento de la FIBA (2026) exige que un balón soltado desde unos 1800 mm rebote entre 1035 y 1085 mm (medido a la parte inferior del balón): \(e=\sqrt{1035/1800}\) a \(\sqrt{1085/1800}\), es decir <b>0,758 a 0,776</b>. La ITF exige que una pelota de tenis tipo 2 soltada desde 254 cm rebote entre 135 y 147 cm: <b>0,729 a 0,761</b>. Esos rangos son el «rebote realista» contra el que se compara la simulación.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es animar el rebote a mano: una curva guionizada que la pelota sigue siempre igual. Funciona para una sola altura y un solo piso. Pero en un juego la pelota cae desde cualquier altura, choca con superficies distintas, contra otros objetos que también se mueven, y cada caso necesitaría su animación. Con \(v'=-e\,v\) y la conservación del momento, un solo número por material produce rebotes coherentes en todos los casos, y además el choque entre dos cuerpos móviles reparte la velocidad correctamente según sus masas.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Rebotes coherentes para cualquier altura, ángulo y pareja de objetos.</li><li>Un parámetro con significado físico, que se puede medir (FIBA, ITF).</li><li>Choques entre cuerpos móviles que conservan el momento.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Hay que combinar dos materiales, y el modo por defecto puede arruinar el rebote.</li><li>Infinitos rebotes en tiempo finito obligan a usar un umbral, que corta el final de forma visible.</li><li>El integrador numérico puede quitar o regalar energía, sobre todo con pasos grandes.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Simulación interactiva</h3>
+  <div class="card">
+    <div class="card-title">Laboratorio de rebote: realista frente a «tu motor»</div>
+    <div class="card-sub">Las dos pelotas caen desde 1,80 m, la altura de la prueba de la FIBA. La de la izquierda sigue la física exacta con e = 0,767, el centro del rango FIBA. La de la derecha se simula paso a paso como en un motor de juego, con los ajustes que elijas. La franja verde es el rebote que exige la FIBA. Todo se recalcula al mover cualquier control.</div>
+    <div class="controls">
+      <div class="ctl"><label>Bounciness de la pelota <output id="t7eBallOut"></output></label><input type="range" id="t7eBall" min="0" max="1.1" step="0.01" value="0.77"></div>
+      <div class="ctl"><label>Bounciness del piso <output id="t7eFloorOut"></output></label><input type="range" id="t7eFloor" min="0" max="1.1" step="0.01" value="0.77"></div>
+      <div class="ctl"><label for="t7combine">Modo de combinación</label><select id="t7combine" class="sel"><option value="avg">Average (promedio)</option><option value="min">Minimum (mínimo)</option><option value="mul">Multiply (producto)</option><option value="max">Maximum (máximo)</option></select></div>
+      <div class="ctl"><label for="t7dt">Paso de tiempo del motor</label><select id="t7dt" class="sel"><option value="240">1/240 s</option><option value="120" selected>1/120 s</option><option value="50">1/50 s (0,02 s)</option><option value="30">1/30 s</option></select></div>
+      <div class="ctl"><label for="t7integ">Integrador</label><select id="t7integ" class="sel"><option value="semi" title="Actualiza primero la velocidad y luego la posición">Euler semiimplícito</option><option value="exp" title="Actualiza la posición con la velocidad vieja">Euler explícito</option></select></div>
+      <div class="ctl"><label class="chk"><input type="checkbox" id="t7thr"> Umbral de rebote: 2 m/s</label></div>
+    </div>
+    <div class="btns">
+      <button class="b primary" id="t7play">Soltar</button>
+      <button class="b" data-t7preset="fiba">Balón FIBA</button>
+      <button class="b" data-t7preset="tenis">Pelota ITF</button>
+      <button class="b" data-t7preset="bugavg">Bug: piso por defecto + promedio</button>
+      <button class="b" data-t7preset="umbral">Umbral 2 m/s</button>
+      <button class="b" data-t7preset="e1">e = 1 + Euler explícito</button>
+      <button class="b" data-t7preset="emax">e &gt; 1</button>
+    </div>
+    <canvas id="t7canvas"></canvas>
+    <div class="readout" id="t7Readout"></div>
+    <div class="chart-box"><canvas id="cT7h"></canvas></div>
+    <table class="data" id="t7Tabla"><thead><tr><th>Rebote n</th><th class="nc">Altura ideal: e<sup>2n</sup>·h<sub>0</sub></th><th class="nc">Altura en «tu motor»</th><th class="nc">Diferencia</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Choque entre dos cuerpos: el momento se conserva siempre, la energía no</div>
+    <div class="card-sub">Dos bloques en una pista sin fricción. El bloque 1 se mueve hacia el bloque 2 en reposo. Usa el mismo coeficiente efectivo de arriba.</div>
+    <div class="controls">
+      <div class="ctl"><label>Masa m<sub>1</sub> <output id="t7m1Out"></output></label><input type="range" id="t7m1" min="0.2" max="5" step="0.1" value="1"></div>
+      <div class="ctl"><label>Masa m<sub>2</sub> <output id="t7m2Out"></output></label><input type="range" id="t7m2" min="0.2" max="5" step="0.1" value="2"></div>
+      <div class="ctl"><label>Velocidad inicial v<sub>1</sub> <output id="t7v1Out"></output></label><input type="range" id="t7v1" min="0.5" max="5" step="0.1" value="3"></div>
+    </div>
+    <div class="btns"><button class="b primary" id="t7crash">Chocar</button></div>
+    <canvas id="t7canvas2"></canvas>
+    <div class="readout" id="t7Readout2"></div>
+  </div>
+  <p><b>Qué observar.</b> Con el preset «Bug» la pelota de la derecha apenas sube una cuarta parte de lo que debería: no es que \(e\) esté mal, es que se combinó con el 0 del piso. Con el umbral activado, la pelota deja de rebotar de golpe cuando la velocidad de impacto baja de 2 m/s, es decir cuando el rebote sería menor que \(v^2/2g\approx 0{,}20\) m. Con \(e=1\) y Euler explícito a 1/30 s, la pelota sube más en cada rebote: el integrador inventa energía, porque actualiza la posición con la velocidad vieja. Con Euler semiimplícito, el mismo caso pierde altura poco a poco. Incluso con los ajustes realistas, la tabla muestra que el motor pierde un poco de altura en cada rebote respecto de la física exacta. El choque se detecta un paso tarde, cuando la pelota ya atravesó el piso, y al recolocarla se pierde algo de energía; con 1/240 s el error baja. En los dos bloques, la suma \(m_1v_1+m_2v_2\) es idéntica antes y después del choque para cualquier \(e\). Lo que cambia con \(e\) es cuánta energía cinética se pierde.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-2">Tema 2</a>: entre rebote y rebote la pelota hace tiro vertical, y el problema del paso de tiempo que distorsiona el salto es el mismo que aquí regala energía.</li>
+    <li>Con el <a href="#tema-9">Tema 9</a>: una asistencia gravitatoria es un «choque» elástico (\(e=1\)) contra un planeta que se mueve. Igual que una pelota que rebota en una raqueta que avanza, sale más rápida en el marco del Sol.</li>
+    <li>Con el <a href="#tema-5">Tema 5</a>: durante el contacto la pelota se comprime como un resorte. \(e&lt;1\) mide cuánta de esa energía elástica no se devuelve.</li>
+    <li>Con la clase: choques elásticos e inelásticos, conservación del momento lineal e impulso.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Unity Technologies. <a href="https://docs.unity3d.com/2022.3/Documentation/Manual/collider-surface-bounce.html" target="_blank" rel="noopener">Collider surface bounciness</a> (Manual de Unity 2022.3) y <a href="https://docs.unity.com/en-us/engine/6000.0/manual/physics-section/physics-overview/collision-section/collider-surfaces/combine" target="_blank" rel="noopener">How collider surface values combine</a> (Manual de Unity 6.0).</li>
+    <li>Unity Technologies. <a href="https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Physics-bounceThreshold.html" target="_blank" rel="noopener">Physics.bounceThreshold</a> (referencia de scripts de Unity 2022.3).</li>
+    <li>Epic Games. <a href="https://dev.epicgames.com/documentation/unreal-engine/physical-materials-reference-for-unreal-engine" target="_blank" rel="noopener">Physical Materials Reference for Unreal Engine</a>.</li>
+    <li>Box2D 2.4.1. <a href="https://box2d.org/documentation/structb2_fixture_def.html" target="_blank" rel="noopener">b2FixtureDef: restitution y restitutionThreshold</a>.</li>
+    <li>FIBA. <a href="https://assets.fiba.basketball/image/upload/documents-corporate-fiba-official-rules-2026-equipment-v1-0.pdf" target="_blank" rel="noopener">Official Basketball Rules 2026: Basketball Equipment</a>, sección 2.4.</li>
+    <li>International Tennis Federation. <a href="https://www.itftennis.com/media/4420/2023-technical-booklet.pdf" target="_blank" rel="noopener">2023 Technical Booklet</a>: Apéndice I (requisitos de la pelota) y Parte A (método de ensayo).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 8 ============================ -->
+<section class="topic" id="tema-8">
+  <div class="topic-head">
+    <div class="num">TEMA 08</div>
+    <h2>Ruedas de reacción: cómo un satélite se gira sin empujarse contra nada</h2>
+    <div class="tags"><span class="tag">Conservación del momento angular</span><span class="tag">Torque</span><span class="tag">Momento de inercia</span><span class="tag res">RECURSO: DIAGRAMA</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>El telescopio espacial <b>Hubble</b> no tiene contra qué empujarse para apuntar a otra estrella. Según la NASA, usa cuatro <b>ruedas de reacción</b>: volantes que su sistema de control acelera hasta 3000 rpm o frena, y «los cambios resultantes en el momento angular mueven el telescopio de un objetivo a otro». También lleva cuatro <b>magnetorquers</b>, bobinas que, reaccionando contra el campo magnético de la Tierra, reducen la velocidad de las ruedas para administrar el momento angular acumulado.</p>
+  <p>El caso del telescopio <b>Kepler</b> muestra lo que pasa cuando el sistema se queda corto. Tras la falla de sus ruedas, la misión <b>K2</b> siguió observando con solo dos. Para lograrlo apuntaba en el plano de su órbita, de modo que la presión de la luz solar quedara equilibrada. Las ruedas absorbían el torque solar en los otros ejes, y cada 48 horas los propulsores descargaban el momento acumulado. La solución fue una nueva forma de apuntar y operar la nave, implementada en su control y su planificación, sin tocar el hardware.</p>
+  <p>En software de simulación, <b>Basilisk</b>, un entorno de simulación astrodinámica de código abierto del laboratorio AVS de la Universidad de Colorado Boulder, modela las ruedas de reacción como cuerpos que intercambian momento angular con el satélite. Trae módulos de administración de momento (<code>thrMomentumManagement</code>, <code>thrForceMapping</code>, <code>thrMomentumDumping</code>) que deciden cuándo y cuánto descargar con propulsores. En su ejemplo de referencia, la descarga se activa cuando el momento acumulado en las ruedas supera 80 N·m·s.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[\vec L_{\text{total}}=I_s\,\vec\omega_s+I_w\,\vec\Omega_w=\text{constante}\qquad\text{(sin torque externo)}\]
+  \[\text{desde el reposo:}\quad I_s\,\omega_s=-\,I_w\,\Omega_w\;\Longrightarrow\;\omega_s=-\frac{I_w}{I_s}\,\Omega_w\qquad\text{y el ángulo girado: }\ \theta_s=-\frac{I_w}{I_s}\,\theta_w\]
+  \[\tau=I_w\,\alpha_w\quad\text{(motor sobre la rueda)},\qquad I_s\,\alpha_s=-\,\tau\quad\text{(reacción sobre el satélite)}\]
+  \[\frac{d\vec L_{\text{total}}}{dt}=\vec\tau_{\text{ext}},\qquad \vec\tau_{\text{mag}}=\vec m\times\vec B,\qquad \vec\tau_{\text{prop}}=\vec r\times\vec F\]
+  </div>
+  <p class="eq-note">Modelo de un eje, como en la clase: \(I_s\) e \(I_w\) son los momentos de inercia del satélite y de la rueda, y \(\omega_s\) y \(\Omega_w\) sus velocidades angulares respecto al espacio inercial. El motor de la rueda está dentro del satélite, así que su torque es interno: le da a la rueda y le quita al satélite exactamente lo mismo (tercera ley), y \(L_{\text{total}}\) no cambia. Solo un torque externo, como el magnético o el de un propulsor, puede cambiarlo.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>Una alternativa sería girar el satélite solo con propulsores, pero cada maniobra gasta combustible, que no se repone. Otra sería programar giros fijos «de memoria», sin modelo: no sirven, porque el satélite recibe todo el tiempo pequeños torques externos (presión solar, gradiente de gravedad, campo magnético) que nadie programó. Al llevar la cuenta de \(L_{\text{total}}\), el software sabe en cada momento cuánto momento angular ha absorbido cada rueda, cuánto le queda antes de saturarse y cuándo programar una descarga, como hacía Kepler cada 48 horas.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Apuntar con mucha precisión sin gastar combustible en cada giro.</li><li>Absorber perturbaciones continuas sin mover propulsores.</li><li>Un «presupuesto de momento» que permite planear las descargas.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Las ruedas se saturan: tienen una velocidad máxima.</li><li>Hacen falta actuadores externos para descargar (magnetorquers o propulsores).</li><li>Son piezas móviles que se desgastan (Kepler perdió ruedas). En 3D aparecen además efectos giroscópicos que el modelo de un eje no capta.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Diagrama del satélite y su rueda de reacción</h3>
+  <div class="card diagram">
+    <div class="card-title">Intercambio de momento angular entre el satélite y la rueda</div>
+    <div class="card-sub">Esquema elaborado para este portafolio (no descargado). A la izquierda, un giro: la rueda gana momento angular hacia arriba y el satélite el mismo hacia abajo. A la derecha, qué ocurre cuando la rueda llega a su velocidad máxima.</div>
+    <svg viewBox="0 0 820 610" role="img" aria-label="Diagrama de un satélite con su rueda de reacción, vectores de momento angular opuestos, torques internos y la saturación con descarga de momento">
+      <defs>
+        <marker id="t8A" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+        <marker id="t8B" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--blue)"/></marker>
+        <marker id="t8G" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+        <marker id="t8I" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-2)"/></marker>
+        <pattern id="t8cells" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="var(--surface-2)"/><path d="M0,0 L14,0 M0,0 L0,14" stroke="var(--blue)" stroke-width="1" opacity=".55"/></pattern>
+      </defs>
+      <g font-family="Inter,sans-serif" fill="var(--ink)">
+        <!-- ===== LEFT: satellite ===== -->
+        <text x="20" y="28" font-size="14" font-weight="700">1 · Girar sin empujarse contra nada</text>
+        <text x="20" y="48" font-size="10.5" fill="var(--ink-2)"><tspan fill="var(--accent)" font-weight="700">τ</tspan>: el motor empuja la rueda · <tspan fill="var(--blue)" font-weight="700">−τ</tspan>: la rueda empuja al satélite (3.ª ley)</text>
+        <!-- axis -->
+        <line x1="240" y1="70" x2="240" y2="470" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="6 5"/>
+        <text x="250" y="80" font-size="12" fill="var(--ink-2)">eje de giro (z)</text>
+        <!-- solar panels -->
+        <rect x="36" y="250" width="104" height="80" rx="4" fill="url(#t8cells)" stroke="var(--ink-2)" stroke-width="1.5"/>
+        <rect x="340" y="250" width="104" height="80" rx="4" fill="url(#t8cells)" stroke="var(--ink-2)" stroke-width="1.5"/>
+        <line x1="140" y1="290" x2="152" y2="290" stroke="var(--ink-2)" stroke-width="3"/>
+        <line x1="328" y1="290" x2="340" y2="290" stroke="var(--ink-2)" stroke-width="3"/>
+        <!-- body -->
+        <rect x="152" y="205" width="176" height="170" rx="10" fill="var(--surface)" stroke="var(--ink-2)" stroke-width="2"/>
+        <text x="162" y="226" font-size="11" fill="var(--ink-3)">satélite · I<tspan dy="3.5" font-size="8">s</tspan><tspan dy="-3.5">​</tspan></text>
+        <!-- body rotation arrow: front half of a horizontal circle, right to left (clockwise seen from +z) -->
+        <path d="M360,172 A120,26 0 0,1 120,172" fill="none" stroke="var(--blue)" stroke-width="2.6" marker-end="url(#t8B)"/>
+        <text x="368" y="168" font-size="14" font-weight="700" fill="var(--blue)">ω<tspan dy="3.5" font-size="10">s</tspan><tspan dy="-3.5">​</tspan></text>
+        <text x="368" y="186" font-size="11" fill="var(--blue)">(opuesto a Ω<tspan dy="3.5" font-size="8">w</tspan><tspan dy="-3.5">)</tspan></text>
+        <!-- internal torques (third law) -->
+        <path d="M268,240 A28,8 0 0,1 212,240" fill="none" stroke="var(--blue)" stroke-width="2" marker-end="url(#t8B)"/>
+        <text x="186" y="246" font-size="12" font-weight="700" fill="var(--blue)">−τ</text>
+        <path d="M212,262 A28,8 0 0,0 268,262" fill="none" stroke="var(--accent)" stroke-width="2" marker-end="url(#t8A)"/>
+        <text x="274" y="272" font-size="12" font-weight="700" fill="var(--accent)">τ</text>
+        <!-- wheel (cylinder) -->
+        <path d="M180,300 L180,316 A60,18 0 0,0 300,316 L300,300" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <ellipse cx="240" cy="300" rx="60" ry="18" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <circle cx="240" cy="300" r="4" fill="var(--accent)"/>
+        <!-- wheel spin arrow: front half, left to right (counterclockwise seen from +z) -->
+        <path d="M170,308 A70,24 0 0,0 310,308" fill="none" stroke="var(--accent)" stroke-width="2.6" marker-end="url(#t8A)"/>
+        <text x="300" y="350" font-size="14" font-weight="700" fill="var(--accent)">Ω<tspan dy="3.5" font-size="10">w</tspan><tspan dy="-3.5">​</tspan></text>
+        <text x="240" y="368" font-size="11" fill="var(--accent)" text-anchor="middle">rueda de reacción · I<tspan dy="3.5" font-size="8">w</tspan><tspan dy="-3.5">​</tspan></text>
+        <!-- angular momentum vectors -->
+        <line x1="240" y1="200" x2="240" y2="108" stroke="var(--accent)" stroke-width="4" marker-end="url(#t8A)"/>
+        <text x="250" y="124" font-size="13" font-weight="700" fill="var(--accent)">L<tspan dy="3.5" font-size="9">w</tspan><tspan dy="-3.5">​</tspan> = I<tspan dy="3.5" font-size="9">w</tspan><tspan dy="-3.5">​</tspan>Ω<tspan dy="3.5" font-size="9">w</tspan><tspan dy="-3.5">​</tspan></text>
+        <line x1="240" y1="380" x2="240" y2="462" stroke="var(--blue)" stroke-width="4" marker-end="url(#t8B)"/>
+        <text x="250" y="436" font-size="13" font-weight="700" fill="var(--blue)">L<tspan dy="3.5" font-size="9">s</tspan><tspan dy="-3.5">​</tspan> = I<tspan dy="3.5" font-size="9">s</tspan><tspan dy="-3.5">​</tspan>ω<tspan dy="3.5" font-size="9">s</tspan><tspan dy="-3.5">​</tspan></text>
+        <text x="250" y="456" font-size="11" fill="var(--ink-2)">L<tspan dy="3.5" font-size="8">s</tspan><tspan dy="-3.5">​</tspan> + L<tspan dy="3.5" font-size="8">w</tspan><tspan dy="-3.5">​</tspan> = 0 (si partió del reposo)</text>
+        <!-- equation box -->
+        <rect x="18" y="488" width="456" height="112" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="32" y="512" font-size="12.5" font-weight="700">Ecuaciones (un eje)</text>
+        <text x="32" y="536" font-size="12.5" font-family="JetBrains Mono,monospace">L_total = I_s·ω_s + I_w·Ω_w = constante</text>
+        <text x="32" y="558" font-size="12.5" font-family="JetBrains Mono,monospace">ω_s = −(I_w / I_s)·Ω_w</text>
+        <text x="32" y="580" font-size="12.5" font-family="JetBrains Mono,monospace">τ = I_w·α_w   y   I_s·α_s = −τ</text>
+
+        <!-- ===== RIGHT: saturation ===== -->
+        <text x="496" y="28" font-size="14" font-weight="700">2 · ¿Y si la rueda llega a su máximo?</text>
+        <rect x="490" y="44" width="316" height="300" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+        <!-- axes -->
+        <line x1="530" y1="300" x2="790" y2="300" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#t8I)"/>
+        <line x1="530" y1="300" x2="530" y2="70" stroke="var(--ink-2)" stroke-width="1.5" marker-end="url(#t8I)"/>
+        <text x="742" y="292" font-size="11" fill="var(--ink-2)">tiempo</text>
+        <text x="500" y="66" font-size="11" fill="var(--ink-2)">H<tspan dy="3.5" font-size="8">w</tspan><tspan dy="-3.5">​</tspan></text>
+        <!-- Hmax -->
+        <line x1="530" y1="110" x2="790" y2="110" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <text x="536" y="104" font-size="11" fill="var(--accent)" font-weight="600">H<tspan dy="3.5" font-size="8">máx</tspan><tspan dy="-3.5">​</tspan>: rueda saturada</text>
+        <!-- sawtooth: subidas = perturbación, bajadas = descarga -->
+        <g stroke-width="2.8" stroke-linecap="round">
+          <line x1="530" y1="270" x2="630" y2="110" stroke="var(--blue)"/>
+          <line x1="630" y1="110" x2="652" y2="262" stroke="var(--green)"/>
+          <line x1="652" y1="262" x2="752" y2="110" stroke="var(--blue)"/>
+          <line x1="752" y1="110" x2="774" y2="262" stroke="var(--green)"/>
+          <line x1="774" y1="262" x2="790" y2="238" stroke="var(--blue)"/>
+        </g>
+        <circle cx="630" cy="110" r="4" fill="var(--accent)"/><circle cx="752" cy="110" r="4" fill="var(--accent)"/>
+        <line x1="506" y1="316" x2="524" y2="316" stroke="var(--blue)" stroke-width="3"/>
+        <text x="530" y="320" font-size="10.5" fill="var(--blue)">sube: la perturbación llena la rueda</text>
+        <line x1="506" y1="333" x2="524" y2="333" stroke="var(--green)" stroke-width="3"/>
+        <text x="530" y="337" font-size="10.5" fill="var(--green)">baja: descarga con torque externo</text>
+        <!-- explanation box -->
+        <rect x="490" y="360" width="316" height="240" rx="12" fill="var(--surface)" stroke="var(--line)"/>
+        <text x="504" y="384" font-size="12.5" font-weight="700">Saturación</text>
+        <text x="504" y="404" font-size="11" fill="var(--ink-2)">Al llegar a Ω<tspan dy="3.5" font-size="8">máx</tspan><tspan dy="-3.5">​</tspan>, la rueda ya no puede</text>
+        <text x="504" y="419" font-size="11" fill="var(--ink-2)">acelerar: deja de absorber momento en</text>
+        <text x="504" y="434" font-size="11" fill="var(--ink-2)">ese sentido y el satélite empieza a girar.</text>
+        <text x="504" y="452" font-size="11.5" font-family="JetBrains Mono,monospace">H_w(t) = H_0 + τ_pert·t</text>
+        <text x="504" y="470" font-size="11.5" font-family="JetBrains Mono,monospace">t_sat = (H_máx − H_0) / τ_pert</text>
+        <text x="504" y="493" font-size="12.5" font-weight="700">Descarga del momento</text>
+        <text x="504" y="511" font-size="11.5" font-family="JetBrains Mono,monospace">dL_total/dt = τ_ext</text>
+        <!-- magnetorquer icon -->
+        <rect x="506" y="518" width="56" height="22" rx="4" fill="var(--surface-2)" stroke="var(--violet)" stroke-width="1.6"/>
+        <g stroke="var(--violet)" stroke-width="1.2"><line x1="514" y1="518" x2="514" y2="540"/><line x1="522" y1="518" x2="522" y2="540"/><line x1="530" y1="518" x2="530" y2="540"/><line x1="538" y1="518" x2="538" y2="540"/><line x1="546" y1="518" x2="546" y2="540"/><line x1="554" y1="518" x2="554" y2="540"/></g>
+        <text x="572" y="526" font-size="11" fill="var(--violet)" font-weight="600">magnetorquer: τ = m × B</text>
+        <text x="572" y="540" font-size="10" fill="var(--ink-2)">(Hubble: reduce la velocidad de las ruedas)</text>
+        <path d="M512,566 L540,566" stroke="var(--green)" stroke-width="3" marker-end="url(#t8G)"/>
+        <text x="572" y="566" font-size="11" fill="var(--green)" font-weight="600">propulsores: τ = r × F</text>
+        <text x="572" y="580" font-size="10" fill="var(--ink-2)">(Kepler/K2: cada 48 h)</text>
+        <text x="504" y="594" font-size="9.5" fill="var(--ink-3)">Al descargar, el motor frena la rueda y el satélite no gira.</text>
+      </g>
+    </svg>
+  </div>
+
+  <h4 class="sub">Caso numérico trabajado: un giro de 90° con una rueda comercial</h4>
+  <p>Uso como referencia la rueda <b>RW1</b> de Blue Canyon Technologies, cuya hoja de datos indica una capacidad de momento de <b>1,0 N·m·s</b> y un torque máximo de <b>0,06 N·m</b>, montada en un microsatélite con \(I_s=10\ \text{kg}\cdot\text{m}^2\) en el eje de giro (ese valor es un supuesto del ejemplo). Para girar 90° lo más rápido posible, el motor acelera la rueda a torque máximo durante la primera mitad del giro y la frena durante la segunda (control <i>bang-bang</i>):</p>
+  <div class="eq">
+  \[\alpha_s=\frac{\tau}{I_s}=\frac{0{,}06}{10}=0{,}006\ \text{rad/s}^2,\qquad \frac{\theta}{2}=\tfrac12\,\alpha_s\left(\frac{t}{2}\right)^{2}\;\Rightarrow\;t=2\sqrt{\frac{\theta}{\alpha_s}}=2\sqrt{\frac{1{,}571}{0{,}006}}\approx 32{,}4\ \text{s}\]
+  \[\omega_{s,\max}=\alpha_s\,\frac{t}{2}\approx 0{,}097\ \text{rad/s}\ (5{,}6^\circ/\text{s}),\qquad H_{w,\max}=I_s\,\omega_{s,\max}\approx 0{,}97\ \text{N}\cdot\text{m}\cdot\text{s}\ \lt\ 1{,}0\ \text{N}\cdot\text{m}\cdot\text{s}\ \checkmark\]
+  </div>
+  <p>La maniobra usa el 97 % de la capacidad de la rueda: un giro de 90° más rápido, o un satélite más pesado, la saturaría. Además, si un torque externo pequeño, digamos \(10^{-5}\ \text{N}\cdot\text{m}\) (otro supuesto, del orden de las perturbaciones típicas), empuja siempre en el mismo sentido, la rueda se llena en \(t_{\text{sat}}=1{,}0/10^{-5}=10^{5}\ \text{s}\approx 28\ \text{h}\). Por eso el software programa descargas periódicas.</p>
+  <div class="card">
+    <div class="card-title">Calculadora del giro (complemento al diagrama)</div>
+    <div class="card-sub">Cambia el satélite, la rueda o el ángulo; el tiempo mínimo y el momento que pide la maniobra se recalculan con las ecuaciones de arriba.</div>
+    <div class="controls">
+      <div class="ctl"><label>Momento de inercia del satélite I<sub>s</sub> <output id="t8IsOut"></output></label><input type="range" id="t8Is" min="1" max="100" step="1" value="10"></div>
+      <div class="ctl"><label for="t8rw">Rueda (hoja de datos Blue Canyon)</label><select id="t8rw" class="sel"><option value="0.05,0.007">RWp050 · 0,05 N·m·s · 0,007 N·m</option><option value="0.5,0.025">RWp500 · 0,5 N·m·s · 0,025 N·m</option><option value="1,0.06" selected>RW1 · 1,0 N·m·s · 0,06 N·m</option><option value="4,0.25">RW4 · 4,0 N·m·s · 0,25 N·m</option><option value="16,0.25">RW16 · 16 N·m·s · 0,25 N·m</option></select></div>
+      <div class="ctl"><label>Ángulo del giro <output id="t8thOut"></output></label><input type="range" id="t8th" min="5" max="180" step="5" value="90"></div>
+    </div>
+    <div class="readout" id="t8Readout"></div>
+  </div>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-3">Tema 3</a>: allá la rotación servía para crear gravedad (\(a_c=\omega^2r\)); aquí el momento angular \(L=I\omega\) se conserva y se intercambia entre dos cuerpos.</li>
+    <li>Con el <a href="#tema-5">Tema 5</a>: el motor de la rueda y el satélite forman un par acción-reacción (tercera ley), como el gatillo y el dedo, pero en versión rotacional: \(\tau\) y \(-\tau\).</li>
+    <li>Con el <a href="#tema-7">Tema 7</a>: la conservación del momento lineal en un choque y la del momento angular aquí son la misma idea. Lo que un cuerpo gana, el otro lo pierde.</li>
+    <li>Con la clase: torque, momento de inercia, \(\tau=I\alpha\) y conservación del momento angular.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>NASA Goddard. <a href="https://asd.gsfc.nasa.gov/archive/hubble/technology/pcs.html" target="_blank" rel="noopener">Hubble Pointing Control System</a>.</li>
+    <li>NASA JPL Science. <a href="https://science.jpl.nasa.gov/projects/k2" target="_blank" rel="noopener">K2</a> (misión extendida del telescopio Kepler).</li>
+    <li>AVS Lab, University of Colorado Boulder. <a href="https://hanspeterschaub.info/basilisk/_modules/scenarioMomentumDumping.html" target="_blank" rel="noopener">Basilisk: scenarioMomentumDumping</a> (código fuente y documentación).</li>
+    <li>Blue Canyon Technologies. <a href="https://www.bluecanyontech.com/wp-content/uploads/Reaction-Wheels-1_2025.pdf" target="_blank" rel="noopener">Reaction Wheels</a> (hoja de datos, 2025).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 9 ============================ -->
+<section class="topic" id="tema-9">
+  <div class="topic-head">
+    <div class="num">TEMA 09</div>
+    <h2>Asistencia gravitatoria: cómo la Voyager ganó velocidad sin gastar combustible</h2>
+    <div class="tags"><span class="tag">Gravitación universal</span><span class="tag">Energía potencial gravitatoria</span><span class="tag">Conservación del momento</span><span class="tag res">RECURSO: VISUALIZACIÓN DE DATOS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>La ruta de las <b>Voyager</b> salió de un programa de computadora. En 1965, Gary Flandro, estudiante de posgrado de Caltech que trabajaba en el Laboratorio de Propulsión a Chorro (JPL) de la NASA, graficó las posiciones de los planetas exteriores y encontró que en la década de 1980 Júpiter, Saturno, Urano y Neptuno quedarían del mismo lado del Sol, una alineación que no se repetiría en 176 años. Para calcular los aumentos de velocidad y los cambios de rumbo en cada sobrevuelo usó un programa de trayectorias interplanetarias que Lockheed había escrito para el JPL. El mismo tipo de cálculo sigue vivo en software actual: <b>JPL Horizons</b>, el servicio del que salen los datos de abajo, entrega posiciones y velocidades de los objetos del sistema solar construidas con modelos numéricos de la gravitación y con los datos de navegación de cada misión, y <b>GMAT</b> (<i>General Mission Analysis Tool</i>) de la NASA es una herramienta de código abierto para diseñar, optimizar y navegar misiones espaciales.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <div class="eq">
+  \[F=\frac{G\,M\,m}{r^{2}},\qquad U=-\frac{G\,M\,m}{r},\qquad E=\tfrac12\,m\,v^{2}-\frac{G\,M_{\odot}\,m}{r}\ \ \text{(constante entre encuentros)}\]
+  \[v_{\text{esc}}(r)=\sqrt{\frac{2\,G\,M_{\odot}}{r}}\qquad\big(v>v_{\text{esc}}\ \Leftrightarrow\ E>0:\ \text{la sonda ya no vuelve}\big)\]
+  \[\text{En el marco del planeta: }\ |\vec v_{\text{sale}}'|=|\vec v_{\text{entra}}'|=v_\infty;\qquad \text{en el marco del Sol: }\ \vec v=\vec V_{p}+\vec{v}\,{}'\ \Rightarrow\ \Delta\vec v=\vec v_{\text{sale}}'-\vec v_{\text{entra}}'\]
+  \[|\Delta\vec v|=2\,v_\infty\,\sin\frac{\delta}{2},\qquad \sin\frac{\delta}{2}=\frac{1}{1+r_p\,v_\infty^{2}/(G M_p)},\qquad m\,\Delta\vec v=-\,M_p\,\Delta\vec V_p\]
+  </div>
+  <p class="eq-note">\(M_\odot\) es la masa del Sol, \(M_p\) la del planeta, \(r_p\) la distancia de máximo acercamiento y \(\delta\) el ángulo que el planeta dobla la trayectoria. Vista desde el planeta, la sonda entra y sale con la misma rapidez: la energía se conserva y el sobrevuelo es como un choque elástico (\(e=1\)). Vista desde el Sol, el planeta se está moviendo, y la sonda sale con su velocidad sumada en otra dirección. El momento que gana la sonda lo pierde el planeta, que por su masa ni lo nota.</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>Una trayectoria precalculada o una animación de «arcos» entre planetas no dicen lo único que importa en el diseño: cuánta rapidez se gana en cada sobrevuelo según la distancia y el lado por el que se pasa, y si al final la sonda supera la velocidad de escape del Sol. Eso solo sale de la gravitación y de la conservación de la energía y del momento. Con el mismo modelo se exploran miles de fechas de lanzamiento y distancias de paso, y es como Flandro encontró una ventana que ocurre una vez cada 176 años.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Llegar a Urano y Neptuno con un lanzador que por sí solo no alcanzaba.</li><li>Elegir la distancia y el lado del paso para ganar o perder rapidez a voluntad.</li><li>Saber cuándo la sonda queda libre del Sol.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Integrar la gravedad de muchos cuerpos es caro. Los modelos simples de «cónicas» por tramos son más baratos pero menos exactos.</li><li>Exige efemérides planetarias muy precisas y correcciones de rumbo.</li><li>La ventana depende de una alineación que no se puede elegir.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Visualización de datos: rapidez de las Voyager respecto al Sol</h3>
+  <p><b>Fuente de los datos:</b> NASA/JPL Horizons, consultado el 30 de octubre de 2026 (objetos −31 y −32; cantidad <i>VmagSn</i>, que Horizons define como la magnitud de la velocidad del objeto respecto al Sol, y distancia al Sol). La curva punteada de cada sonda es la velocidad de escape del Sol a la distancia donde estaba, calculada con \(v_{\text{esc}}=\sqrt{2GM_\odot/r}\). Las fechas de máximo acercamiento son de la NASA (NSSDCA).</p>
+  <div class="card">
+    <div class="card-title">Rapidez heliocéntrica de la Voyager 1 y la Voyager 2, 1977–1990</div>
+    <div class="card-sub">Entre encuentros la rapidez baja suavemente: la sonda sube contra la gravedad del Sol y cambia energía cinética por potencial. En cada encuentro, marcado con una línea vertical punteada, hay un salto. Usa los botones para acercarte a cada uno.</div>
+    <div class="btns">
+      <button class="b primary" data-t9zoom="all">Todo el vuelo</button>
+      <button class="b" data-t9zoom="J">Júpiter 1979</button>
+      <button class="b" data-t9zoom="S">Saturno 1980–81</button>
+      <button class="b" data-t9zoom="U">Urano 1986</button>
+      <button class="b" data-t9zoom="N">Neptuno 1989</button>
+    </div>
+    <div class="chart-box xtall"><canvas id="cT9"></canvas></div>
+    <div class="readout" id="t9Readout"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">La prueba de la conservación: marco del planeta frente a marco del Sol</div>
+    <div class="card-sub">Rapidez 40 días antes y 40 días después de cada máximo acercamiento, con Horizons centrado en el Sol y en el planeta. En el marco del planeta la rapidez de entrada y de salida es prácticamente la misma; en el del Sol, no.</div>
+    <table class="data" id="t9Tabla">
+      <thead><tr><th>Encuentro</th><th>Máx. acercamiento</th><th>Marco del Sol: antes → después</th><th>Δ Sol</th><th>Marco del planeta: antes → después</th><th>Δ planeta</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <h4 class="sub">Lectura de los datos</h4>
+  <p>Antes de Júpiter, la Voyager 2 viajaba a unos <b>10,0 km/s</b> respecto al Sol, por debajo de la velocidad de escape a esa distancia (18,3 km/s): sin el planeta habría vuelto a caer hacia el Sol. Seis días después del encuentro iba a <b>21,9 km/s</b>, por encima del escape (18,2 km/s). Ese salto de casi 12 km/s, sin encender motores, es lo que la liberó del Sol. Saturno sumó unos 5 km/s más y Urano casi 2. En Neptuno la rapidez <b>bajó</b> unos 2 km/s: la sonda pasó a 29 217 km del centro del planeta, en una trayectoria elegida para visitar también su luna Tritón, y esa geometría le quitó rapidez. Es la misma física con el signo contrario, y muestra que el resultado depende de por dónde se pasa. El pico agudo justo en cada encuentro es la sonda cayendo hacia el planeta y saliendo de él; lo que cuenta es la diferencia entre antes y después.</p>
+  <h4 class="sub">Caso numérico trabajado: Voyager 2 en Júpiter</h4>
+  <div class="eq">
+  \[v_\infty=\sqrt{v^{2}-\frac{2GM_J}{d}}=\sqrt{8{,}15^{2}-\frac{2\,(1{,}267\times10^{8})}{3{,}18\times10^{7}}}\approx 7{,}65\ \text{km/s}\qquad\text{(a } d=0{,}213\ \text{UA de Júpiter, dato de Horizons)}\]
+  \[1+\frac{r_p\,v_\infty^{2}}{GM_J}=1+\frac{721\,834\times7{,}65^{2}}{1{,}267\times10^{8}}\approx1{,}33\;\Rightarrow\;\delta\approx97^\circ,\qquad |\Delta\vec v|=2\,v_\infty\sin\frac{\delta}{2}\approx 11{,}5\ \text{km/s}\]
+  \[\Delta V_J=\frac{m\,|\Delta\vec v|}{M_J}=\frac{721{,}9\ \text{kg}\times 1{,}15\times10^{4}\ \text{m/s}}{1{,}898\times10^{27}\ \text{kg}}\approx 4\times10^{-21}\ \text{m/s}\]
+  </div>
+  <p>Los 11,5 km/s del cambio de vector concuerdan con el salto de rapidez que muestra la gráfica, de unos 12 km/s entre seis días antes y seis días después. A cambio, Júpiter se frenó unos \(4\times10^{-21}\) m/s, una cantidad imposible de medir. La rapidez «gratis» sale de la energía orbital del planeta.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-7">Tema 7</a>: el sobrevuelo es un choque elástico (\(e=1\)) contra un cuerpo enorme que se mueve. En su marco, la sonda «rebota» con la misma rapidez, y en el marco del Sol hereda la velocidad del planeta.</li>
+    <li>Con el <a href="#tema-6">Tema 6</a>: en los dos casos se transforma energía cinética sin quemar combustible. Allá se guarda en la batería, aquí se roba a un planeta.</li>
+    <li>Con el <a href="#tema-2">Tema 2</a> y el <a href="#tema-3">Tema 3</a>: la gravedad que allá era un parámetro de diseño aquí es la ley de Newton completa, \(F=GMm/r^{2}\), que cambia con la distancia.</li>
+    <li>Con la clase: gravitación universal, energía potencial gravitatoria, velocidad de escape y conservación de la energía y el momento.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>NASA/JPL Solar System Dynamics. <a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noopener">Horizons System</a>, vía su <a href="https://ssd-api.jpl.nasa.gov/doc/horizons.html" target="_blank" rel="noopener">API</a>, consultado el 30 de octubre de 2026. Consultas detalladas en <code>data/README.md</code>.</li>
+    <li>NASA NSSDCA. <a href="https://nssdc.gsfc.nasa.gov/planetary/voyager-periapse.html" target="_blank" rel="noopener">Voyager 1/2 Closest Approach Distances/Times</a> y <a href="https://nssdc.gsfc.nasa.gov/planetary/voyager.html" target="_blank" rel="noopener">Voyager Project Information</a> (masa en órbita: 721,9 kg).</li>
+    <li>PBS, <i>The Farthest</i>. <a href="https://www.pbs.org/the-farthest/science/man-behind-mission" target="_blank" rel="noopener">The Man Behind the Mission</a> (Gary Flandro y la alineación de los planetas).</li>
+    <li>NASA Software Catalog. <a href="https://software.nasa.gov/software/GSC-19640-1" target="_blank" rel="noopener">General Mission Analysis Tool (GMAT), versión R2026</a>.</li>
+  </ol></div>
+</section>
+
 <section class="soon-sec" id="proximos">
   <h2 style="font-size:1.4rem">Próximos temas</h2>
-  <p>El portafolio es acumulativo. Estas secciones se completarán en los siguientes avances.</p>
+  <p>El portafolio es acumulativo. Estas secciones se completarán en la entrega final.</p>
   <div class="soon-grid">
-    <div><span class="n">06 · Avance 2</span><br>Frenado regenerativo en un vehículo eléctrico</div>
-    <div><span class="n">07 · Avance 2</span><br>El coeficiente de restitución en un motor de videojuego</div>
-    <div><span class="n">08 · Avance 2</span><br>Ruedas de reacción en satélites</div>
-    <div><span class="n">09 · Avance 2</span><br>Asistencia gravitatoria de la Voyager</div>
     <div><span class="n">10 · Final</span><br>Spring animations en interfaces</div>
     <div><span class="n">11 · Final</span><br>Síntesis de sonido y armónicos</div>
     <div><span class="n">12 · Final</span><br>Resonancia estructural y Tacoma Narrows</div>
@@ -661,8 +1106,8 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 </section>
 
 <footer>
-  Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 1, octubre de 2026.<br>
-  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas elaborados para este portafolio; los videos pertenecen a sus autores y se citan en el Tema 5.
+  Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 2, octubre de 2026.<br>
+  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas elaborados para este portafolio; los videos pertenecen a sus autores y se citan en el Tema 5. Datos: EPA, NREL, NASA/JPL Horizons y NASA NSSDCA, citados en cada tema y guardados en <code>data/</code>.
 </footer>
 </main>
 </div>
@@ -670,6 +1115,8 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="data/ciclos-epa.js"></script>
+<script src="data/voyager-horizons.js"></script>
 <script>
 (function(){
 "use strict";
@@ -695,7 +1142,7 @@ document.querySelectorAll('section.topic').forEach(s=>obs.observe(s));
 function renderMath(){ if(window.renderMathInElement){ renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false}); } }
 renderMath();
 
-if(!window.Chart){ console.warn('Chart.js no cargó'); }
+if(!window.Chart){ console.warn('Chart.js no cargó'); } else { Chart.defaults.locale='es-CR'; }
 const charts=[];
 function baseOpts(xTitle,yTitle){
   const ink=css('--ink-2'), grid=css('--line');
@@ -848,6 +1295,256 @@ function updHooke(){const x0=+$('x0').value,S=+$('sF').value;$('x0Out').textCont
   $('hookeReadout').innerHTML=`<div><span>Modo</span><b>${hMode}</b></div><div><span>x₀</span><b>${fmt(x0,2)}</b></div><div><span>k (pendiente)</span><b>${hMode==='slope'?fmt(k,2):'— (no lineal)'}</b></div><div><span>Trabajo W = área</span><b>${fmt(W,3)}</b></div>${hMode==='slope'?`<div><span>½k(1−x₀)²</span><b>${fmt(0.5*k*(1-x0)**2,3)}</b></div>`:''}`;}
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{hMode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('primary',x===b));updHooke();});
 ['x0','sF'].forEach(id=>$(id).addEventListener('input',updHooke)); updHooke();
+
+/* =============== TEMA 6: frenado regenerativo =============== */
+if($('tema-6') && window.CICLOS && window.VEHICULOS_EPA){
+  const LBF=4.4482216152605, MPH=0.44704, LB=0.45359237, KWH_GAL=33.705, MI_KM=1.609344;
+  let t6c='udds', t6v='m3';
+  const runCache={};
+  function t6run(vk,ck){
+    const key=vk+'|'+ck; if(runCache[key]) return runCache[key];
+    const car=VEHICULOS_EPA[vk], m=car.etw_lb*LB, v=CICLOS[ck].mph10.map(x=>x/10*MPH);
+    let Etr=0,Erl=0,Ebrk=0,dist=0; const t=[0],etr=[0],erl=[0],ebrk=[0];
+    for(let i=0;i<v.length-1;i++){
+      const va=(v[i]+v[i+1])/2, a=v[i+1]-v[i], vm=va/MPH;          // paso de 1 s
+      const Frl= va>0 ? (car.A+car.B*vm+car.C*vm*vm)*LBF : 0;        // N
+      const P=(m*a+Frl)*va;                                          // W (J en 1 s)
+      Erl+=Frl*va; if(P>0) Etr+=P; else Ebrk+=-P; dist+=va;
+      t.push(i+1); etr.push(Etr/3600); erl.push(Erl/3600); ebrk.push(Ebrk/3600);
+    }
+    return runCache[key]={Etr:Etr/3600,Erl:Erl/3600,Ebrk:Ebrk/3600,distKm:dist/1000,t,etr,erl,ebrk,vkmh:v.map(x=>x*3.6),m};
+  }
+  function t6calib(vk,etac){
+    const car=VEHICULOS_EPA[vk], U=t6run(vk,'udds'), H=t6run(vk,'hwfet');
+    const acU=KWH_GAL/car.mpgeUDDS*(U.distKm/MI_KM)*1000, acH=KWH_GAL/car.mpgeHWY*(H.distKm/MI_KM)*1000;   // Wh medidos por la EPA
+    const a1=U.Etr,b1=-U.Ebrk,c1=acU*etac,a2=H.Etr,b2=-H.Ebrk,c2=acH*etac,det=a1*b2-a2*b1;
+    const x=(c1*b2-c2*b1)/det, y=(a1*c2-a2*c1)/det;              // x = 1/eta_d, y = rho
+    return {etad:1/x,rho:y,acU,acH};
+  }
+  const whkm=mpge=>KWH_GAL/mpge/MI_KM*1000;
+  $('t6Tabla').querySelector('tbody').innerHTML=Object.values(VEHICULOS_EPA).map(c=>`<tr><td>${c.nombre}</td><td>${fmt(c.etw_lb*LB,0)} <span class="muted">(${fmt(c.etw_lb,0)} lb)</span></td><td>${fmt(c.A,2)}</td><td>${fmt(c.B,4)}</td><td>${fmt(c.C,5).replace(/0+$/,'')}</td><td>${fmt(c.mpgeUDDS,0)} · ${fmt(whkm(c.mpgeUDDS),0)}</td><td>${fmt(c.mpgeHWY,c.mpgeHWY%1?1:0)} · ${fmt(whkm(c.mpgeHWY),0)}</td></tr>`).join('');
+  const etaC=()=>+$('t6Eta').value;
+  function velCfg(){ const R=t6run(t6v,t6c); const o=baseOpts('Tiempo t [s]','Velocidad [km/h]'); o.scales.x.max=R.t[R.t.length-1]; o.plugins.legend.display=false;
+    o.plugins.tooltip={callbacks:{label:c=>`${fmt(c.parsed.y,1)} km/h a los ${c.parsed.x} s`}};
+    return {type:'line',data:{datasets:[{label:'Velocidad',data:R.vkmh.map((y,i)=>({x:i,y})),borderColor:css('--ink-2'),backgroundColor:css('--ink-2'),pointRadius:0,borderWidth:1.6}]},options:o}; }
+  function enCfg(){ const R=t6run(t6v,t6c), C=t6calib(t6v,etaC()), rho=C.rho; const o=baseOpts('Tiempo t [s]','Energía acumulada en las ruedas [Wh]'); o.scales.x.max=R.t[R.t.length-1];
+    o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,0)} Wh`}};
+    const S=(arr,f)=>arr.map((y,i)=>({x:R.t[i],y:f?f(y):y}));
+    return {type:'line',data:{datasets:[
+      {label:'Entregada a las ruedas (tracción)',data:S(R.etr),borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:2.6},
+      {label:'Resistencia al avance (rodadura + aire)',data:S(R.erl),borderColor:css('--amber'),backgroundColor:css('--amber'),pointRadius:0,borderWidth:2.2},
+      {label:'Frenado: vuelve a la batería',data:S(R.ebrk,y=>rho*y),borderColor:css('--green'),backgroundColor:css('--green'),pointRadius:0,borderWidth:2.4},
+      {label:'Frenado: se disipa en calor',data:S(R.ebrk,y=>(1-rho)*y),borderColor:css('--violet'),backgroundColor:css('--violet'),pointRadius:0,borderWidth:2.2,borderDash:[6,4]}]},options:o}; }
+  function balCfg(){ const C=t6calib(t6v,etaC()); const U=t6run(t6v,'udds'), H=t6run(t6v,'hwfet');
+    const per=(R,f)=>f(R)/R.distKm;
+    const o=baseOpts('','Energía por kilómetro [Wh/km]'); o.indexAxis='x'; o.scales.x={type:'category',stacked:true,ticks:{color:css('--ink-2')},grid:{display:false}}; o.scales.y.stacked=true; o.scales.y.beginAtZero=true;
+    o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,1)} Wh/km`}};
+    const ds=(label,f,col)=>({label,data:[per(U,f),per(H,f)],backgroundColor:css(col),borderColor:css(col),borderWidth:0,borderRadius:4});
+    return {type:'bar',data:{labels:['UDDS · ciudad','HWFET · carretera'],datasets:[
+      ds('Resistencia al avance',R=>R.Erl,'--amber'), ds('Frenado: vuelve a la batería',R=>C.rho*R.Ebrk,'--green'), ds('Frenado: se disipa en calor',R=>(1-C.rho)*R.Ebrk,'--violet')]},options:o}; }
+  const vc6=velCfg(); vc6._build=velCfg; const cT6v=mk('cT6vel',vc6);
+  const ec6=enCfg(); ec6._build=enCfg; const cT6e=mk('cT6energia',ec6);
+  const bc6=balCfg(); bc6._build=balCfg; const cT6b=mk('cT6balance',bc6);
+  function t6update(){
+    $('t6EtaOut').textContent=fmt(etaC(),2);
+    [[cT6v,velCfg],[cT6e,enCfg],[cT6b,balCfg]].forEach(([c,b])=>{ if(!c) return; const n=b(); c.data=n.data; c.options=n.options; c.update('none'); });
+    const R=t6run(t6v,t6c), C=t6calib(t6v,etaC()), car=VEHICULOS_EPA[t6v];
+    const ac= t6c==='udds'?C.acU:C.acH, mod=(R.Etr/C.etad-C.rho*R.Ebrk)/etaC(), rec=C.rho*R.Ebrk, dis=(1-C.rho)*R.Ebrk;
+    $('t6Readout').innerHTML=`<div><span>Entregada a las ruedas</span><b>${fmt(R.Etr,0)} Wh</b></div><div><span>Rodadura + aire</span><b>${fmt(R.Erl,0)} Wh · ${fmt(100*R.Erl/R.Etr,0)} %</b></div><div><span>Hay que frenar</span><b>${fmt(R.Ebrk,0)} Wh · ${fmt(100*R.Ebrk/R.Etr,0)} %</b></div><div><span>Vuelve a la batería</span><b>${fmt(rec,0)} Wh</b></div><div><span>Se disipa en calor</span><b>${fmt(dis,0)} Wh</b></div><div><span>De la red: modelo / EPA</span><b>${fmt(mod,0)} / ${fmt(ac,0)} Wh</b></div><div><span>Calibración</span><b${C.etad>0.96?' class="delta-neg"':''}>η<sub>d</sub> ${fmt(C.etad,3)} · ρ ${fmt(C.rho,3)}</b></div>`;
+    const ciclo=t6c==='udds'?'En ciudad (UDDS)':'En carretera (HWFET)';
+    let txt=`<b>${ciclo}, ${car.nombre}:</b> el ${fmt(100*R.Ebrk/R.Etr,0)} % de la energía que el motor entrega a las ruedas hay que quitarla después al frenar, y el modelo calibrado recupera el ${fmt(100*C.rho,0)} % de esa energía. `;
+    txt+= ac<R.Etr ? `Por eso, en la prueba de la EPA el auto tomó de la red ${fmt(ac,0)} Wh, <b>menos</b> que los ${fmt(R.Etr,0)} Wh que entregó a las ruedas. Sin frenado regenerativo eso sería imposible: la diferencia es energía cinética que volvió a la batería y se usó otra vez.`
+                   : `Aquí casi no se frena: la mayor parte de la energía se la lleva la resistencia al avance, sobre todo la del aire (\\(Cv^2\\)), y la regeneración aporta poco. Por eso este auto consume más por kilómetro en carretera que en ciudad.`;
+    if(C.etad>0.96){ const minC=Math.ceil(C.etad*etaC()/0.96*100-1e-9)/100;   // η_d es inversamente proporcional a η_c
+      txt+=`<br><br><b>Ojo con η<sub>c</sub> = ${fmt(etaC(),2)}:</b> para reproducir las mediciones de la EPA, el ajuste exige η<sub>d</sub> = ${fmt(C.etad,3)}, un tren motriz casi sin pérdidas, lo cual no es realista. Para que η<sub>d</sub> no pase de 0,96, η<sub>c</sub> tiene que ser de ${fmt(minC,2)} o más.`; }
+    $('t6Hallazgo').innerHTML=txt; if(window.renderMathInElement) renderMathInElement($('t6Hallazgo'),{delimiters:[{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  }
+  document.querySelectorAll('[data-t6ciclo]').forEach(b=>b.onclick=()=>{t6c=b.dataset.t6ciclo;document.querySelectorAll('[data-t6ciclo]').forEach(x=>x.classList.toggle('primary',x===b));t6update();});
+  document.querySelectorAll('[data-t6veh]').forEach(b=>b.onclick=()=>{t6v=b.dataset.t6veh;document.querySelectorAll('[data-t6veh]').forEach(x=>x.classList.toggle('primary',x===b));t6update();});
+  $('t6Eta').addEventListener('input',t6update); t6update();
+}
+
+/* =============== TEMA 7: coeficiente de restitución =============== */
+if($('tema-7')){
+  const G=9.81, H0=1.8, TMAX=6, R_BALL=0.12;
+  const REFS={fiba:{lo:0.758,hi:0.776,e:0.767,nombre:'FIBA'},itf:{lo:0.729,hi:0.761,e:0.745,nombre:'ITF tipo 2'}};
+  let ref='fiba';
+  const P=()=>({eb:+$('t7eBall').value,ef:+$('t7eFloor').value,comb:$('t7combine').value,hz:+$('t7dt').value,integ:$('t7integ').value,thr:$('t7thr').checked});
+  const combine=(a,b,m)=>m==='avg'?(a+b)/2:m==='min'?Math.min(a,b):m==='mul'?a*b:Math.max(a,b);
+  function simExact(e,T,step){ // solución analítica, evento por evento
+    const out=[]; let t=0,y=H0,v=0,tNext=0; const peaks=[]; let rest=false;
+    for(let k=0;k<=T/step;k++){ const tt=k*step;
+      while(!rest && tt>=tNext){ // avanzar al siguiente evento
+        const tImp=tNext + (v + Math.sqrt(v*v+2*G*y))/G; // tiempo de impacto desde (y,v) en tNext
+        if(tt<tImp){ break; }
+        const vi=v-G*(tImp-tNext); const vo=-e*vi; // vi<0
+        if(vo<0.05){ rest=true; y=0; v=0; tNext=tImp; break; }
+        peaks.push(vo*vo/(2*G)); y=0; v=vo; tNext=tImp;
+      }
+      let yy= rest&&tt>=tNext ? 0 : y + v*(tt-tNext) - 0.5*G*(tt-tNext)*(tt-tNext);
+      out.push(Math.max(0,yy));
+    }
+    return {y:out,peaks,step};
+  }
+  function simEngine(p){
+    const e=combine(p.eb,p.ef,p.comb), dt=1/p.hz; let y=H0,v=0,t=0,impacts=0,rest=null,maxY=H0,cur=0,flying=false; const ys=[],peaks=[]; const sub=1/240;
+    let acc=0; ys.push(y);
+    while(t<TMAX-1e-9){
+      if(rest===null){
+        if(p.integ==='semi'){ v-=G*dt; y+=v*dt; } else { y+=v*dt; v-=G*dt; }
+        if(y<=0 && v<0){ const vi=-v; impacts++;
+          if(flying) peaks.push(cur); flying=false; cur=0;
+          if((p.thr && vi<2) || vi<0.02){ v=0; y=0; rest=t+dt; }
+          else { v=e*vi; y=0; flying=true; }
+        }
+        if(flying){ cur=Math.max(cur,y); }
+        maxY=Math.max(maxY,y);
+      }
+      t+=dt;
+      // muestrear a 240 Hz para dibujar (repite el último estado del motor)
+      while(acc+sub<=t+1e-12){ acc+=sub; ys.push(Math.max(0,y)); }
+    }
+    if(flying && cur>0 && v<=0) peaks.push(cur);
+    return {y:ys,peaks,impacts,rest,e,maxY,step:sub};
+  }
+  let REF=null, ENG=null;
+  function t7compute(){
+    const p=P(); $('t7eBallOut').textContent=fmt(p.eb,2); $('t7eFloorOut').textContent=fmt(p.ef,2);
+    REF=simExact(REFS[ref].e,TMAX,1/240); ENG=simEngine(p);
+    const r=REFS[ref], bandLo=r.lo*r.lo*H0, bandHi=r.hi*r.hi*H0, first=ENG.peaks[0];
+    const inBand= first!==undefined && first>=bandLo && first<=bandHi;
+    const e=ENG.e;
+    $('t7Readout').innerHTML=`<div><span>e efectivo</span><b>${fmt(e,3)}</b></div><div><span>Rango real (${r.nombre})</span><b>${fmt(r.lo,3)}–${fmt(r.hi,3)}</b></div><div><span>1.er rebote</span><b>${first!==undefined?fmt(first,3)+' m':'no rebota'}</b></div><div><span>¿Dentro de la franja?</span><b class="${inBand?'delta-pos':'delta-neg'}">${inBand?'Sí, realista':'No'}</b></div><div><span>Rebotes de más de 1 cm</span><b>${ENG.peaks.filter(h=>h>0.01).length}${ENG.rest!==null?' y se detiene':''}</b></div><div><span>Choques calculados en ${TMAX} s</span><b>${ENG.impacts}</b></div><div><span>Altura máxima</span><b>${fmt(ENG.maxY,2)} m</b></div>`;
+    const tb=$('t7Tabla').querySelector('tbody'); let rows='';
+    for(let n=1;n<=6;n++){ const ideal=Math.pow(e,2*n)*H0, sim=ENG.peaks[n-1];
+      const diff= sim===undefined ? '—' : (ideal>1e-6? (sim>=ideal?'+':'')+fmt(100*(sim-ideal)/ideal,1)+' %' : '—');
+      rows+=`<tr><td>${n}</td><td>${fmt(ideal,3)} m</td><td>${sim===undefined?(ENG.rest!==null?'detenida':'—'):fmt(sim,3)+' m'}</td><td>${diff}</td></tr>`; }
+    tb.innerHTML=rows;
+    if(cH7){ const n=hCfg(); cH7.data=n.data; cH7.options=n.options; cH7.update('none'); }
+    t7t=0; drawT7(0); t7crashCompute(); drawT7b(0);
+  }
+  function hCfg(){ const o=baseOpts('Tiempo t [s]','Altura de la parte inferior [m]'); o.scales.x.max=TMAX; o.scales.y.min=0;
+    o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,3)} m`}};
+    const r=REFS[ref]; const lo=r.lo*r.lo*H0, hi=r.hi*r.hi*H0;
+    const dec=(arr,step)=>arr.filter((_,i)=>i%4===0).map((y,i)=>({x:i*4*step,y}));
+    return {type:'line',data:{datasets:[
+      {label:`Realista (${r.nombre}, e = ${fmt(r.e,3)})`,data:REF?dec(REF.y,REF.step):[],borderColor:css('--ink-3'),backgroundColor:css('--ink-3'),pointRadius:0,borderWidth:2,borderDash:[6,4]},
+      {label:'Tu motor',data:ENG?dec(ENG.y,ENG.step):[],borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:2.4},
+      {label:`Franja ${r.nombre}`,data:[{x:0,y:hi},{x:TMAX,y:hi}],borderColor:'transparent',backgroundColor:'rgba(29,138,91,.15)',fill:{target:{value:lo}},pointRadius:0}]},options:o}; }
+  let cH7=null;
+  // canvas principal
+  const cv7=$('t7canvas'), g7=cv7.getContext('2d'); let t7t=0, t7anim=null;
+  function drawT7(t){
+    const dpr=window.devicePixelRatio||1, W=cv7.clientWidth, Hh=cv7.clientHeight; cv7.width=W*dpr; cv7.height=Hh*dpr; g7.setTransform(dpr,0,0,dpr,0,0);
+    g7.clearRect(0,0,W,Hh);
+    const top=2.3, padB=30, padT=30, sc=(Hh-padB-padT)/(top+2*R_BALL), Y=y=>Hh-padB-y*sc;
+    const lanes=[{x:W*0.28,lab:'Realista',col:css('--ink-3'),arr:REF},{x:W*0.72,lab:'Tu motor',col:css('--accent'),arr:ENG}];
+    const r=REFS[ref], lo=r.lo*r.lo*H0, hi=r.hi*r.hi*H0;
+    // franja real
+    g7.fillStyle='rgba(29,138,91,.16)'; g7.fillRect(40,Y(hi),W-50,Y(lo)-Y(hi));
+    g7.fillStyle=css('--green'); g7.font='11px Inter'; g7.textAlign='center'; g7.fillText(`rebote ${r.nombre}`,W*0.5,Y(hi)-5); g7.textAlign='left';
+    // escala
+    g7.strokeStyle=css('--line'); g7.fillStyle=css('--ink-3'); g7.lineWidth=1;
+    for(let y=0;y<=2.0001;y+=0.5){ g7.beginPath(); g7.moveTo(36,Y(y)); g7.lineTo(W-8,Y(y)); g7.stroke(); g7.fillText(fmt(y,1)+' m',2,Y(y)+4); }
+    g7.strokeStyle=css('--ink-2'); g7.lineWidth=2; g7.beginPath(); g7.moveTo(36,Y(0)); g7.lineTo(W-8,Y(0)); g7.stroke();
+    g7.setLineDash([4,4]); g7.strokeStyle=css('--ink-3'); g7.beginPath(); g7.moveTo(36,Y(H0)); g7.lineTo(W-8,Y(H0)); g7.stroke(); g7.setLineDash([]);
+    g7.fillStyle=css('--ink-3'); g7.textAlign='center'; g7.fillText('caída 1,80 m',W*0.5,Y(H0)-5); g7.textAlign='left';
+    const rad=Math.max(R_BALL*sc,7);
+    lanes.forEach(L=>{ if(!L.arr) return; const i=Math.min(L.arr.y.length-1,Math.round(t/L.arr.step)); let yb=L.arr.y[i];
+      const over=yb>top-0.05; if(over) yb=top-0.05;
+      g7.fillStyle=L.col; g7.beginPath(); g7.arc(L.x,Y(yb)-rad,rad,0,7); g7.fill();
+      g7.strokeStyle=css('--surface'); g7.lineWidth=1.5; g7.beginPath(); g7.moveTo(L.x-rad,Y(yb)-rad); g7.lineTo(L.x+rad,Y(yb)-rad); g7.stroke();
+      g7.fillStyle=css('--ink'); g7.font='600 12px Inter'; g7.textAlign='center'; g7.fillText(L.lab,L.x,18); g7.textAlign='left';
+      if(over){ g7.fillStyle=L.col; g7.font='600 11px Inter'; g7.fillText('↑ '+fmt(L.arr.y[i],2)+' m',L.x+rad+6,Y(yb)-rad+4); }
+    });
+    g7.fillStyle=css('--ink-2'); g7.font='11px Inter'; g7.textAlign='right'; g7.fillText('t = '+fmt(t,2)+' s',W-8,Hh-10); g7.textAlign='left';
+  }
+  function playT7(){ if(t7anim) cancelAnimationFrame(t7anim); let last=null; t7t=0;
+    const step=ts=>{ if(last===null) last=ts; t7t+=(ts-last)/1000; last=ts; drawT7(Math.min(t7t,TMAX)); if(t7t<TMAX) t7anim=requestAnimationFrame(step); else t7anim=null; }; t7anim=requestAnimationFrame(step); }
+  $('t7play').onclick=playT7;
+  ['t7eBall','t7eFloor'].forEach(id=>$(id).addEventListener('input',t7compute));
+  ['t7combine','t7dt','t7integ','t7thr'].forEach(id=>$(id).addEventListener('change',t7compute));
+  const PRE={fiba:{eb:.77,ef:.77,comb:'avg',hz:'120',integ:'semi',thr:false,ref:'fiba'},tenis:{eb:.745,ef:.745,comb:'avg',hz:'120',integ:'semi',thr:false,ref:'itf'},
+    bugavg:{eb:.77,ef:0,comb:'avg',hz:'120',integ:'semi',thr:false,ref:'fiba'},umbral:{eb:.77,ef:.77,comb:'avg',hz:'120',integ:'semi',thr:true,ref:'fiba'},
+    e1:{eb:1,ef:1,comb:'avg',hz:'30',integ:'exp',thr:false,ref:'fiba'},emax:{eb:1.1,ef:1.1,comb:'avg',hz:'120',integ:'semi',thr:false,ref:'fiba'}};
+  document.querySelectorAll('[data-t7preset]').forEach(b=>b.onclick=()=>{const q=PRE[b.dataset.t7preset]; $('t7eBall').value=q.eb; $('t7eFloor').value=q.ef; $('t7combine').value=q.comb; $('t7dt').value=q.hz; $('t7integ').value=q.integ; $('t7thr').checked=q.thr; ref=q.ref;
+    document.querySelectorAll('[data-t7preset]').forEach(x=>x.classList.toggle('primary',x===b)); $('t7play').classList.add('primary'); t7compute(); playT7();});
+  // choque entre dos bloques
+  const cv7b=$('t7canvas2'), g7b=cv7b.getContext('2d'); let CR=null, t7banim=null;
+  function t7crashCompute(){ const m1=+$('t7m1').value, m2=+$('t7m2').value, v1=+$('t7v1').value, v2=0, e=ENG?ENG.e:0.77;
+    $('t7m1Out').textContent=fmt(m1,1)+' kg'; $('t7m2Out').textContent=fmt(m2,1)+' kg'; $('t7v1Out').textContent=fmt(v1,1)+' m/s';
+    const M=m1+m2, p=m1*v1+m2*v2; const v1p=(p-m2*e*(v1-v2))/M, v2p=(p+m1*e*(v1-v2))/M;
+    const K0=0.5*m1*v1*v1+0.5*m2*v2*v2, K1=0.5*m1*v1p*v1p+0.5*m2*v2p*v2p, dKf=-0.5*(m1*m2/M)*(1-e*e)*(v1-v2)*(v1-v2);
+    CR={m1,m2,v1,v2,v1p,v2p,e};
+    $('t7Readout2').innerHTML=`<div><span>e usado</span><b>${fmt(e,3)}</b></div><div><span>Después: v₁′, v₂′</span><b>${fmt(v1p,2)} · ${fmt(v2p,2)} m/s</b></div><div><span>Momento antes / después</span><b>${fmt(p,3)} / ${fmt(m1*v1p+m2*v2p,3)} kg·m/s</b></div><div><span>Energía antes / después</span><b>${fmt(K0,3)} / ${fmt(K1,3)} J</b></div><div><span>ΔK (fórmula)</span><b>${fmt(dKf,3)} J</b></div>`;
+  }
+  function drawT7b(t){ if(!CR) return; const dpr=window.devicePixelRatio||1, W=cv7b.clientWidth, Hh=cv7b.clientHeight; cv7b.width=W*dpr; cv7b.height=Hh*dpr; g7b.setTransform(dpr,0,0,dpr,0,0); g7b.clearRect(0,0,W,Hh);
+    const s1=26+18*Math.sqrt(CR.m1), s2=26+18*Math.sqrt(CR.m2), mid=W*0.5, x10=W*0.12, tc=(mid-s1/2-x10)/ (CR.v1*55); // 55 px por m/s·s
+    let x1,x2; if(t<tc){ x1=x10+CR.v1*55*t; x2=mid+s2/2; } else { const dt=t-tc; x1=mid-s1/2+CR.v1p*55*dt; x2=mid+s2/2+CR.v2p*55*dt; }
+    const yb=Hh-30; g7b.strokeStyle=css('--ink-2'); g7b.lineWidth=2; g7b.beginPath(); g7b.moveTo(10,yb); g7b.lineTo(W-10,yb); g7b.stroke();
+    g7b.fillStyle=css('--blue'); g7b.fillRect(x1-s1/2,yb-s1,s1,s1); g7b.fillStyle=css('--accent'); g7b.fillRect(x2-s2/2,yb-s2,s2,s2);
+    g7b.fillStyle='#fff'; g7b.font='600 12px Inter'; g7b.fillText('1',x1-4,yb-s1/2+4); g7b.fillText('2',x2-4,yb-s2/2+4);
+    g7b.fillStyle=css('--ink-2'); g7b.font='11px Inter'; g7b.fillText(t<tc?'antes del choque':'después del choque',12,16);
+  }
+  $('t7crash').onclick=()=>{ if(t7banim) cancelAnimationFrame(t7banim); let last=null, t=0; const step=ts=>{ if(last===null) last=ts; t+=(ts-last)/1000; last=ts; drawT7b(t); if(t<4) t7banim=requestAnimationFrame(step); }; t7banim=requestAnimationFrame(step); };
+  ['t7m1','t7m2','t7v1'].forEach(id=>$(id).addEventListener('input',()=>{t7crashCompute();drawT7b(0);}));
+  REF=simExact(REFS[ref].e,TMAX,1/240); ENG=simEngine(P());
+  const hc7=hCfg(); hc7._build=hCfg; cH7=mk('cT7h',hc7);
+  t7compute(); addEventListener('resize',()=>{drawT7(t7t);drawT7b(0);});
+}
+
+/* =============== TEMA 8: ruedas de reacción =============== */
+if($('tema-8')){
+  function t8(){ const Is=+$('t8Is').value, [Hmax,tau]=$('t8rw').value.split(',').map(Number), thDeg=+$('t8th').value, th=thDeg*Math.PI/180;
+    $('t8IsOut').textContent=fmt(Is,0)+' kg·m²'; $('t8thOut').textContent=fmt(thDeg,0)+'°';
+    const a=tau/Is; let t=2*Math.sqrt(th/a), wmax=a*t/2, Hneed=Is*wmax, sat=Hneed>Hmax, note='';
+    if(sat){ const wl=Hmax/Is, ta=wl/a, tha=0.5*a*ta*ta; t=2*ta+(th-2*tha)/wl; wmax=wl; note='La rueda se satura: hay que limitar la velocidad y dejar un tramo de giro constante.'; }
+    const tsat=Hmax/1e-5/3600;
+    $('t8Readout').innerHTML=`<div><span>α del satélite</span><b>${fmt(a,4)} rad/s²</b></div><div><span>Tiempo del giro</span><b>${fmt(t,1)} s</b></div><div><span>ω<sub>s</sub> máxima</span><b>${fmt(wmax*180/Math.PI,2)} °/s</b></div><div><span>Momento que pide</span><b>${fmt(sat?Hmax:Hneed,3)} N·m·s</b></div><div><span>Capacidad usada</span><b class="${sat?'delta-neg':'delta-pos'}">${sat?'100 % (saturada)':fmt(100*Hneed/Hmax,0)+' %'}</b></div><div><span>Saturación con 10⁻⁵ N·m</span><b>${fmt(tsat,1)} h</b></div>`+(note?`<div style="grid-column:1/-1"><span>Nota</span><b style="font-family:Inter;font-size:.9rem">${note}</b></div>`:'');
+  }
+  ['t8Is','t8th'].forEach(id=>$(id).addEventListener('input',t8)); $('t8rw').addEventListener('change',t8); t8();
+}
+
+/* =============== TEMA 9: Voyager =============== */
+if($('tema-9') && window.VOYAGER){
+  const GM=1.32712440018e11, AU=149597870.7, T0=Date.UTC(1977,0,1);
+  const yr=d=>1977+d/365.25;
+  const dateOf=d=>new Date(T0+d*864e5);
+  const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const fdate=d=>{const x=dateOf(d);return x.getUTCDate()+' '+MES[x.getUTCMonth()]+' '+x.getUTCFullYear();};
+  const parse=s=>s.split(';').map(r=>r.split(',').map(Number));
+  const D={v1:parse(VOYAGER.v1),v2:parse(VOYAGER.v2)};
+  const encYear=e=>yr((Date.parse(e.fecha)-T0)/864e5);
+  const ZO={all:[1977.6,1991],J:[1979.1,1979.62],S:[1980.8,1981.75],U:[1985.97,1986.15],N:[1989.57,1989.73]};
+  let zoom='all';
+  const encPlugin={id:'t9enc',afterDatasetsDraw(chart){ const xs=chart.scales.x, a=chart.chartArea, ctx=chart.ctx; ctx.save(); ctx.font='11px Inter';
+    VOYAGER.encuentros.forEach(e=>{ const x=xs.getPixelForValue(encYear(e)); if(x<a.left||x>a.right) return; ctx.strokeStyle=css(e.nave==='v1'?'--blue':'--accent'); ctx.globalAlpha=.45; ctx.setLineDash([3,4]); ctx.beginPath(); ctx.moveTo(x,a.top); ctx.lineTo(x,a.bottom); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1; ctx.fillStyle=css(e.nave==='v1'?'--blue':'--accent');
+      const lab=(e.nave==='v1'?'V1 ':'V2 ')+(chart.width<600?e.planeta[0]:e.planeta), w=ctx.measureText(lab).width; let tx=x+4; if(tx+w>a.right) tx=x-4-w;
+      ctx.fillText(lab,tx,a.top+(e.nave==='v1'?14:28)); });
+    ctx.restore(); }};
+  function t9Cfg(){ const o=baseOpts(zoom==='all'?'Año':'Fecha','Rapidez respecto al Sol [km/s]'); const [x0,x1]=ZO[zoom]; o.scales.x.min=x0; o.scales.x.max=x1;
+    o.scales.x.ticks.callback=v=> zoom==='all'? (Number.isInteger(v)?String(v):'') : fdate((v-1977)*365.25);
+    o.plugins.tooltip={callbacks:{title:it=>it.length?fdate(it[0].raw.d):'',label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,2)} km/s`}};
+    const ser=(k,f)=>D[k].map(([d,v,r])=>({x:yr(d),y:f(v,r),d}));
+    const esc=(v,r)=>Math.sqrt(2*GM/(r*AU));
+    return {type:'line',data:{datasets:[
+      {label:'Voyager 1',data:ser('v1',v=>v),borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:2.4,tension:0},
+      {label:'Escape del Sol (posición de la V1)',data:ser('v1',esc),borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:1.2,borderDash:[5,5],pointStyle:'line'},
+      {label:'Voyager 2',data:ser('v2',v=>v),borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:2.4,tension:0},
+      {label:'Escape del Sol (posición de la V2)',data:ser('v2',esc),borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:1.2,borderDash:[5,5],pointStyle:'line'}]},options:o,plugins:[encPlugin]}; }
+  const c9=t9Cfg(); c9._build=t9Cfg; const cT9=mk('cT9',c9);
+  document.querySelectorAll('[data-t9zoom]').forEach(b=>b.onclick=()=>{ zoom=b.dataset.t9zoom; document.querySelectorAll('[data-t9zoom]').forEach(x=>x.classList.toggle('primary',x===b)); if(cT9){ const n=t9Cfg(); cT9.options=n.options; cT9.update('none'); } });
+  // tabla marco del Sol vs marco del planeta
+  const sgn=x=>(x>=0?'+':'−')+fmt(Math.abs(x),2);
+  $('t9Tabla').querySelector('tbody').innerHTML=VOYAGER.encuentros.map(e=>{ const ds=e.despues.sol-e.antes.sol, dp=e.despues.planeta-e.antes.planeta; const f=new Date(Date.parse(e.fecha));
+    return `<tr><td>${e.nave==='v1'?'Voyager 1':'Voyager 2'} · ${e.planeta}</td><td>${f.getUTCDate()}\u00a0${MES[f.getUTCMonth()]}\u00a0${f.getUTCFullYear()} · ${fmt(e.dist_km,0)}\u00a0km</td><td>${fmt(e.antes.sol,2)} → ${fmt(e.despues.sol,2)} km/s</td><td class="${ds>=0?'delta-pos':'delta-neg'}">${sgn(ds)}</td><td>${fmt(e.antes.planeta,2)} → ${fmt(e.despues.planeta,2)} km/s</td><td>${sgn(dp)}</td></tr>`; }).join('');
+  // indicadores
+  const at=(k,d)=>{ const a=D[k]; for(let i=1;i<a.length;i++){ if(a[i][0]>=d){ const f=(d-a[i-1][0])/(a[i][0]-a[i-1][0]); return [a[i-1][1]+f*(a[i][1]-a[i-1][1]), a[i-1][2]+f*(a[i][2]-a[i-1][2])]; } } return a[a.length-1].slice(1); };
+  const dJ=(Date.parse('1979-07-09T00:00:00Z')-T0)/864e5; const [vb,rb]=at('v2',dJ-6), [va,ra]=at('v2',dJ+6);
+  const last=D.v2[D.v2.length-1];
+  $('t9Readout').innerHTML=`<div><span>V2 antes de Júpiter</span><b>${fmt(vb,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(rb*AU)),1)} km/s</b></div><div><span>V2 después de Júpiter</span><b>${fmt(va,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(ra*AU)),1)} km/s</b></div><div><span>V2 a fines de 1990</span><b>${fmt(last[1],1)} km/s a ${fmt(last[2],1)} UA</b></div><div><span>Escape ahí</span><b>${fmt(Math.sqrt(2*GM/(last[2]*AU)),1)} km/s</b></div>`;
+}
+
 })();
 </script>
 </body>
