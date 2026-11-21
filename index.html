@@ -243,7 +243,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
   <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
   <h4 class="sub">El caso concreto</h4>
-  <p>Los drones multirrotor de reparto (como los que operan Wing, de Alphabet, o los basados en el piloto automático de código abierto <b>PX4</b>) no vuelan "de punto a punto" saltando entre coordenadas GPS. El planificador de PX4 genera una <b>trayectoria con jerk limitado</b> (<em>jerk-limited trajectory</em>): para cada tramo calcula, instante a instante, el vector posición deseado y sus derivadas, la velocidad y la aceleración, respetando límites configurables de velocidad, aceleración y jerk (parámetros <code>MPC_XY_VEL_MAX</code>, <code>MPC_ACC_HOR</code>, <code>MPC_JERK_AUTO</code>). Además, el estimador de estado usa un modelo cinemático para predecir dónde estará el dron entre una lectura de GPS y la siguiente.</p>
+  <p>Los drones multirrotor de reparto (como los que operan Wing, de Alphabet, o los basados en el piloto automático de código abierto <b>PX4</b>) no vuelan "de punto a punto" saltando entre coordenadas GPS. En modo misión, el planificador de PX4 genera una <b>trayectoria con jerk limitado</b> (<em>jerk-limited trajectory</em>): para cada tramo calcula, instante a instante, el vector posición deseado y sus derivadas, la velocidad y la aceleración, con curvas S simétricas que garantizan los límites de aceleración y de jerk (parámetros <code>MPC_ACC_HOR</code> y <code>MPC_JERK_AUTO</code>; la velocidad deseada es <code>MPC_XY_CRUISE</code>, que el planificador reduce al acercarse a cada waypoint). Además, el estimador de estado usa un modelo cinemático para predecir dónde estará el dron entre una lectura de GPS y la siguiente.</p>
 
   <h4 class="sub">El concepto físico, como ecuación</h4>
   <p>La posición del dron en el plano horizontal es un vector que se descompone en componentes este (x) y norte (y). Velocidad y aceleración son sus derivadas:</p>
@@ -251,10 +251,24 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   \[\vec r(t)=x(t)\,\,\hat{i}+y(t)\,\,\hat{j},\qquad \vec v=\frac{d\vec r}{dt}=v_x\,\hat{i}+v_y\,\hat{j},\qquad \vec a=\frac{d\vec v}{dt}=a_x\,\hat{i}+a_y\,\hat{j}\]
   \[|\vec v|=\sqrt{v_x^2+v_y^2},\qquad v_x=|\vec v|\cos\theta,\quad v_y=|\vec v|\sin\theta\]
   </div>
-  <p>Para cada tramo recto de longitud <i>L</i> y duración <i>T</i> uso un perfil de jerk mínimo (la misma familia de curvas suaves que usan los planificadores de multirrotores), con \(\tau=t/T\):</p>
+  <p>Para generar la ruta de este tema uso un perfil <b>propio</b>, distinto del de PX4: el perfil de <b>jerk mínimo</b> de Flash y Hogan. Para cada tramo recto de longitud <i>L</i> y duración <i>T</i>, con \(\tau=t/T\):</p>
   <div class="eq">
   \[s(\tau)=L\,(10\tau^3-15\tau^4+6\tau^5),\quad v(\tau)=\tfrac{L}{T}(30\tau^2-60\tau^3+30\tau^4),\quad a(\tau)=\tfrac{L}{T^2}(60\tau-180\tau^2+120\tau^3)\]
+  \[j(\tau)=\tfrac{L}{T^3}(60-360\tau+360\tau^2)\qquad\Rightarrow\qquad v_{\max}=1{,}875\,\tfrac{L}{T},\quad a_{\max}=\tfrac{10}{\sqrt3}\,\tfrac{L}{T^2}\approx5{,}77\,\tfrac{L}{T^2},\quad |j|_{\max}=60\,\tfrac{L}{T^3}\]
   </div>
+  <h4 class="sub">Mi perfil frente al planificador de PX4</h4>
+  <p>Los dos producen movimientos suaves que arrancan y terminan en reposo, pero resuelven problemas distintos:</p>
+  <table class="data">
+    <thead><tr><th></th><th class="l">Jerk mínimo (este tema)</th><th class="l">Curva S con jerk limitado (PX4)</th></tr></thead>
+    <tbody>
+      <tr><td>Qué se fija</td><td class="l">La duración <i>T</i> de cada tramo</td><td class="l">Los límites \(v_{\text{crucero}}\), \(a_{\max}\), \(j_{\max}\)</td></tr>
+      <tr><td>Qué optimiza</td><td class="l">Minimiza \(\int_0^T j(t)^2\,dt\): el movimiento más «redondo» posible en ese tiempo</td><td class="l">Llega lo antes posible sin pasar ningún límite</td></tr>
+      <tr><td>Forma del jerk</td><td class="l">Parábola continua en el tiempo</td><td class="l">Por tramos constante: \(+j_{\max}\), 0 o \(-j_{\max}\)</td></tr>
+      <tr><td>Forma de la aceleración</td><td class="l">Polinomio de grado 3</td><td class="l">Trapecio (sube, se mantiene en \(a_{\max}\), baja)</td></tr>
+      <tr><td>Límites físicos</td><td class="l">No los impone: hay que comprobarlos después con las fórmulas de arriba (ver columnas de la tabla de la ruta)</td><td class="l">Los garantiza por construcción</td></tr>
+    </tbody>
+  </table>
+  <p>Elegí el jerk mínimo porque tiene fórmula cerrada (se deriva a mano y se comprueba con lo visto en clase), pero un dron real usa la curva S porque lo que el software debe garantizar son los límites de los motores, no la duración. La gráfica comparativa en (b) muestra las dos para el mismo tramo.</p>
   <p class="eq-note">Y entre muestras de GPS, el estimador predice con la ecuación de MRUA vectorial vista en clase: \(\vec r_{k+1}=\vec r_k+\vec v_k\,\Delta t+\tfrac12\vec a_k\,\Delta t^2\).</p>
 
   <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
@@ -267,7 +281,7 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <h3><span class="lbl">(b)</span> Visualización de datos: perfiles de una ruta de reparto</h3>
   <p><b>Fuente de los datos:</b> datos generados para este portafolio a partir de la siguiente ruta declarada (plano local este-norte con origen en el centro de distribución; distancias en metros). Cada tramo usa el perfil de jerk mínimo de arriba y el dron se detiene brevemente en cada vértice, como hace un multirrotor en modo misión al girar 90°.</p>
   <table class="data">
-    <thead><tr><th>Tramo</th><th>Desde (m)</th><th>Hasta (m)</th><th>Longitud</th><th>Duración</th><th>v pico</th></tr></thead>
+    <thead><tr><th>Tramo</th><th>Desde (m)</th><th>Hasta (m)</th><th>Longitud</th><th>Duración</th><th>v pico</th><th>|a| pico</th><th>|jerk| pico</th></tr></thead>
     <tbody id="routeTable"></tbody>
   </table>
 
@@ -285,6 +299,13 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <div class="card"><div class="card-title">Aceleración vs tiempo</div><div class="card-sub">a<sub>x</sub>, a<sub>y</sub> en m/s². Observe que la aceleración arranca y termina en cero en cada tramo: eso es lo que hace "suave" la trayectoria.</div><div class="chart-box"><canvas id="cAcc"></canvas></div>
     <div class="btns" style="margin-top:12px"><button class="b" id="csvBtn">Descargar los datos (CSV)</button></div>
   </div>
+  <div class="card"><div class="card-title">Tramo 1 con dos planificadores: jerk mínimo frente a curva S estilo PX4</div>
+    <div class="card-sub">Mismo tramo de 1200 m. Jerk mínimo con T = 90 s (el de este tema). Curva S calculada para esta gráfica con límites declarados \(v_{\text{crucero}}=16\) m/s, \(a_{\max}=1\) m/s², \(j_{\max}=0{,}5\) m/s³ (valores elegidos para que ambos duren algo parecido; no son los valores por defecto de PX4). Use los botones para ver velocidad, aceleración o jerk.</div>
+    <div class="btns"><button class="b primary" data-t1cmp="v">Velocidad</button><button class="b" data-t1cmp="a">Aceleración</button><button class="b" data-t1cmp="j">Jerk</button></div>
+    <div class="chart-box"><canvas id="cCmp"></canvas></div>
+    <div class="readout" id="cmpReadout"></div>
+  </div>
+  <p><b>Lectura de la comparación.</b> La curva S llega a 16 m/s y se queda ahí (crucero): su aceleración es un trapecio que nunca pasa de 1 m/s², y su jerk solo toma tres valores. El jerk mínimo no tiene crucero: acelera durante medio tramo y frena el otro medio, con un pico de 25 m/s en el centro. Si un dron tuviera un límite de crucero de 16 m/s, el perfil de jerk mínimo lo violaría aunque sea más suave; por eso PX4 parte de los límites y no de la duración.</p>
   <p><b>Lectura de las gráficas.</b> En el tramo 1 el dron vuela solo hacia el este, así que toda la física está en la componente x y \(v_y=a_y=0\). En el tramo 2 ocurre lo contrario. En el tramo 3 (diagonal a 36,9°) ambas componentes trabajan a la vez y se cumple \(v_y/v_x=600/800=\tan 36{,}9^\circ\) en todo momento: la descomposición en componentes es exactamente lo que el planificador calcula para mandar consignas a los motores en cada eje.</p>
 
   <div class="links"><b>Conexiones</b><ul>
@@ -535,8 +556,9 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <div class="eq">
   \[f_s\le\mu_s N,\qquad f_k=\mu_k N\qquad\text{(modelo simple de clase: el agarre es proporcional a la carga)}\]
   \[\mu(F_z)=\mu_0-k\,F_z\quad\Longrightarrow\quad F_{y,\max}=\mu(F_z)\,F_z=\mu_0F_z-kF_z^2\qquad\text{(sensibilidad a la carga)}\]
-  \[\mu(T,F_z)=\mu(F_z)\cdot\lambda(T),\qquad \lambda(T)=1\ \text{dentro de la ventana } [T_{\min},T_{\max}]\]
+  \[\mu(T,F_z)=c_k\cdot\mu(F_z)\cdot\lambda_k(T),\qquad \lambda_k(T)=1\ \text{dentro de la ventana } [T_{\min},T_{\max}]\ \text{del compuesto } k,\qquad \lambda_k(T)&lt;1\ \text{fuera de ella}\]
   </div>
+  <p class="eq-note">Separo dos efectos que es fácil mezclar. \(\lambda_k(T)\) es un factor <b>normalizado</b>: vale exactamente 1 en la ventana de cada compuesto y solo dice cuánto agarre se pierde por estar frío o sobrecalentado. \(c_k\) es el nivel de agarre propio del compuesto dentro de su ventana (un C5 blando agarra más que un C1 duro, a cambio de durar menos). Así, «estar en la ventana» significa \(\lambda_k=1\) para todos los compuestos, aunque no todos agarren lo mismo.</p>
   <p>Como \(F_{y,\max}\) es cóncava en \(F_z\), duplicar la carga <b>no</b> duplica el agarre. Por eso la transferencia de peso en una curva (más carga en la llanta exterior, menos en la interior) reduce el agarre total del eje, aunque la carga total sea la misma.</p>
 
   <h4 class="sub">Fricción estática vs cinética en una llanta</h4>
@@ -558,17 +580,18 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 
   <h3><span class="lbl">(b)</span> Visualización de datos</h3>
   <div class="card">
-    <div class="card-title">Factor de agarre λ(T) según la temperatura, compuestos C1–C5</div>
-    <div class="card-sub">Ventanas de trabajo publicadas por Pirelli para 2019 (ver tabla). La meseta de cada curva es la ventana real; la caída fuera de ella es un modelo construido para esta gráfica (gaussiano, más brusco al sobrecalentar), porque la curva completa no es pública.</div>
+    <div class="card-title">Agarre relativo c<sub>k</sub>·λ<sub>k</sub>(T) según la temperatura, compuestos C1–C5</div>
+    <div class="card-sub">Cada curva es \(c_k\,\lambda_k(T)\). La meseta es la ventana de trabajo que Pirelli publicó para 2019 (ver tabla), donde \(\lambda_k=1\) y la altura de la curva es solo \(c_k\). La caída fuera de la ventana es un modelo construido para esta gráfica (gaussiano, más brusco al sobrecalentar), porque la curva completa no es pública. Los valores de \(c_k\) (columna de la tabla) son ilustrativos: Pirelli no publica el agarre absoluto de cada compuesto, solo que los blandos agarran más.</div>
+    <div class="btns"><button class="b primary" data-t4mode="abs">Ver c<sub>k</sub>·λ<sub>k</sub>(T)</button><button class="b" data-t4mode="norm">Ver solo λ<sub>k</sub>(T) normalizado</button></div>
     <div class="chart-box tall"><canvas id="cTemp"></canvas></div>
     <table class="data">
-      <thead><tr><th>Compuesto</th><th>Dureza</th><th>T<sub>mín</sub> (°C)</th><th>T<sub>máx</sub> (°C)</th></tr></thead>
+      <thead><tr><th>Compuesto</th><th>Dureza</th><th>T<sub>mín</sub> (°C)</th><th>T<sub>máx</sub> (°C)</th><th class="nc">c<sub>k</sub> (ilustrativo)</th></tr></thead>
       <tbody>
-        <tr><td>C1</td><td>Más duro</td><td>110</td><td>140</td></tr>
-        <tr><td>C2</td><td>Duro</td><td>110</td><td>135</td></tr>
-        <tr><td>C3</td><td>Medio</td><td>105</td><td>135</td></tr>
-        <tr><td>C4</td><td>Blando</td><td>90</td><td>120</td></tr>
-        <tr><td>C5</td><td>Más blando</td><td>85</td><td>115</td></tr>
+        <tr><td>C1</td><td>Más duro</td><td>110</td><td>140</td><td>0,94</td></tr>
+        <tr><td>C2</td><td>Duro</td><td>110</td><td>135</td><td>0,96</td></tr>
+        <tr><td>C3</td><td>Medio</td><td>105</td><td>135</td><td>0,98</td></tr>
+        <tr><td>C4</td><td>Blando</td><td>90</td><td>120</td><td>1,00</td></tr>
+        <tr><td>C5</td><td>Más blando</td><td>85</td><td>115</td><td>1,02</td></tr>
       </tbody>
     </table>
   </div>
@@ -1071,14 +1094,21 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </div>
 
   <h4 class="sub">Lectura de los datos</h4>
-  <p>Antes de Júpiter, la Voyager 2 viajaba a unos <b>10,0 km/s</b> respecto al Sol, por debajo de la velocidad de escape a esa distancia (18,3 km/s): sin el planeta habría vuelto a caer hacia el Sol. Seis días después del encuentro iba a <b>21,9 km/s</b>, por encima del escape (18,2 km/s). Ese salto de casi 12 km/s, sin encender motores, es lo que la liberó del Sol. Saturno sumó unos 5 km/s más y Urano casi 2. En Neptuno la rapidez <b>bajó</b> unos 2 km/s: la sonda pasó a 29 217 km del centro del planeta, en una trayectoria elegida para visitar también su luna Tritón, y esa geometría le quitó rapidez. Es la misma física con el signo contrario, y muestra que el resultado depende de por dónde se pasa. El pico agudo justo en cada encuentro es la sonda cayendo hacia el planeta y saliendo de él; lo que cuenta es la diferencia entre antes y después.</p>
+  <p>Cuarenta días antes de Júpiter, la Voyager 2 viajaba a <b>10,1 km/s</b> respecto al Sol, por debajo de la velocidad de escape a esa distancia (18,6 km/s): sin el planeta habría vuelto a caer hacia el Sol. Cuarenta días después iba a <b>19,8 km/s</b>, por encima del escape (18,0 km/s). Esa ganancia de casi 10 km/s, sin encender motores, es lo que la liberó del Sol. Saturno sumó unos 5 km/s más y Urano casi 2. En Neptuno la rapidez <b>bajó</b> unos 2 km/s: la sonda pasó a 29 217 km del centro del planeta, en una trayectoria elegida para visitar también su luna Tritón, y esa geometría le quitó rapidez. Es la misma física con el signo contrario, y muestra que el resultado depende de por dónde se pasa. El pico agudo justo en cada encuentro es la sonda cayendo hacia el planeta y saliendo de él; por eso comparo 40 días antes y 40 días después, cuando la sonda ya está lejos del pozo de gravedad del planeta. Unos días después del encuentro la gráfica todavía marca más (21,9 km/s a los seis días), porque la sonda aún no ha terminado de alejarse de Júpiter.</p>
   <h4 class="sub">Caso numérico trabajado: Voyager 2 en Júpiter</h4>
+  <p>Hay dos cantidades distintas que conviene no confundir: la magnitud del <b>cambio del vector velocidad</b>, \(|\Delta\vec v|=|\vec v_{\text{sale}}-\vec v_{\text{entra}}|\), y el <b>cambio de rapidez</b>, \(\Delta|\vec v|=|\vec v_{\text{sale}}|-|\vec v_{\text{entra}}|\). La primera dice cuánto «empujó» el planeta; la segunda, cuánto más rápido va la sonda. Por la desigualdad triangular, \(\Delta|\vec v|\le|\Delta\vec v|\), y solo son iguales si la velocidad no cambia de dirección (si solo se alarga). Para calcularlas tomé de Horizons dos estados en el instante del máximo acercamiento (9 de julio de 1979, 22:30 TDB, eclíptica J2000): la posición y la velocidad de la Voyager 2 respecto a Júpiter y la velocidad de Júpiter respecto al Sol.</p>
   <div class="eq">
-  \[v_\infty=\sqrt{v^{2}-\frac{2GM_J}{d}}=\sqrt{8{,}15^{2}-\frac{2\,(1{,}267\times10^{8})}{3{,}18\times10^{7}}}\approx 7{,}65\ \text{km/s}\qquad\text{(a } d=0{,}213\ \text{UA de Júpiter, dato de Horizons)}\]
-  \[1+\frac{r_p\,v_\infty^{2}}{GM_J}=1+\frac{721\,834\times7{,}65^{2}}{1{,}267\times10^{8}}\approx1{,}33\;\Rightarrow\;\delta\approx97^\circ,\qquad |\Delta\vec v|=2\,v_\infty\sin\frac{\delta}{2}\approx 11{,}5\ \text{km/s}\]
-  \[\Delta V_J=\frac{m\,|\Delta\vec v|}{M_J}=\frac{721{,}9\ \text{kg}\times 1{,}15\times10^{4}\ \text{m/s}}{1{,}898\times10^{27}\ \text{kg}}\approx 4\times10^{-21}\ \text{m/s}\]
+  \[\vec r'=(438\,861;\ 565\,977;\ -86\,334)\ \text{km},\qquad \vec v\,'=(-16{,}002;\ 12{,}374;\ -0{,}241)\ \text{km/s},\qquad \vec V_J=(-8{,}972;\ -9{,}055;\ 0{,}238)\ \text{km/s}\]
+  \[v_\infty=\sqrt{|\vec v\,'|^{2}-\frac{2GM_J}{|\vec r\,'|}}=\sqrt{20{,}23^{2}-\frac{2\,(1{,}2669\times10^{8})}{721\,375}}\approx 7{,}62\ \text{km/s}\]
+  \[1+\frac{r_p\,v_\infty^{2}}{GM_J}=1+\frac{721\,375\times7{,}62^{2}}{1{,}2669\times10^{8}}\approx1{,}33\;\Rightarrow\;\delta\approx97{,}5^\circ,\qquad |\Delta\vec v|=2\,v_\infty\sin\frac{\delta}{2}\approx 11{,}45\ \text{km/s}\]
   </div>
-  <p>Los 11,5 km/s del cambio de vector concuerdan con el salto de rapidez que muestra la gráfica, de unos 12 km/s entre seis días antes y seis días después. A cambio, Júpiter se frenó unos \(4\times10^{-21}\) m/s, una cantidad imposible de medir. La rapidez «gratis» sale de la energía orbital del planeta.</p>
+  <p>Con la órbita hiperbólica respecto a Júpiter (que sale de \(\vec r\,'\) y \(\vec v\,'\)) obtengo las dos asíntotas \(\vec v\,'_{\text{entra}}\) y \(\vec v\,'_{\text{sale}}\), ambas de magnitud \(v_\infty\). Al sumarles \(\vec V_J\) paso al marco del Sol:</p>
+  <div class="eq">
+  \[|\vec V_J+\vec v\,'_{\text{entra}}|\approx 9{,}59\ \text{km/s},\qquad |\vec V_J+\vec v\,'_{\text{sale}}|\approx 19{,}50\ \text{km/s}\qquad\Rightarrow\qquad \Delta|\vec v|\approx 9{,}91\ \text{km/s}\ \ne\ |\Delta\vec v|\approx 11{,}45\ \text{km/s}\]
+  \[|\vec v_{\text{sale}}|^{2}-|\vec v_{\text{entra}}|^{2}=2\,\vec V_J\cdot\Delta\vec v\qquad(\text{porque } |\vec v\,'_{\text{sale}}|=|\vec v\,'_{\text{entra}}|)\qquad\Rightarrow\qquad 19{,}50^{2}-9{,}59^{2}\approx 2\,(144{,}2)\ \text{km}^2/\text{s}^2\]
+  \[\Delta V_J=\frac{m\,|\Delta\vec v|}{M_J}=\frac{721{,}9\ \text{kg}\times 1{,}145\times10^{4}\ \text{m/s}}{1{,}898\times10^{27}\ \text{kg}}\approx 4\times10^{-21}\ \text{m/s}\]
+  </div>
+  <p><b>Qué dice cada número.</b> El planeta le cambió el vector velocidad en 11,45 km/s, pero la rapidez solo subió 9,9 km/s, porque una parte del cambio de vector se fue en <b>girar</b> la velocidad (unos 24° en el marco del Sol) y no en alargarla. La segunda ecuación muestra de dónde sale la ganancia de rapidez: del producto punto entre la velocidad del planeta y el cambio de vector. Si \(\Delta\vec v\) fuera perpendicular a \(\vec V_J\), la sonda no ganaría rapidez aunque el planeta la desviara igual; aquí forman un ángulo de solo 9°, por eso la ganancia es grande. El valor de 9,9 km/s del modelo concuerda con el que sale de los datos a ±40 días (10,09 → 19,76 km/s, es decir 9,7 km/s); la pequeña diferencia se debe a que en esos 80 días el Sol también frena a la sonda y Júpiter cambia de dirección en su órbita. Que \(|\Delta\vec v|\) y \(\Delta|\vec v|\) den números parecidos no valida a uno con el otro: son cantidades distintas, y aquí difieren en 1,5 km/s. A cambio, Júpiter se frenó unos \(4\times10^{-21}\) m/s. La rapidez «gratis» sale de la energía orbital del planeta.</p>
 
   <div class="links"><b>Conexiones</b><ul>
     <li>Con el <a href="#tema-7">Tema 7</a>: el sobrevuelo es un choque elástico (\(e=1\)) contra un cuerpo enorme que se mueve. En su marco, la sonda «rebota» con la misma rapidez, y en el marco del Sol hereda la velocidad del planeta.</li>
@@ -1168,8 +1198,8 @@ function drone(t){
     } t0+=L.T; }
 }
 const D=[]; for(let t=0;t<=totalT;t+=1) D.push(drone(t));
-$('routeTable').innerHTML=legs.map((L,i)=>{const len=Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]);return `<tr><td>${i+1}</td><td>(${L.p0.join(', ')})</td><td>(${L.p1.join(', ')})</td><td>${fmt(len,0)} m</td><td>${L.T} s</td><td>${fmt(1.875*len/L.T,1)} m/s</td></tr>`}).join('')+
-  `<tr><td><b>Total</b></td><td></td><td></td><td><b>${fmt(legs.reduce((s,L)=>s+Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]),0),0)} m</b></td><td><b>${totalT} s</b></td><td></td></tr>`;
+$('routeTable').innerHTML=legs.map((L,i)=>{const len=Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]);return `<tr><td>${i+1}</td><td>(${L.p0.join(', ')})</td><td>(${L.p1.join(', ')})</td><td>${fmt(len,0)} m</td><td>${L.T} s</td><td>${fmt(1.875*len/L.T,1)} m/s</td><td>${fmt(10/Math.sqrt(3)*len/L.T**2,2)} m/s²</td><td>${fmt(60*len/L.T**3,3)} m/s³</td></tr>`}).join('')+
+  `<tr><td><b>Total</b></td><td></td><td></td><td><b>${fmt(legs.reduce((s,L)=>s+Math.hypot(L.p1[0]-L.p0[0],L.p1[1]-L.p0[1]),0),0)} m</b></td><td><b>${totalT} s</b></td><td></td><td></td><td></td></tr>`;
 $('tSlider').max=totalT;
 let tSel=60;
 const vecPlugin={id:'vecs',afterDatasetsDraw(chart){
@@ -1197,6 +1227,25 @@ function updDrone(){tSel=+$('tSlider').value; $('tOut').textContent=tSel+' s'; c
   $('droneReadout').innerHTML=`<div><span>Tramo</span><b>${s.leg}</b></div><div><span>r = (x, y)</span><b>(${fmt(s.x,0)}, ${fmt(s.y,0)}) m</b></div><div><span>v = (vx, vy)</span><b>(${fmt(s.vx)}, ${fmt(s.vy)}) m/s</b></div><div><span>|v|</span><b>${fmt(Math.hypot(s.vx,s.vy))} m/s</b></div><div><span>a = (ax, ay)</span><b>(${fmt(s.ax,2)}, ${fmt(s.ay,2)}) m/s²</b></div><div><span>|a|</span><b>${fmt(Math.hypot(s.ax,s.ay),2)} m/s²</b></div>`;
   [cMap,cPos,cVel,cAcc].forEach(c=>c&&c.update('none'));}
 $('tSlider').addEventListener('input',updDrone); updDrone();
+/* Comparación tramo 1: jerk mínimo vs curva S (jerk por tramos constante, estilo PX4) */
+function sCurve(L,V,A,Jm){ // reposo a reposo, supone V >= A²/J y L suficiente para crucero
+  const tj=A/Jm, ta=V/A-A/Jm, tacc=2*tj+ta, dacc=V/2*(V/A+A/Jm), tv=(L-2*dacc)/V;
+  const ph=[[tj,Jm],[ta,0],[tj,-Jm],[tv,0],[tj,-Jm],[ta,0],[tj,Jm]];
+  const out=[]; let t=0,s=0,v=0,a=0; const dt=0.01; let k=0, tEnd=0; const ends=ph.map(p=>tEnd+=p[0]);
+  for(let n=0;t<=tEnd+1e-9;n++){ while(k<ph.length-1&&t>=ends[k]-1e-9)k++; const j=ph[k][1];
+    if(n%50===0) out.push({t,s,v,a,j}); a+=j*dt; v+=a*dt; s+=v*dt; t+=dt; }
+  return {pts:out,T:tEnd,tacc,tv};
+}
+const SC=sCurve(1200,16,1,0.5);
+const MJ=[]; for(let t=0;t<=90;t+=0.5){const T=90,L=1200,u=t/T; MJ.push({t,v:L/T*(30*u**2-60*u**3+30*u**4),a:L/T**2*(60*u-180*u**2+120*u**3),j:L/T**3*(60-360*u+360*u**2)});}
+let cmpK='v';
+function cmpCfg(){const lab={v:'Velocidad [m/s]',a:'Aceleración [m/s²]',j:'Jerk [m/s³]'}[cmpK]; const o=baseOpts('Tiempo desde el inicio del tramo [s]',lab); o.scales.x.max=95;
+  o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,3)} a t = ${fmt(c.parsed.x,1)} s`}};
+  return {type:'line',data:{datasets:[{label:'Jerk mínimo (T = 90 s)',data:MJ.map(d=>({x:d.t,y:d[cmpK]})),borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:2.4},
+    {label:'Curva S (v = 16, a = 1, j = 0,5)',data:SC.pts.map(d=>({x:d.t,y:d[cmpK]})),borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:2.4,stepped:cmpK==='j'?'before':false}]},options:o};}
+const ccfg=cmpCfg(); ccfg._build=cmpCfg; const cCmp=mk('cCmp',ccfg);
+document.querySelectorAll('[data-t1cmp]').forEach(b=>b.onclick=()=>{cmpK=b.dataset.t1cmp;document.querySelectorAll('[data-t1cmp]').forEach(x=>x.classList.toggle('primary',x===b));if(cCmp){const n=cmpCfg();cCmp.data.datasets.forEach((d,i)=>{d.data=n.data.datasets[i].data;d.stepped=n.data.datasets[i].stepped;});cCmp.options=n.options;cCmp.update();}});
+$('cmpReadout').innerHTML=`<div><span>Duración jerk mínimo</span><b>90,0 s</b></div><div><span>Duración curva S</span><b>${fmt(SC.T,1)} s</b></div><div><span>v pico jerk mín. / curva S</span><b>25,0 / 16,0 m/s</b></div><div><span>|a| pico jerk mín. / curva S</span><b>${fmt(10/Math.sqrt(3)*1200/8100,2)} / 1,00 m/s²</b></div><div><span>|j| pico jerk mín. / curva S</span><b>${fmt(60*1200/729000,3)} / 0,500 m/s³</b></div><div><span>Crucero de la curva S</span><b>${fmt(SC.tv,1)} s</b></div>`;
 $('csvBtn').onclick=()=>{const rows=['t_s,x_m,y_m,vx_ms,vy_ms,speed_ms,ax_ms2,ay_ms2'].concat(D.map(d=>[d.t,d.x.toFixed(3),d.y.toFixed(3),d.vx.toFixed(4),d.vy.toFixed(4),Math.hypot(d.vx,d.vy).toFixed(4),d.ax.toFixed(5),d.ay.toFixed(5)].join(',')));
   const b=new Blob([rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='ruta_dron.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
 
@@ -1263,12 +1312,16 @@ function updHab(){const n=+$('rpm').value,gt=+$('gT').value;const w=2*Math.PI*n/
 
 /* =============== TEMA 4: llantas =============== */
 const comps=[{n:'C1',a:110,b:140,peak:0.94,c:'--ink-2'},{n:'C2',a:110,b:135,peak:0.96,c:'--blue'},{n:'C3',a:105,b:135,peak:0.98,c:'--amber'},{n:'C4',a:90,b:120,peak:1.00,c:'--green'},{n:'C5',a:85,b:115,peak:1.02,c:'--accent'}];
-function lam(T,cmp){ if(T<cmp.a) return cmp.peak*(0.62+0.38*Math.exp(-(((cmp.a-T)/22)**2))); if(T>cmp.b) return cmp.peak*(0.55+0.45*Math.exp(-(((T-cmp.b)/12)**2))); return cmp.peak; }
-function tempCfg(){const o=baseOpts('Temperatura de la banda de rodadura [°C]','Factor de agarre relativo λ(T) [–]');o.scales.x.min=50;o.scales.x.max=170;o.scales.y.min=0.5;o.scales.y.max=1.08;
-  o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: λ = ${fmt(c.parsed.y,3)} a ${c.parsed.x} °C`}};
-  const ds=comps.map(cm=>{const pts=[];for(let T=50;T<=170;T+=1)pts.push({x:T,y:lam(T,cm)});return {label:`${cm.n} (${cm.a}–${cm.b} °C)`,data:pts,borderColor:css(cm.c),backgroundColor:css(cm.c),pointRadius:0,borderWidth:2.2};});
+/* λ_k(T): normalizado, vale 1 dentro de la ventana. c_k (cm.peak) es el nivel de agarre del compuesto. */
+function lamN(T,cmp){ if(T<cmp.a) return 0.62+0.38*Math.exp(-(((cmp.a-T)/22)**2)); if(T>cmp.b) return 0.55+0.45*Math.exp(-(((T-cmp.b)/12)**2)); return 1; }
+let t4mode='abs';
+function tempCfg(){const norm=t4mode==='norm';const o=baseOpts('Temperatura de la banda de rodadura [°C]',norm?'Factor normalizado λₖ(T) [–]':'Agarre relativo cₖ·λₖ(T) [–]');o.scales.x.min=50;o.scales.x.max=170;o.scales.y.min=0.5;o.scales.y.max=1.08;
+  o.plugins.tooltip={callbacks:{label:c=>{const cm=comps[c.datasetIndex],l=lamN(c.parsed.x,cm);return `${cm.n}: λ = ${fmt(l,3)}, c·λ = ${fmt(cm.peak*l,3)} a ${c.parsed.x} °C`;}}};
+  const ds=comps.map(cm=>{const pts=[];for(let T=50;T<=170;T+=1)pts.push({x:T,y:(norm?1:cm.peak)*lamN(T,cm)});return {label:`${cm.n} (${cm.a}–${cm.b} °C)`,data:pts,borderColor:css(cm.c),backgroundColor:css(cm.c),pointRadius:0,borderWidth:2.2};});
   return {type:'line',data:{datasets:ds},options:o};}
-const tc=tempCfg(); tc._build=tempCfg; mk('cTemp',tc);
+const tc=tempCfg(); tc._build=tempCfg; const cTempChart=mk('cTemp',tc);
+document.querySelectorAll('[data-t4mode]').forEach(b=>b.onclick=()=>{t4mode=b.dataset.t4mode;document.querySelectorAll('[data-t4mode]').forEach(x=>x.classList.toggle('primary',x===b));
+  if(cTempChart){const n=tempCfg();cTempChart.data.datasets.forEach((d,i)=>d.data=n.data.datasets[i].data);cTempChart.options=n.options;cTempChart.update();}});
 function loadCfg(){const o=baseOpts('Carga vertical F_z [kN]','Fuerza lateral máxima F_y,max [kN]');o.scales.x.min=0;o.scales.x.max=10;
   const a=[],b=[],m=[];for(let f=0;f<=10.001;f+=0.25){a.push({x:f,y:(2.0-0.075*f)*f});b.push({x:f,y:1.8*f});m.push({x:f,y:2.0-0.075*f});}
   o.scales.y2={position:'right',min:1,max:2.2,title:{display:true,text:'μ(F_z) [–]',color:css('--ink-2')},ticks:{color:css('--ink-2')},grid:{drawOnChartArea:false}};
@@ -1540,9 +1593,9 @@ if($('tema-9') && window.VOYAGER){
     return `<tr><td>${e.nave==='v1'?'Voyager 1':'Voyager 2'} · ${e.planeta}</td><td>${f.getUTCDate()}\u00a0${MES[f.getUTCMonth()]}\u00a0${f.getUTCFullYear()} · ${fmt(e.dist_km,0)}\u00a0km</td><td>${fmt(e.antes.sol,2)} → ${fmt(e.despues.sol,2)} km/s</td><td class="${ds>=0?'delta-pos':'delta-neg'}">${sgn(ds)}</td><td>${fmt(e.antes.planeta,2)} → ${fmt(e.despues.planeta,2)} km/s</td><td>${sgn(dp)}</td></tr>`; }).join('');
   // indicadores
   const at=(k,d)=>{ const a=D[k]; for(let i=1;i<a.length;i++){ if(a[i][0]>=d){ const f=(d-a[i-1][0])/(a[i][0]-a[i-1][0]); return [a[i-1][1]+f*(a[i][1]-a[i-1][1]), a[i-1][2]+f*(a[i][2]-a[i-1][2])]; } } return a[a.length-1].slice(1); };
-  const dJ=(Date.parse('1979-07-09T00:00:00Z')-T0)/864e5; const [vb,rb]=at('v2',dJ-6), [va,ra]=at('v2',dJ+6);
+  const dJ=(Date.parse('1979-07-09T00:00:00Z')-T0)/864e5; const [vb,rb]=at('v2',dJ-40), [va,ra]=at('v2',dJ+40);
   const last=D.v2[D.v2.length-1];
-  $('t9Readout').innerHTML=`<div><span>V2 antes de Júpiter</span><b>${fmt(vb,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(rb*AU)),1)} km/s</b></div><div><span>V2 después de Júpiter</span><b>${fmt(va,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(ra*AU)),1)} km/s</b></div><div><span>V2 a fines de 1990</span><b>${fmt(last[1],1)} km/s a ${fmt(last[2],1)} UA</b></div><div><span>Escape ahí</span><b>${fmt(Math.sqrt(2*GM/(last[2]*AU)),1)} km/s</b></div>`;
+  $('t9Readout').innerHTML=`<div><span>V2, 40 días antes de Júpiter</span><b>${fmt(vb,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(rb*AU)),1)} km/s</b></div><div><span>V2, 40 días después de Júpiter</span><b>${fmt(va,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(ra*AU)),1)} km/s</b></div><div><span>V2 a fines de 1990</span><b>${fmt(last[1],1)} km/s a ${fmt(last[2],1)} UA</b></div><div><span>Escape ahí</span><b>${fmt(Math.sqrt(2*GM/(last[2]*AU)),1)} km/s</b></div>`;
 }
 
 })();

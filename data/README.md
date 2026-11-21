@@ -24,3 +24,14 @@ Comprobación de los ciclos: el UDDS reconstruido dura 1369 s, recorre 11,99 km 
 Las consultas se hicieron el 30 de octubre de 2026 con la API de Horizons (`https://ssd.jpl.nasa.gov/api/horizons.api`), con `EPHEM_TYPE='OBSERVER'`, `CENTER='500@399'` y `QUANTITIES='19,22'`. `VmagSn` es, según la propia documentación de Horizons, la magnitud de la velocidad del objeto respecto al Sol, de modo que no depende del observador elegido. Se pidió un paso de 5 días entre 1977 y 1991 y un paso de 3 horas en los 6 días alrededor de cada encuentro planetario; para aligerar la página se conservaron todos los puntos a menos de 2 días de cada encuentro, uno cada 12 horas hasta 8 días, uno cada 5 días hasta 40 días y uno cada 15 días en el resto del vuelo.
 
 La tabla de encuentros (marco del Sol frente a marco del planeta) usa consultas adicionales a Horizons con el centro en cada planeta (`CENTER='500@599'`, `'500@699'`, `'500@799'`, `'500@899'`), 40 días antes y 40 días después de cada máximo acercamiento. Las fechas y distancias de máximo acercamiento son las de NASA NSSDCA (*Voyager 1/2 Closest Approach Distances/Times*).
+
+### Caso numérico de la Voyager 2 en Júpiter (entrega final)
+
+Para separar la magnitud del cambio del vector velocidad, |Δv|, del cambio de rapidez, Δ|v|, se consultaron el 21 de noviembre de 2026 dos estados vectoriales en el máximo acercamiento (1979-07-09 22:30 TDB), con `EPHEM_TYPE='VECTORS'`, `VEC_TABLE=2`, `OUT_UNITS='KM-S'`, `REF_PLANE='ECLIPTIC'`:
+
+| Consulta | Resultado (posición en km, velocidad en km/s) |
+|---|---|
+| `COMMAND='-32'`, `CENTER='500@599'` (Voyager 2 respecto a Júpiter) | r = (438 860,9; 565 977,1; −86 334,2), v = (−16,0016; 12,3745; −0,2410) |
+| `COMMAND='599'`, `CENTER='500@10'` (Júpiter respecto al Sol) | v = (−8,9716; −9,0553; 0,2382) |
+
+Con GM de Júpiter = 1,26687 × 10⁸ km³/s², la órbita hiperbólica da v∞ = 7,62 km/s, e = 1,330, δ = 97,5°, |Δv| = 11,45 km/s, rapidez heliocéntrica asintótica de entrada 9,59 km/s y de salida 19,50 km/s, es decir Δ|v| = 9,91 km/s. El cálculo está en `voyager2_jupiter_vectores.py`.
