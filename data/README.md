@@ -35,3 +35,12 @@ Para separar la magnitud del cambio del vector velocidad, |Δv|, del cambio de r
 | `COMMAND='599'`, `CENTER='500@10'` (Júpiter respecto al Sol) | v = (−8,9716; −9,0553; 0,2382) |
 
 Con GM de Júpiter = 1,26687 × 10⁸ km³/s², la órbita hiperbólica da v∞ = 7,62 km/s, e = 1,330, δ = 97,5°, |Δv| = 11,45 km/s, rapidez heliocéntrica asintótica de entrada 9,59 km/s y de salida 19,50 km/s, es decir Δ|v| = 9,91 km/s. El cálculo está en `voyager2_jupiter_vectores.py`.
+
+## Tema 12 — Medición del período en el video de Tacoma Narrows
+
+| Archivo | Contenido | Origen |
+|---|---|---|
+| `tacoma_toma_0040_0046.csv` | 150 cuadros de la toma desde la calzada (0:39,9 a 0:45,9 del video). Por cuadro: tiempo en el video y brillo medio (0–255) de una cuadrícula de 4 × 4 zonas de la imagen | Muestreado cuadro a cuadro del video de British Pathé, *Tacoma Bridge Collapse: The Wobbliest Bridge in the World? (1940)*, https://www.youtube.com/watch?v=XggxeuFDaDU, reproducido a velocidad normal |
+| `tacoma_periodo.py` | Calcula la inclinación como la primera componente principal de las 16 series de brillo, y de ahí los mínimos, los cruces por cero y el período en el video | Script propio |
+
+Resultado: mínimos en 41,92 s y 44,96 s, cruces por cero de subida en 42,58 s y 45,56 s; período en el video de unos 3,0 s, frente a los 5 s que midió F. B. Farquharson con cronómetro el 7 de noviembre de 1940. La diferencia viene de la velocidad de la película (ver el Tema 12).

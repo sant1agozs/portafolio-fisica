@@ -43,5 +43,5 @@ Correcciones de los avances anteriores: Tema 1 (perfil de jerk mínimo frente a 
 
 - `index.html`: sitio de una sola página. Las gráficas usan Chart.js y las ecuaciones KaTeX. Las simulaciones de los temas 2 y 7 recalculan la física cada vez que se mueve un control, y los diagramas de los temas 3 y 8 son SVG elaborados para este portafolio.
 - `audio/`: las dos muestras del Tema 11 y el script que las genera (`generar_muestras.py`).
-- `data/`: datos de terceros que usan los temas 6 y 9 (EPA y NASA/JPL), en `.csv` para revisarlos y en `.js` para que los cargue la página. La procedencia de cada archivo y las consultas exactas están en [`data/README.md`](data/README.md).
+- `data/`: datos de terceros que usan los temas 6, 9 y 12 (EPA, NASA/JPL y la medición del video de Tacoma Narrows), en `.csv` para revisarlos y en `.js` para que los cargue la página. La procedencia de cada archivo y las consultas exactas están en [`data/README.md`](data/README.md).
 - Las gráficas de los temas del Avance 1 se calculan en la propia página a partir de las ecuaciones y fuentes citadas en cada tema.
