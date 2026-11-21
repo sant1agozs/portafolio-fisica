@@ -26,8 +26,22 @@ El portafolio documenta cómo la mecánica clásica aparece en el desarrollo de 
 | 8 | Ruedas de reacción: cómo un satélite se gira sin empujarse contra nada | Diagrama |
 | 9 | Asistencia gravitatoria: cómo la Voyager ganó velocidad sin gastar combustible | Visualización de datos (NASA/JPL Horizons) |
 
+## Entrega final — Oscilaciones y Mecánica de fluidos
+
+| # | Tema | Recurso |
+|---|------|---------|
+| 10 | Spring animations: el resorte amortiguado detrás de las animaciones de iOS y de Framer Motion | Simulación interactiva |
+| 11 | Síntesis de sonido: armónicos, timbre y el sintetizador | Multimedia con análisis (dos audios generados, forma de onda y espectro por FFT) |
+| 12 | Resonancia estructural: Tacoma Narrows y por qué las tropas rompen el paso al cruzar un puente | Multimedia con análisis (video de British Pathé con período medido cuadro a cuadro) |
+| 13 | Enfriamiento líquido de un centro de datos: continuidad, caudal y Bernoulli | Visualización de datos (modelo hidráulico de un rack con parámetros declarados) |
+
+Cierre: sección **«Qué aprendí»** con el mapa de conexiones (tres pares de temas) y una aplicación propia.
+
+Correcciones de los avances anteriores: Tema 1 (perfil de jerk mínimo frente a la curva S de PX4), Tema 4 (normalización de λ(T) separada del nivel de agarre del compuesto) y Tema 9 (|Δv| frente a Δ|v| en la Voyager 2 en Júpiter, con vectores de Horizons).
+
 ## Estructura
 
 - `index.html`: sitio de una sola página. Las gráficas usan Chart.js y las ecuaciones KaTeX. Las simulaciones de los temas 2 y 7 recalculan la física cada vez que se mueve un control, y los diagramas de los temas 3 y 8 son SVG elaborados para este portafolio.
+- `audio/`: las dos muestras del Tema 11 y el script que las genera (`generar_muestras.py`).
 - `data/`: datos de terceros que usan los temas 6 y 9 (EPA y NASA/JPL), en `.csv` para revisarlos y en `.js` para que los cargue la página. La procedencia de cada archivo y las consultas exactas están en [`data/README.md`](data/README.md).
 - Las gráficas de los temas del Avance 1 se calculan en la propia página a partir de las ecuaciones y fuentes citadas en cada tema.

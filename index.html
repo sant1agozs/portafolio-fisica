@@ -118,6 +118,10 @@ button.b.primary{background:var(--accent);border-color:var(--accent);color:#fff;
 .readout div{background:var(--surface-2);border-radius:10px;padding:8px 12px}
 .readout span{display:block;font-size:.76rem;color:var(--ink-3);letter-spacing:.01em}
 .readout b{font-family:"JetBrains Mono",monospace;font-size:1rem}
+canvas#t10track{width:100%;height:120px;display:block;border-radius:10px;background:var(--surface-2);margin:6px 0 4px;cursor:pointer;touch-action:none}
+section#que-aprendi .card p{margin:6px 0 0;font-size:.95rem}
+section#que-aprendi .card-title a{color:inherit}
+.timeline .ts a{color:inherit}
 canvas#jumpCanvas{width:100%;height:340px;display:block;border-radius:10px;background:var(--surface-2)}
 table.data{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
 table.data th,table.data td{border-bottom:1px solid var(--line);padding:7px 10px;text-align:right}
@@ -186,12 +190,18 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
       </ol>
     </div>
     <div class="nav-group">
-      <h4>Entrega final · próximamente</h4>
+      <h4>Entrega final · Oscilaciones y Mecánica de fluidos</h4>
       <ol>
-        <li class="soon"><a><span class="n">10</span>Spring animations en interfaces</a></li>
-        <li class="soon"><a><span class="n">11</span>Síntesis de sonido y armónicos</a></li>
-        <li class="soon"><a><span class="n">12</span>Resonancia estructural y Tacoma Narrows</a></li>
-        <li class="soon"><a><span class="n">13</span>Enfriamiento líquido de un centro de datos</a></li>
+        <li><a href="#tema-10"><span class="n">10</span>Spring animations: el resorte amortiguado detrás de las animaciones de iOS y de Framer Motion</a></li>
+        <li><a href="#tema-11"><span class="n">11</span>Síntesis de sonido: armónicos, timbre y el sintetizador</a></li>
+        <li><a href="#tema-12"><span class="n">12</span>Resonancia estructural: Tacoma Narrows y por qué las tropas rompen el paso al cruzar un puente</a></li>
+        <li><a href="#tema-13"><span class="n">13</span>Enfriamiento líquido de un centro de datos: continuidad, caudal y Bernoulli</a></li>
+      </ol>
+    </div>
+    <div class="nav-group">
+      <h4>Cierre</h4>
+      <ol>
+        <li><a href="#que-aprendi"><span class="n">✦</span>Qué aprendí</a></li>
       </ol>
     </div>
     <button class="theme-btn" id="themeBtn">Cambiar tema claro/oscuro</button>
@@ -202,13 +212,13 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
 <header class="hero">
   <div class="eyebrow">Universidad CENFOTEC · Física I (FUN-18) · 2026-C3</div>
   <h1>Física en el Software</h1>
-  <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura, gatillos que fingen ser resortes, autos eléctricos que recuperan energía al frenar, pelotas que rebotan mal, satélites que giran sin empujarse contra nada y una sonda que les «robó» velocidad a los planetas.</p>
-  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron elaborados para este portafolio (ninguno es descargado) y se calculan en esta misma página. Los datos de terceros (EPA, NASA/JPL, reglamentos deportivos, documentación de motores de juego) están citados en cada tema, y los datos crudos están en la carpeta <code>data/</code> del repositorio.</p>
+  <p class="lead">Un portafolio sobre cómo la mecánica clásica que vemos en clase aparece en el software real: drones que se rastrean con vectores, saltos de videojuego con gravedad trucada, estaciones espaciales que giran, llantas que solo agarran en su temperatura, gatillos que fingen ser resortes, autos eléctricos que recuperan energía al frenar, pelotas que rebotan mal, satélites que giran sin empujarse contra nada, una sonda que les «robó» velocidad a los planetas, animaciones que son resortes, sintetizadores que suman armónicos, puentes que entran en oscilación y servidores enfriados con agua. Trece casos y, al final, lo que aprendí al verlos juntos.</p>
+  <p>Cada tema se presenta como un caso de ingeniería: qué producto o sistema lo usa, con qué ecuación, por qué modelar la física supera a las alternativas no físicas (valores fijos, trayectorias precalculadas, animaciones guionizadas) y qué cuesta hacerlo. Todas las gráficas, simulaciones y diagramas fueron elaborados para este portafolio (ninguno es descargado) y se calculan en esta misma página. Los datos de terceros (EPA, NASA/JPL, Pirelli, OCP, documentación de Apple, PX4 y motores de juego) están citados en cada tema; los datos crudos están en la carpeta <code>data/</code> del repositorio y los audios del Tema 11, con el script que los genera, en <code>audio/</code>.</p>
   <div class="meta">
     <span class="chip">Autor: Santiago Hernández Quirós</span>
     <span class="chip">Docente: Andrés Castro Núñez</span>
     <span class="chip">Sección FCV1</span>
-    <span class="chip">Avance 2 de 3 · 31 oct 2026</span>
+    <span class="chip">Entrega final · 21 nov 2026</span><span class="chip">13 temas + cierre</span>
   </div>
   <div class="howto">
     <div><b>(a) Caso de uso</b>Producto o sistema concreto, la ecuación explícita y la justificación frente a alternativas no físicas.</div>
@@ -216,17 +226,19 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
     <div><b>Conexiones</b>Al final de cada tema enlazo con otros temas del portafolio y con lo visto en clase.</div>
   </div>
   <div class="thread">
-    <h2>Hilo conductor: las mismas leyes en nueve casos</h2>
-    <p>Cada tema enlaza con otros en su recuadro de «Conexiones». Esta tabla muestra el mapa completo.</p>
+    <h2>Hilo conductor: las mismas leyes en trece casos</h2>
+    <p>Cada tema enlaza con otros en su recuadro de «Conexiones». Esta tabla muestra el mapa completo, y la sección <a href="#que-aprendi">Qué aprendí</a> desarrolla tres de esos pares.</p>
     <table class="data">
       <thead><tr><th>Idea de la clase</th><th>Temas</th><th>Dónde aparece</th></tr></thead>
       <tbody>
         <tr><td>Cinemática: \(\vec r\), \(\vec v\), \(\vec a\)</td><td class="l"><a href="#tema-1">1</a> · <a href="#tema-2">2</a> · <a href="#tema-6">6</a></td><td class="l">Perfiles del dron, arco del salto y velocidad segundo a segundo del ciclo UDDS</td></tr>
         <tr><td>Fricción y segunda ley</td><td class="l"><a href="#tema-4">4</a> · <a href="#tema-6">6</a></td><td class="l">Agarre de la llanta y frenos de fricción que disipan lo que el motor no recupera</td></tr>
         <tr><td>Tercera ley (acción y reacción)</td><td class="l"><a href="#tema-5">5</a> · <a href="#tema-8">8</a></td><td class="l">Gatillo contra dedo, y rueda de reacción contra satélite (τ y −τ)</td></tr>
-        <tr><td>Conservación de la energía</td><td class="l"><a href="#tema-2">2</a> · <a href="#tema-5">5</a> · <a href="#tema-6">6</a> · <a href="#tema-9">9</a></td><td class="l">Altura del salto, energía del resorte ½kx², balance de un ciclo de manejo y velocidad de escape</td></tr>
+        <tr><td>Conservación de la energía</td><td class="l"><a href="#tema-2">2</a> · <a href="#tema-5">5</a> · <a href="#tema-6">6</a> · <a href="#tema-9">9</a> · <a href="#tema-13">13</a></td><td class="l">Altura del salto, energía del resorte ½kx², balance de un ciclo de manejo, velocidad de escape y calor que se lleva el agua (P = ρQc<sub>p</sub>ΔT)</td></tr>
         <tr><td>Conservación del momento lineal</td><td class="l"><a href="#tema-7">7</a> · <a href="#tema-9">9</a></td><td class="l">Choques con coeficiente de restitución, y el sobrevuelo como choque elástico con un planeta</td></tr>
         <tr><td>Rotación y momento angular</td><td class="l"><a href="#tema-3">3</a> · <a href="#tema-8">8</a></td><td class="l">MCU del hábitat giratorio, e intercambio de L entre rueda y satélite</td></tr>
+        <tr><td>Oscilaciones: libres, amortiguadas y forzadas</td><td class="l"><a href="#tema-5">5</a> · <a href="#tema-10">10</a> · <a href="#tema-11">11</a> · <a href="#tema-12">12</a></td><td class="l">Resorte virtual del gatillo, resorte amortiguado de una animación, armónicos de una nota y resonancia de un puente</td></tr>
+        <tr><td>Mecánica de fluidos</td><td class="l"><a href="#tema-13">13</a> · <a href="#tema-6">6</a></td><td class="l">Continuidad y Bernoulli en un circuito de refrigeración; arrastre del aire en el ciclo de manejo</td></tr>
         <tr><td>Gravitación</td><td class="l"><a href="#tema-2">2</a> · <a href="#tema-3">3</a> · <a href="#tema-9">9</a></td><td class="l">Gravedad como parámetro de diseño, gravedad aparente y la ley de Newton completa</td></tr>
       </tbody>
     </table>
@@ -1098,14 +1110,15 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   <h4 class="sub">Caso numérico trabajado: Voyager 2 en Júpiter</h4>
   <p>Hay dos cantidades distintas que conviene no confundir: la magnitud del <b>cambio del vector velocidad</b>, \(|\Delta\vec v|=|\vec v_{\text{sale}}-\vec v_{\text{entra}}|\), y el <b>cambio de rapidez</b>, \(\Delta|\vec v|=|\vec v_{\text{sale}}|-|\vec v_{\text{entra}}|\). La primera dice cuánto «empujó» el planeta; la segunda, cuánto más rápido va la sonda. Por la desigualdad triangular, \(\Delta|\vec v|\le|\Delta\vec v|\), y solo son iguales si la velocidad no cambia de dirección (si solo se alarga). Para calcularlas tomé de Horizons dos estados en el instante del máximo acercamiento (9 de julio de 1979, 22:30 TDB, eclíptica J2000): la posición y la velocidad de la Voyager 2 respecto a Júpiter y la velocidad de Júpiter respecto al Sol.</p>
   <div class="eq">
-  \[\vec r'=(438\,861;\ 565\,977;\ -86\,334)\ \text{km},\qquad \vec v\,'=(-16{,}002;\ 12{,}374;\ -0{,}241)\ \text{km/s},\qquad \vec V_J=(-8{,}972;\ -9{,}055;\ 0{,}238)\ \text{km/s}\]
-  \[v_\infty=\sqrt{|\vec v\,'|^{2}-\frac{2GM_J}{|\vec r\,'|}}=\sqrt{20{,}23^{2}-\frac{2\,(1{,}2669\times10^{8})}{721\,375}}\approx 7{,}62\ \text{km/s}\]
+  \[\vec r'=(438\,861;\ 565\,977;\ -86\,334)\ \text{km},\qquad \vec v\,{}'=(-16{,}002;\ 12{,}374;\ -0{,}241)\ \text{km/s}\]
+  \[\vec V_J=(-8{,}972;\ -9{,}055;\ 0{,}238)\ \text{km/s}\]
+  \[v_\infty=\sqrt{|\vec v\,{}'|^{2}-\frac{2GM_J}{|\vec r\,{}'|}}=\sqrt{20{,}23^{2}-\frac{2\,(1{,}2669\times10^{8})}{721\,375}}\approx 7{,}62\ \text{km/s}\]
   \[1+\frac{r_p\,v_\infty^{2}}{GM_J}=1+\frac{721\,375\times7{,}62^{2}}{1{,}2669\times10^{8}}\approx1{,}33\;\Rightarrow\;\delta\approx97{,}5^\circ,\qquad |\Delta\vec v|=2\,v_\infty\sin\frac{\delta}{2}\approx 11{,}45\ \text{km/s}\]
   </div>
-  <p>Con la órbita hiperbólica respecto a Júpiter (que sale de \(\vec r\,'\) y \(\vec v\,'\)) obtengo las dos asíntotas \(\vec v\,'_{\text{entra}}\) y \(\vec v\,'_{\text{sale}}\), ambas de magnitud \(v_\infty\). Al sumarles \(\vec V_J\) paso al marco del Sol:</p>
+  <p>Con la órbita hiperbólica respecto a Júpiter (que sale de \(\vec r\,{}'\) y \(\vec v\,{}'\)) obtengo las dos asíntotas \(\vec v\,{}'_{\text{entra}}\) y \(\vec v\,{}'_{\text{sale}}\), ambas de magnitud \(v_\infty\). Al sumarles \(\vec V_J\) paso al marco del Sol:</p>
   <div class="eq">
-  \[|\vec V_J+\vec v\,'_{\text{entra}}|\approx 9{,}59\ \text{km/s},\qquad |\vec V_J+\vec v\,'_{\text{sale}}|\approx 19{,}50\ \text{km/s}\qquad\Rightarrow\qquad \Delta|\vec v|\approx 9{,}91\ \text{km/s}\ \ne\ |\Delta\vec v|\approx 11{,}45\ \text{km/s}\]
-  \[|\vec v_{\text{sale}}|^{2}-|\vec v_{\text{entra}}|^{2}=2\,\vec V_J\cdot\Delta\vec v\qquad(\text{porque } |\vec v\,'_{\text{sale}}|=|\vec v\,'_{\text{entra}}|)\qquad\Rightarrow\qquad 19{,}50^{2}-9{,}59^{2}\approx 2\,(144{,}2)\ \text{km}^2/\text{s}^2\]
+  \[|\vec V_J+\vec v\,{}'_{\text{entra}}|\approx 9{,}59\ \text{km/s},\qquad |\vec V_J+\vec v\,{}'_{\text{sale}}|\approx 19{,}50\ \text{km/s}\qquad\Rightarrow\qquad \Delta|\vec v|\approx 9{,}91\ \text{km/s}\ \ne\ |\Delta\vec v|\approx 11{,}45\ \text{km/s}\]
+  \[|\vec v_{\text{sale}}|^{2}-|\vec v_{\text{entra}}|^{2}=2\,\vec V_J\cdot\Delta\vec v\qquad(\text{porque } |\vec v\,{}'_{\text{sale}}|=|\vec v\,{}'_{\text{entra}}|)\qquad\Rightarrow\qquad 19{,}50^{2}-9{,}59^{2}\approx 2\,(144{,}2)\ \text{km}^2/\text{s}^2\]
   \[\Delta V_J=\frac{m\,|\Delta\vec v|}{M_J}=\frac{721{,}9\ \text{kg}\times 1{,}145\times10^{4}\ \text{m/s}}{1{,}898\times10^{27}\ \text{kg}}\approx 4\times10^{-21}\ \text{m/s}\]
   </div>
   <p><b>Qué dice cada número.</b> El planeta le cambió el vector velocidad en 11,45 km/s, pero la rapidez solo subió 9,9 km/s, porque una parte del cambio de vector se fue en <b>girar</b> la velocidad (unos 24° en el marco del Sol) y no en alargarla. La segunda ecuación muestra de dónde sale la ganancia de rapidez: del producto punto entre la velocidad del planeta y el cambio de vector. Si \(\Delta\vec v\) fuera perpendicular a \(\vec V_J\), la sonda no ganaría rapidez aunque el planeta la desviara igual; aquí forman un ángulo de solo 9°, por eso la ganancia es grande. El valor de 9,9 km/s del modelo concuerda con el que sale de los datos a ±40 días (10,09 → 19,76 km/s, es decir 9,7 km/s); la pequeña diferencia se debe a que en esos 80 días el Sol también frena a la sonda y Júpiter cambia de dirección en su órbita. Que \(|\Delta\vec v|\) y \(\Delta|\vec v|\) den números parecidos no valida a uno con el otro: son cantidades distintas, y aquí difieren en 1,5 km/s. A cambio, Júpiter se frenó unos \(4\times10^{-21}\) m/s. La rapidez «gratis» sale de la energía orbital del planeta.</p>
@@ -1124,20 +1137,371 @@ footer{padding-top:30px;font-size:.82rem;color:var(--ink-3)}
   </ol></div>
 </section>
 
-<section class="soon-sec" id="proximos">
-  <h2 style="font-size:1.4rem">Próximos temas</h2>
-  <p>El portafolio es acumulativo. Estas secciones se completarán en la entrega final.</p>
-  <div class="soon-grid">
-    <div><span class="n">10 · Final</span><br>Spring animations en interfaces</div>
-    <div><span class="n">11 · Final</span><br>Síntesis de sonido y armónicos</div>
-    <div><span class="n">12 · Final</span><br>Resonancia estructural y Tacoma Narrows</div>
-    <div><span class="n">13 · Final</span><br>Enfriamiento líquido de un centro de datos</div>
+<!-- ============================ TEMA 10 ============================ -->
+<section class="topic" id="tema-10">
+  <div class="topic-head">
+    <div class="num">TEMA 10</div>
+    <h2>Spring animations: el resorte amortiguado detrás de las animaciones de iOS y de Framer Motion</h2>
+    <div class="tags"><span class="tag">Oscilación amortiguada</span><span class="tag">Constante elástica k</span><span class="tag">Coeficiente de amortiguamiento c</span><span class="tag res">RECURSO: SIMULACIÓN INTERACTIVA</span></div>
   </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Cuando en un iPhone se arrastra una tarjeta y se suelta, o se abre una app desde el ícono, el movimiento no sale de una curva de duración fija: sale de un resorte simulado. En <b>SwiftUI</b> el tipo <code>Spring</code> se puede crear con <code>Spring(mass:stiffness:damping:)</code> o con la forma que Apple presentó en la charla <i>Animate with springs</i> (WWDC23), <code>Spring(duration:bounce:)</code>, que es solo otra manera de escribir los mismos parámetros físicos. En la web, la librería <b>Motion</b> (antes Framer Motion) hace lo mismo con <code>transition: {type: "spring", stiffness, damping, mass}</code>, con valores por defecto de rigidez 100, amortiguamiento 10 y masa 1. UIKit (<code>UISpringTimingParameters</code>) y Core Animation (<code>CASpringAnimation</code>) exponen los mismos tres parámetros.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <p>El elemento que se anima es una masa unida a su posición final por un resorte (ley de Hooke, Tema 5) y frenada por un amortiguador proporcional a la velocidad. La segunda ley de Newton da la ecuación del oscilador amortiguado:</p>
+  <div class="eq">
+  \[m\,\ddot x=-k\,(x-x_{\text{fin}})-c\,\dot x\qquad\Longleftrightarrow\qquad \ddot u+2\zeta\omega_0\,\dot u+\omega_0^{2}\,u=0,\quad u=x-x_{\text{fin}}\]
+  \[\omega_0=\sqrt{\frac{k}{m}},\qquad \zeta=\frac{c}{2\sqrt{k\,m}}\qquad(\text{frecuencia natural y razón de amortiguamiento})\]
+  \[\zeta<1:\ u(t)=e^{-\zeta\omega_0 t}\big(A\cos\omega_d t+B\sin\omega_d t\big),\ \ \omega_d=\omega_0\sqrt{1-\zeta^{2}}\qquad\text{(subamortiguado: rebota)}\]
+  \[\zeta=1:\ u(t)=(A+Bt)\,e^{-\omega_0 t}\qquad\text{(crítico: llega lo más rápido posible sin pasarse)}\]
+  \[\zeta>1:\ u(t)=A\,e^{s_1t}+B\,e^{s_2t},\ \ s_{1,2}=-\omega_0\big(\zeta\mp\sqrt{\zeta^{2}-1}\big)\qquad\text{(sobreamortiguado: llega lento, sin rebote)}\]
+  </div>
+  <p>La forma de Apple con duración <i>d</i> y rebote <i>b</i> es un cambio de variables de la misma física (con \(m=1\)):</p>
+  <div class="eq">
+  \[k=\Big(\frac{2\pi}{d}\Big)^{2},\qquad c=\frac{4\pi\,(1-b)}{d}\quad(b\ge0)\qquad\Longrightarrow\qquad \omega_0=\frac{2\pi}{d},\qquad \zeta=1-b\]
+  </div>
+  <p class="eq-note">Es decir, la «duración» de Apple es el período natural \(T_0=2\pi/\omega_0\) del resorte sin amortiguar, y el «rebote» es \(1-\zeta\): rebote 0 es amortiguamiento crítico, rebote positivo es subamortiguado y rebote negativo es sobreamortiguado. Ejemplo: los valores por defecto de Motion (\(k=100\), \(c=10\), \(m=1\)) dan \(\omega_0=10\) rad/s y \(\zeta=0{,}5\), o sea un resorte con \(d=0{,}63\) s y rebote 0,5. El rebote se mide con el sobrepaso: \(M_p=e^{-\pi\zeta/\sqrt{1-\zeta^{2}}}=16{,}3\,\%\) para \(\zeta=0{,}5\).</p>
+
+  <h4 class="sub">Por qué describir una animación con rigidez y amortiguamiento y no con una duración</h4>
+  <p>Una animación clásica es una curva fija (por ejemplo, una Bézier «ease-in-out» de 300 ms): empieza siempre en velocidad cero y dura siempre lo mismo. Eso falla en las dos situaciones más comunes de una interfaz táctil. <b>Primero, el gesto ya trae velocidad:</b> si el usuario lanza una tarjeta y la animación arranca desde velocidad cero, el elemento se «frena en seco» justo al soltarlo. El resorte acepta la velocidad del dedo como condición inicial \(\dot x(0)=v_{\text{dedo}}\) y la continúa sin salto. <b>Segundo, el objetivo cambia a mitad del movimiento:</b> si el usuario toca de nuevo antes de que termine, una curva fija tiene que cortarse y reiniciarse, con un salto de velocidad; el resorte solo cambia \(x_{\text{fin}}\) en la ecuación y sigue integrando desde la posición y la velocidad que tenía. Apple lo resume en la charla: los resortes son el único tipo de animación que mantiene la continuidad tanto si se parte del reposo como si se parte con velocidad.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Continuidad de posición y velocidad al soltar un gesto o al interrumpir.</li><li>Un solo modelo cubre todos los casos: no hay que diseñar una animación por cada situación.</li><li>Dos parámetros con significado físico (rigidez y amortiguamiento) en vez de curvas arbitrarias.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>La duración real no es fija: un resorte se acerca al final asintóticamente y hay que definir cuándo «terminó» (umbral de reposo).</li><li>Hay que integrar la ecuación en cada cuadro, o evaluar su solución analítica.</li><li>Con \(\zeta\) bajo, el rebote puede marear o tapar contenido; por eso iOS usa casi siempre resortes sin rebote.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Simulación interactiva</h3>
+  <div class="card">
+    <div class="card-title">Laboratorio de resortes para interfaces</div>
+    <div class="card-sub">La tarjeta naranja se mueve integrando \(m\ddot x=-k(x-x_{\text{fin}})-c\dot x\) en cada cuadro (paso fijo de 1 ms). La tarjeta gris usa una curva Bézier «ease-in-out» de duración fija, como referencia no física. Toque la pista (o use los botones) para mandar la tarjeta a otro lugar, incluso a mitad del movimiento.</div>
+    <div class="controls">
+      <div class="ctl"><label>Rigidez k <output id="t10kOut"></output></label><input type="range" id="t10k" min="10" max="600" step="1" value="100"></div>
+      <div class="ctl"><label>Amortiguamiento c <output id="t10cOut"></output></label><input type="range" id="t10c" min="0" max="150" step="0.5" value="10"></div>
+      <div class="ctl"><label>Masa m <output id="t10mOut"></output></label><input type="range" id="t10m" min="0.3" max="4" step="0.1" value="1"></div>
+      <div class="ctl"><label>Velocidad del gesto al soltar <output id="t10v0Out"></output></label><input type="range" id="t10v0" min="-3000" max="3000" step="50" value="0"></div>
+    </div>
+    <div class="btns">
+      <button class="b primary" id="t10go">Animar al otro extremo</button>
+      <button class="b" data-t10z="0.3">Subamortiguado (ζ = 0,3)</button>
+      <button class="b" data-t10z="1">Crítico (ζ = 1)</button>
+      <button class="b" data-t10z="2.5">Sobreamortiguado (ζ = 2,5)</button>
+      <button class="b" id="t10def">Valores por defecto de Motion</button>
+    </div>
+    <canvas id="t10track" aria-label="Pista de animación: toque para cambiar el destino"></canvas>
+    <div class="readout" id="t10Readout"></div>
+    <div class="chart-box tall" style="margin-top:12px"><canvas id="cT10"></canvas></div>
+    <div class="card-sub" style="margin-top:8px">La gráfica muestra x(t) de la última animación: en color, el resorte; en gris, la curva de duración fija; y en punteado, los tres regímenes con la misma k y m para comparar (ζ = 0,3, 1 y 2,5).</div>
+  </div>
+  <p><b>Qué observar.</b> (1) Con los valores por defecto de Motion (ζ = 0,5) la tarjeta se pasa un 16 % y vuelve: subamortiguado. Al subir c hasta \(2\sqrt{km}\) (20 con k = 100 y m = 1) el rebote desaparece y la llegada es la más rápida posible sin pasarse; al seguir subiendo c, la tarjeta llega cada vez más lenta. (2) Subir k con ζ fijo acorta todo el movimiento en proporción a \(1/\sqrt k\): por eso Apple llama «duración» a \(2\pi\sqrt{m/k}\). (3) Ponga una velocidad de gesto grande y anime: el resorte arranca con esa velocidad y la curva Bézier no puede, empieza en cero. (4) Toque la pista mientras la tarjeta se mueve: el resorte cambia de rumbo sin saltos de velocidad, mientras que la curva fija tiene que reiniciar desde cero.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-5">Tema 5</a>: es la misma ley de Hooke del gatillo háptico, \(F=-kx\), con un término de amortiguamiento \(-c\dot x\) agregado. Allá el resorte empuja el dedo; aquí empuja un píxel.</li>
+    <li>Con el <a href="#tema-12">Tema 12</a>: si a este mismo oscilador se le agrega una fuerza externa periódica, aparece la resonancia. La razón de amortiguamiento ζ es la que decide qué tan alto crece la amplitud.</li>
+    <li>Con el <a href="#tema-2">Tema 2</a>: en los dos casos se usa la <i>forma</i> de la física pero se eligen los <i>parámetros</i> por cómo se siente, no por realismo: una gravedad de 4 g allá, un resorte de ζ = 0,8 aquí.</li>
+    <li>Con la clase: oscilaciones libres y amortiguadas, frecuencia natural \(\omega_0=\sqrt{k/m}\), período \(T=2\pi/\omega_0\), energía del resorte \(\tfrac12kx^{2}\) que el amortiguador disipa.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Apple. <a href="https://developer.apple.com/videos/play/wwdc2023/10158/" target="_blank" rel="noopener">Animate with springs</a>, WWDC23, sesión 10158 (continuidad de velocidad, duración y rebote, y su conversión a masa, rigidez y amortiguamiento).</li>
+    <li>Apple Developer Documentation. <a href="https://developer.apple.com/documentation/swiftui/spring" target="_blank" rel="noopener">SwiftUI <code>Spring</code></a> y <a href="https://developer.apple.com/documentation/uikit/uispringtimingparameters" target="_blank" rel="noopener">UIKit <code>UISpringTimingParameters</code></a>.</li>
+    <li>Motion. <a href="https://motion.dev/docs/react-transitions" target="_blank" rel="noopener">Transitions: spring</a> y <a href="https://motion.dev/docs/spring" target="_blank" rel="noopener">spring</a> (parámetros <code>stiffness</code>, <code>damping</code>, <code>mass</code>, <code>bounce</code>, <code>duration</code>).</li>
+  </ol></div>
 </section>
 
+<!-- ============================ TEMA 11 ============================ -->
+<section class="topic" id="tema-11">
+  <div class="topic-head">
+    <div class="num">TEMA 11</div>
+    <h2>Síntesis de sonido: armónicos, timbre y el sintetizador</h2>
+    <div class="tags"><span class="tag">Ondas sonoras</span><span class="tag">Armónicos y ondas estacionarias</span><span class="tag">Serie de Fourier</span><span class="tag res">RECURSO: MULTIMEDIA CON ANÁLISIS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Todos los navegadores modernos traen un sintetizador: la <b>Web Audio API</b> del W3C. Su método <code>createPeriodicWave(real, imag)</code> recibe directamente las amplitudes de los armónicos de una onda (los coeficientes de su serie de Fourier) y el <code>OscillatorNode</code> genera esa onda a la frecuencia que se le pida. Es <b>síntesis aditiva</b>: el timbre se programa como una lista de amplitudes. La misma idea existe desde el órgano Hammond, cuyas barras de registro (<i>drawbars</i>) suben o bajan el volumen de armónicos concretos de cada nota, y es la base de los sintetizadores por software y de los motores de audio de los videojuegos, que generan sonidos en tiempo real en vez de reproducir grabaciones. Las dos muestras de abajo y el mezclador del final de esta sección se generan con esta técnica.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <p>Un sonido periódico de frecuencia fundamental \(f_0\) se puede escribir como una suma de ondas senoidales cuyas frecuencias son múltiplos enteros de \(f_0\) (sus armónicos):</p>
+  <div class="eq">
+  \[y(t)=\sum_{n=1}^{N}A_n\,\sin\!\big(2\pi\,n f_0\,t+\varphi_n\big),\qquad f_n=n\,f_0,\qquad T=\frac{1}{f_0}\]
+  </div>
+  <p>La <b>altura</b> (la nota) la fija \(f_0\): todas las sumas de armónicos de 220 Hz se repiten cada \(T=4{,}545\) ms y suenan como un La3. El <b>timbre</b> lo fija el conjunto de amplitudes \(A_n\). En un instrumento real esas amplitudes salen de las ondas estacionarias que caben en él:</p>
+  <div class="eq">
+  \[\text{cuerda fija en los dos extremos: } f_n=\frac{n\,v}{2L},\ \ n=1,2,3,\dots\quad\big(v=\sqrt{F_T/\mu}\big)\qquad\text{tubo cerrado en un extremo: } f_n=\frac{n\,v}{4L},\ \ n=1,3,5,\dots\]
+  </div>
+  <p class="eq-note">Una cuerda puede vibrar con todos los armónicos; un tubo cerrado por un extremo (como, en primera aproximación, el clarinete) solo admite los impares. Por eso dos instrumentos tocando la misma nota no suenan igual. Las muestras de abajo reproducen esas dos «recetas» de armónicos con amplitudes \(A_n=1/n\).</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es el <i>sampling</i>: grabar cada nota del instrumento real y reproducir la grabación. Suena realista, pero cada nota, cada intensidad y cada articulación necesitan su propia grabación (las bibliotecas profesionales ocupan decenas de gigabytes), y el timbre queda congelado: no se puede «abrir» o «apagar» el sonido de forma continua sin grabar más. Al sintetizar con la suma de armónicos, una nota cuesta unos pocos números, la misma receta sirve para cualquier \(f_0\) y el timbre se puede modificar en tiempo real (un filtro que baja los armónicos altos, un juego que vuelve más brillante el motor de un auto al acelerar).</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Memoria mínima: el timbre es una lista de amplitudes.</li><li>Control continuo del timbre mientras suena.</li><li>Cualquier nota con la misma receta, sin huecos entre grabaciones.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Imitar un instrumento real es difícil: sus armónicos cambian en el tiempo y el ataque tiene ruido que no es periódico.</li><li>Las cuerdas reales son algo inarmónicas (\(f_n\) un poco mayor que \(n f_0\)), y eso hay que modelarlo aparte.</li><li>Más osciladores, más cómputo por muestra de audio.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Multimedia con análisis: la misma nota con dos timbres</h3>
+  <p><b>Las muestras.</b> Ambos audios son un La3 (\(f_0=220\) Hz) de 2 s con la misma envolvente (ataque de 30 ms y caída de 300 ms) y el mismo volumen eficaz (RMS). Lo único que cambia es qué armónicos tienen. Los generé con el script <code>audio/generar_muestras.py</code> del repositorio (síntesis aditiva con 15 armónicos). Las gráficas de forma de onda y de espectro se calculan en esta página a partir de los mismos archivos que se escuchan: el navegador decodifica el WAV y le aplica una transformada rápida de Fourier (FFT).</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Muestra A: solo armónicos impares</div>
+      <div class="card-sub">\(A_n=1/n\) para \(n=1,3,5,\dots,15\). Forma cercana a una onda cuadrada.</div>
+      <audio controls preload="metadata" src="audio/muestra_impares.wav" style="width:100%"></audio>
+    </div>
+    <div class="card">
+      <div class="card-title">Muestra B: todos los armónicos</div>
+      <div class="card-sub">\(A_n=1/n\) para \(n=1,2,3,\dots,15\). Forma cercana a un diente de sierra.</div>
+      <audio controls preload="metadata" src="audio/muestra_todos.wav" style="width:100%"></audio>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Forma de onda: tres períodos de cada muestra</div>
+    <div class="card-sub">Tomados de la parte sostenida (desde t = 0,5 s). Eje x en milisegundos; eje y en amplitud normalizada del archivo (−1 a 1).</div>
+    <div class="chart-box"><canvas id="cT11w"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Espectro: contenido armónico de cada muestra</div>
+    <div class="card-sub">FFT de 8192 muestras (0,19 s de la parte sostenida) con ventana de Hann. Eje y en decibeles relativos al pico de cada muestra. Las líneas verticales punteadas marcan los múltiplos de 220 Hz. En los múltiplos impares (220, 660, 1100 Hz…) las dos muestras tienen el mismo pico y las curvas quedan superpuestas; los picos en los múltiplos pares (440, 880 Hz…) son solo de la muestra B.</div>
+    <div class="chart-box tall"><canvas id="cT11s"></canvas></div>
+    <div class="readout" id="t11Readout"></div>
+  </div>
+
+  <h4 class="sub">Análisis: qué diferencia produce qué</h4>
+  <div class="timeline">
+    <div><span class="ts">Altura</span>Las dos formas de onda se repiten exactamente cada 4,545 ms (las tres repeticiones de la gráfica ocupan 13,6 ms en ambas). Mismo período, misma \(f_0=1/T=220\) Hz: por eso las dos muestras suenan como la misma nota aunque se vean distintas.</div>
+    <div><span class="ts">Forma de onda</span>La muestra A tiene «mesetas» casi planas arriba y abajo, con pequeñas ondulaciones: es la suma de armónicos impares acercándose a una onda cuadrada (las ondulaciones aparecen porque la suma se corta en el armónico 15). Además cumple \(y(t+T/2)=-y(t)\): la segunda mitad de cada período es la primera invertida. Esa simetría es justamente la que anula los armónicos pares. La muestra B sube en rampa y cae de golpe una vez por período, como un diente de sierra, y no tiene esa simetría.</div>
+    <div><span class="ts">Espectro</span>En la muestra A solo hay picos en 220, 660, 1100, 1540 Hz…, separados 440 Hz. En la B hay un pico en cada múltiplo de 220 Hz. En las dos, cada pico baja según \(A_n=1/n\): el armónico 3 está \(20\log_{10}(1/3)=-9{,}5\) dB por debajo del fundamental, y el 15 a \(-23{,}5\) dB.</div>
+    <div><span class="ts">Timbre</span>Al escuchar, la A suena «hueca» o «de madera», parecida a un clarinete grave, y la B suena más brillante y áspera, parecida a una cuerda frotada o un metal. La diferencia está en los armónicos pares: en la B se llevan el 24 % de la potencia (\(\sum_{\text{pares}}1/n^2\) frente a \(\sum 1/n^2\)), y suben el centroide espectral, que es el «centro de gravedad» del espectro y se relaciona con el brillo que percibimos: 370 Hz en la A y 462 Hz en la B.</div>
+    <div><span class="ts">Lo que no cambia</span>El ataque y la caída (los primeros 30 ms y los últimos 300 ms) son iguales en las dos, y el volumen eficaz también. Así, si se perciben distintas, es solo por el contenido armónico. En instrumentos reales el ataque también ayuda mucho a reconocer el timbre; aquí lo dejé igual a propósito para aislar el efecto de los armónicos.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Extra: mezclador de armónicos en vivo</div>
+    <div class="card-sub">Mueva las barras para fijar la amplitud de los primeros ocho armónicos de un La3 y escúchelo con la Web Audio API (<code>createPeriodicWave</code>). Es la misma idea de las barras de registro del órgano Hammond. La forma de onda se recalcula con \(y(t)=\sum A_n\sin(2\pi n f_0 t)\) al mover cada barra.</div>
+    <div class="controls" id="t11mix"></div>
+    <div class="btns"><button class="b primary" id="t11play">▶ Escuchar</button><button class="b" data-t11p="seno">Solo fundamental</button><button class="b" data-t11p="impares">Impares (tipo A)</button><button class="b" data-t11p="todos">Todos (tipo B)</button><button class="b" data-t11p="hueco">Fundamental + octava</button></div>
+    <div class="chart-box short"><canvas id="cT11m"></canvas></div>
+  </div>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-10">Tema 10</a> y el <a href="#tema-12">Tema 12</a>: los tres temas son oscilaciones. Aquí el oscilador no se amortigua (el sintetizador lo mantiene), allá se amortigua o se fuerza. Cada armónico es un modo normal, igual que los modos de vibrar de un puente.</li>
+    <li>Con el <a href="#tema-5">Tema 5</a>: el gatillo háptico también produce vibraciones; los motores hápticos se programan con formas de onda, igual que un sintetizador.</li>
+    <li>Con la clase: ondas mecánicas, velocidad de una onda en una cuerda \(v=\sqrt{F_T/\mu}\), ondas estacionarias en cuerdas y tubos, frecuencia y período.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>W3C. <a href="https://www.w3.org/TR/webaudio/" target="_blank" rel="noopener">Web Audio API</a> (secciones <i>PeriodicWave</i> y <i>OscillatorNode</i>). Ver también MDN, <a href="https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/createPeriodicWave" target="_blank" rel="noopener">BaseAudioContext.createPeriodicWave()</a>.</li>
+    <li>Wolfe, J. <a href="https://newt.phys.unsw.edu.au/jw/clarinetacoustics.html" target="_blank" rel="noopener">Clarinet acoustics: an introduction</a>. UNSW Sydney, Music Acoustics (por qué el clarinete grave tiene sobre todo armónicos impares).</li>
+    <li>Audios, formas de onda y espectros: elaborados para este portafolio (<code>audio/generar_muestras.py</code>, parámetros en <code>audio/muestras.json</code>).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 12 ============================ -->
+<section class="topic" id="tema-12">
+  <div class="topic-head">
+    <div class="num">TEMA 12</div>
+    <h2>Resonancia estructural: Tacoma Narrows y por qué las tropas rompen el paso al cruzar un puente</h2>
+    <div class="tags"><span class="tag">Oscilación forzada</span><span class="tag">Resonancia</span><span class="tag">Frecuencia natural</span><span class="tag">Autoexcitación</span><span class="tag res">RECURSO: MULTIMEDIA CON ANÁLISIS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Hoy ningún puente peatonal largo se construye sin un <b>análisis modal</b> por computadora. Los programas de elementos finitos que usa la ingeniería estructural (SAP2000, ANSYS, Abaqus, Midas Civil) dividen la estructura en miles de elementos, arman sus matrices de masa \(\mathbf M\) y de rigidez \(\mathbf K\) y calculan sus <b>frecuencias naturales</b> y la forma de cada modo de vibrar. Las guías de diseño exigen comparar esas frecuencias con las de quienes van a cruzar: la guía técnica francesa Sétra/AFGC (2006) y la guía europea HiVoSS piden un análisis dinámico detallado cuando una frecuencia vertical cae en el rango del ritmo de los pasos (de 1,25 a 2,3 Hz en HiVoSS) o una lateral cae cerca de la mitad de ese ritmo (de 0,5 a 1,2 Hz), porque el cuerpo se balancea de lado una vez cada dos pasos. El caso que convenció a la industria fue el <b>Millennium Bridge</b> de Londres: se abrió el 10 de junio de 2000, se balanceó de lado con la multitud y se cerró dos días después; se resolvió instalando amortiguadores, y desde entonces la «excitación lateral sincronizada» de los peatones es un chequeo de diseño.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <p>Un modo de vibrar del puente se comporta como un oscilador con masa modal \(m\), rigidez \(k\) y amortiguamiento \(c\) (el mismo del <a href="#tema-10">Tema 10</a>), ahora con una fuerza externa periódica de frecuencia \(\omega\):</p>
+  <div class="eq">
+  \[m\,\ddot x+c\,\dot x+k\,x=F_0\cos(\omega t)\qquad\Rightarrow\qquad x_{\text{estable}}(t)=A(\omega)\cos(\omega t-\delta)\]
+  \[A(\omega)=\frac{F_0/m}{\sqrt{(\omega_0^{2}-\omega^{2})^{2}+(2\zeta\omega_0\,\omega)^{2}}},\qquad \omega_0=\sqrt{\frac{k}{m}},\qquad \frac{A(\omega_0)}{A(0)}=\frac{1}{2\zeta}\]
+  </div>
+  <p class="eq-note">Cuando la frecuencia de la excitación se acerca a la frecuencia natural (\(\omega\approx\omega_0\)) la amplitud se multiplica por \(1/(2\zeta)\) respecto a la que produciría la misma fuerza aplicada lentamente. Los puentes de acero tienen amortiguamientos muy bajos, del orden de \(\zeta\approx0{,}5\,\%\) a \(1\,\%\): un factor de 50 a 100. En el modelo matricial del software, cada modo cumple \(\det(\mathbf K-\omega^{2}\mathbf M)=0\); para un solo grado de libertad eso se reduce a \(\omega_0^{2}=k/m\).</p>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es diseñar solo para cargas estáticas, con un factor de seguridad: «el puente aguanta tres veces el peso de la gente que cabe en él». Ese cálculo no ve el problema, porque la resonancia no depende de cuánto pesa la carga sino de <b>a qué ritmo</b> llega. Ochenta soldados marchando al paso pueden mover un puente que soporta sin problema a mil personas quietas. La regla práctica de «romper el paso» que adoptó el ejército británico después del colapso del puente colgante de Broughton (Manchester, 1831) es una solución de este tipo: funciona, pero no dice qué puentes son peligrosos ni cuánto. El análisis modal sí lo dice, y permite elegir antes de construir la rigidez o los amortiguadores que alejan \(\omega_0\) de las frecuencias de excitación o que suben \(\zeta\).</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Se detecta el riesgo en la etapa de diseño, cuando cambiar rigidez o masa es barato.</li><li>Se puede dimensionar el amortiguador exacto que hace falta.</li><li>Sirve para cualquier excitación: pasos, viento, tráfico, sismos.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>El amortiguamiento real es difícil de predecir y suele medirse ya construido el puente.</li><li>Los fenómenos que dependen del propio movimiento (peatones que se sincronizan, viento que se acopla a la torsión) necesitan modelos más complejos o túneles de viento.</li><li>Modelos con miles de grados de libertad y muchos casos de carga.</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Multimedia con análisis: el puente de Tacoma Narrows, 7 de noviembre de 1940</h3>
+  <div class="card">
+    <div class="video"><iframe id="t12video" src="https://www.youtube-nocookie.com/embed/XggxeuFDaDU?rel=0" title="Tacoma Bridge Collapse: The Wobbliest Bridge in the World? (1940), British Pathé" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="card-sub" style="margin-top:8px">British Pathé, <i>Tacoma Bridge Collapse: The Wobbliest Bridge in the World? (1940)</i>, noticiero de 1 min 13 s. Los tiempos de abajo son enlaces: llevan el video a ese instante.</div>
+  </div>
+  <div class="timeline">
+    <div><span class="ts"><a href="#tema-12" data-t12seek="16">0:16</a></span><b>El modo que se excitó: torsión.</b> En la toma lateral el tablero está torcido: una orilla está más alta que la otra y la línea central casi no se mueve. Ese giro alrededor del eje del puente es el modo torsional, que es el que destruyó el puente. Antes de ese día, el puente («Galloping Gertie») oscilaba de arriba abajo sin torcerse; el cambio a torsión ocurrió poco después de las 10 de la mañana.</div>
+    <div><span class="ts"><a href="#tema-12" data-t12seek="40">0:40</a></span><b>Medición del período en el video.</b> Toma desde la calzada, entre 0:40 y 0:46. Medí la inclinación de la imagen cuadro a cuadro: los mínimos caen en 0:41,9 y 0:44,9 y los cruces por cero de subida en 0:42,6 y 0:45,6. El período <i>en el video</i> es entonces \(T_{\text{video}}\approx3{,}0\) s.</div>
+    <div><span class="ts">Frecuencia natural</span><b>Por qué ese 3,0 s no es el real.</b> El profesor F. B. Farquharson, que estaba en el puente con un cronómetro, midió 12 ciclos por minuto: \(T=5\) s, \(f=0{,}2\) Hz, \(\omega=2\pi f\approx1{,}26\) rad/s. Olson y colaboradores (Physics Today, 2015) mostraron que la película se filmó a 16 cuadros por segundo y se pasó a video como si fuera de 24, así que las copias corren más rápido de lo que vieron los testigos. Mi medición en esta copia (3,0 s contra 5 s) da un factor de aceleración de \(5/3{,}0\approx1{,}7\), del mismo orden que el 1,5 que encontraron ellos. Lección para cualquier análisis de video: antes de medir tiempos hay que saber a qué velocidad se grabó.</div>
+    <div><span class="ts"><a href="#tema-12" data-t12seek="46">0:46</a></span><b>La amplitud.</b> Una persona camina por la calzada inclinada: la pendiente transversal se ve a simple vista, no es un temblor. Con una frecuencia tan baja (0,2 Hz), una amplitud así significa que el tablero pasa varios segundos inclinado hacia cada lado.</div>
+    <div><span class="ts"><a href="#tema-12" data-t12seek="56">0:56</a></span><b>El colapso.</b> El tramo central se desprende y cae al estrecho (hacia las 11:02 de la mañana, según Olson). A partir de 1:06 se ven las torres con el tramo central vacío.</div>
+  </div>
+
+  <h4 class="sub">La fuente de la excitación y por qué crece la amplitud</h4>
+  <p>Aquí está la parte que el video no muestra y que corrige la explicación de muchos libros. El viento de ese día era fuerte (más de 40 millas por hora, unos 64 km/h) pero <b>constante</b>: no soplaba en ráfagas cada 5 segundos. Sin una fuerza periódica a 0,2 Hz no hay resonancia en el sentido de la ecuación de arriba. Lo que ocurrió fue una <b>autoexcitación</b> (flameo o <i>flutter</i> torsional): al torcerse, el tablero cambia cómo lo empuja el viento, y esa fuerza depende del propio movimiento. En el modelo del curso de ecuaciones diferenciales del MIT, para el ángulo \(\theta\) del tablero:</p>
+  <div class="eq">
+  \[\ddot\theta+b\,\dot\theta+\omega_n^{2}\theta=F,\qquad F\approx a_1(v)\,\dot\theta\qquad\Rightarrow\qquad \ddot\theta+(b-a_1)\,\dot\theta+\omega_n^{2}\theta=0\]
+  \[\theta(t)=A\,e^{kt}\cos(\omega t-\varphi),\qquad k=\frac{a_1(v)-b}{2}\]
+  </div>
+  <p>Mientras el viento es suave, \(a_1\le0\) y el viento hasta amortigua. Por encima de una velocidad crítica (unas 40 mi/h en Tacoma), \(a_1\) supera al amortiguamiento propio \(b\), el amortiguamiento efectivo se vuelve negativo y \(k>0\): en cada ciclo el viento mete más energía de la que la estructura disipa, y la amplitud crece de forma exponencial hasta que algo se rompe. La frecuencia a la que oscila es la natural del modo torsional (por eso 0,2 Hz), y en eso se parece a la resonancia; la diferencia es que la «excitación» no viene de afuera con su propio ritmo, sino que la fabrica el mismo movimiento. Billah y Scanlan (1991) señalaron que, a diferencia de una resonancia, esa amplificación crece sin pico al aumentar la velocidad del viento.</p>
+  <p><b>Y las tropas.</b> El caso de los soldados sí es resonancia clásica: un grupo marchando al paso aplica una fuerza periódica \(F_0\cos(\omega t)\) a su ritmo de marcha (unos 2 pasos por segundo). Si un modo del puente está cerca de esa frecuencia, la amplitud se multiplica por \(1/(2\zeta)\). Romper el paso desordena las fases: las fuerzas de cada soldado dejan de sumarse en un solo \(F_0\cos(\omega t)\) y el término forzante coherente casi desaparece. El Millennium Bridge mostró una mezcla de los dos mecanismos: los peatones no marchaban, pero al sentir el balanceo empezaron a acompasar sus pasos con él, y esa sincronización realimentó el movimiento.</p>
+
+  <div class="card">
+    <div class="card-title">Extra: curva de resonancia de un modo de puente</div>
+    <div class="card-sub">\(A(\omega)/A(0)\) con la ecuación de arriba, para una frecuencia natural y un amortiguamiento elegidos. La línea vertical es el ritmo de la marcha. Modifíquelos para ver por qué un puente con \(f_0\) cerca de 2 Hz y poco amortiguamiento es peligroso para una tropa al paso.</div>
+    <div class="controls">
+      <div class="ctl"><label>Frecuencia natural del modo f₀ <output id="t12f0Out"></output></label><input type="range" id="t12f0" min="0.5" max="5" step="0.05" value="2"></div>
+      <div class="ctl"><label>Razón de amortiguamiento ζ <output id="t12zOut"></output></label><input type="range" id="t12z" min="0.005" max="0.3" step="0.005" value="0.01"></div>
+      <div class="ctl"><label>Ritmo de la marcha <output id="t12fsOut"></output></label><input type="range" id="t12fs" min="1.2" max="2.8" step="0.05" value="2"></div>
+    </div>
+    <div class="chart-box"><canvas id="cT12"></canvas></div>
+    <div class="readout" id="t12Readout"></div>
+  </div>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-10">Tema 10</a>: es la misma ecuación del resorte amortiguado con un término de fuerza. Allá se elige ζ para que la animación se sienta bien; aquí ζ decide si el puente se queda quieto o amplifica 100 veces.</li>
+    <li>Con el <a href="#tema-8">Tema 8</a>: el tablero de Tacoma oscilaba girando; su ecuación usa ángulo, velocidad angular y un momento de inercia, como la rueda de reacción.</li>
+    <li>Con el <a href="#tema-11">Tema 11</a>: cada modo de un puente es como un armónico de una cuerda: una onda estacionaria con su propia frecuencia.</li>
+    <li>Con la clase: oscilaciones forzadas, frecuencia natural, amortiguamiento y energía que entra y sale de un oscilador en cada ciclo.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>British Pathé. <a href="https://www.youtube.com/watch?v=XggxeuFDaDU" target="_blank" rel="noopener">Tacoma Bridge Collapse: The Wobbliest Bridge in the World? (1940)</a>. YouTube, 2013.</li>
+    <li>Olson, D. W., Wolf, S. F. y Hook, J. M. (2015). <a href="https://physicstoday.aip.org/article/68/11/64/414979" target="_blank" rel="noopener">The Tacoma Narrows Bridge collapse</a>. <i>Physics Today</i>, 68(11), 64 (12 ciclos por minuto medidos por Farquharson; película a 16 cuadros/s; horas del colapso).</li>
+    <li>Billah, K. Y. y Scanlan, R. H. (1991). Resonance, Tacoma Narrows bridge failure, and undergraduate physics textbooks. <i>American Journal of Physics</i>, 59(2), 118–124.</li>
+    <li>MIT OpenCourseWare, 18.03 Differential Equations (2010). <a href="https://ocw.mit.edu/courses/18-03-differential-equations-spring-2010/63b26053bec64e7c32b93900b15d7fad_MIT18_03S10_Appendix_B.pdf" target="_blank" rel="noopener">Appendix B: The Tacoma Narrows Bridge, resonance vs flutter</a> (modelo con amortiguamiento negativo y velocidad crítica cercana a 40 mi/h).</li>
+    <li>Sétra/AFGC (2006). <i>Footbridges: Assessment of vibrational behaviour of footbridges under pedestrian loading</i>; y HiVoSS (2008), <a href="https://www.stahlbau.stb.rwth-aachen.de/projekte/2007/HIVOSS/docs/Footbridge_Guidelines_EN03.pdf" target="_blank" rel="noopener">Design of Footbridges, Guideline</a>.</li>
+    <li>Dallard, P. et al. (2001). The London Millennium Footbridge. <i>The Structural Engineer</i>, 79(22); y Ingenia, <a href="https://ingenia.org.uk/articles/stabilising-the-london-millennium-bridge/" target="_blank" rel="noopener">Stabilising the London Millennium Bridge</a>.</li>
+    <li>Wikipedia. <a href="https://en.wikipedia.org/wiki/Broughton_Suspension_Bridge" target="_blank" rel="noopener">Broughton Suspension Bridge</a> (colapso de 1831 y la orden de romper el paso).</li>
+  </ol></div>
+</section>
+
+<!-- ============================ TEMA 13 ============================ -->
+<section class="topic" id="tema-13">
+  <div class="topic-head">
+    <div class="num">TEMA 13</div>
+    <h2>Enfriamiento líquido de un centro de datos: continuidad, caudal y Bernoulli</h2>
+    <div class="tags"><span class="tag">Ecuación de continuidad</span><span class="tag">Teorema de Bernoulli</span><span class="tag">Caudal</span><span class="tag">Balance de energía</span><span class="tag res">RECURSO: VISUALIZACIÓN DE DATOS</span></div>
+  </div>
+
+  <h3><span class="lbl">(a)</span> Caso de uso en Ingeniería del Software</h3>
+  <h4 class="sub">El caso concreto</h4>
+  <p>Los servidores de inteligencia artificial ya no se pueden enfriar solo con aire: un rack con GPU de última generación consume del orden de 100 kW, cuando un centro de datos tradicional se diseñó para 10 a 20 kW por rack. La solución estándar es el <b>enfriamiento líquido directo al chip</b>: una unidad de distribución de refrigerante (CDU) bombea agua o agua con glicol por una tubería principal, un colector vertical (<i>manifold</i>) la reparte entre los servidores del rack, y en cada servidor el agua pasa por una <b>placa fría</b> pegada al procesador. La industria lo coordina en el <b>Open Compute Project</b> (OCP), cuyas guías de enfriamiento líquido fijan temperaturas de suministro y caudales por kilovatio. Para dimensionar estos circuitos se usan programas de redes hidráulicas y de dinámica de fluidos computacional (CFD), y el software de control de la CDU ajusta la bomba en tiempo real para mantener el caudal. Esta sección es una versión reducida de ese cálculo.</p>
+
+  <h4 class="sub">El concepto físico, como ecuación</h4>
+  <p>Tres ecuaciones bastan para dimensionar el circuito. La primera dice cuánta agua hace falta: todo el calor que disipa el servidor lo tiene que llevar el agua, que se calienta \(\Delta T\) al pasar.</p>
+  <div class="eq">
+  \[P=\dot m\,c_p\,\Delta T=\rho\,Q\,c_p\,\Delta T\qquad\Rightarrow\qquad Q=\frac{P}{\rho\,c_p\,\Delta T}=\frac{100\ 000\ \text{W}}{995{,}7\times4178\times10}\approx2{,}40\times10^{-3}\ \text{m}^3/\text{s}=144\ \text{L/min}\]
+  </div>
+  <p class="eq-note">Es decir, 1,44 L/min por kilovatio con \(\Delta T=10\) K, muy cerca de la regla de 1,5 L/min por kW que se usa en la industria (por ejemplo, la placa fría de 4 kW de CoolIT se probó a 6 L/min). La segunda ecuación dice qué tan rápido va esa agua en cada tramo: el caudal se conserva (el agua no se comprime), así que donde la tubería se angosta, el agua acelera.</p>
+  <div class="eq">
+  \[Q=A_1v_1=A_2v_2,\qquad A=\frac{\pi D^{2}}{4}\qquad\Rightarrow\qquad v_2=v_1\Big(\frac{D_1}{D_2}\Big)^{2};\qquad \text{en el colector: } Q_k=Q-\sum_{i\lt k}q_i\]
+  </div>
+  <p>La tercera relaciona la velocidad, la altura y la presión. Bernoulli dice que, sin pérdidas, la energía por unidad de volumen se conserva a lo largo del flujo. En un circuito real hay que agregarle las pérdidas por fricción (ecuación de Darcy–Weisbach) y la caída de presión de cada placa fría:</p>
+  <div class="eq">
+  \[p_1+\tfrac12\rho v_1^{2}+\rho g z_1=p_2+\tfrac12\rho v_2^{2}+\rho g z_2+\Delta p_{\text{pérdidas}},\qquad \Delta p_f=f\,\frac{L}{D}\,\frac{\rho v^{2}}{2},\qquad f=\begin{cases}64/Re & Re<2300\\ 0{,}316\,Re^{-1/4} & \text{turbulento (Blasius)}\end{cases},\quad Re=\frac{\rho vD}{\mu}\]
+  </div>
+
+  <h4 class="sub">Por qué modelar la física es mejor que las alternativas</h4>
+  <p>La alternativa no física es elegir tuberías «por experiencia» o copiar el diámetro de la instalación anterior y abrir más la bomba si algo se calienta. Con 100 kW por rack eso falla en silencio: el caudal total puede ser el correcto y aun así los servidores del extremo del colector recibir menos agua que los del inicio, porque la presión disponible cambia a lo largo del colector. Ese servidor no se apaga; baja su velocidad por temperatura (<i>thermal throttling</i>) y nadie sabe por qué ese nodo rinde menos. Con continuidad y Bernoulli el ingeniero predice, antes de comprar una sola tubería, cuánto caudal llega a cada servidor, qué presión debe dar la bomba y qué diámetro de colector mantiene el reparto parejo.</p>
+  <div class="tradeoff">
+    <div class="gain"><b>Qué se gana</b><ul><li>Caudal garantizado en cada servidor, no solo en el total.</li><li>La bomba se dimensiona para la caída de presión real, sin sobredimensionar (energía).</li><li>Se puede comparar en minutos un colector de 25 mm contra uno de 40 mm.</li></ul></div>
+    <div class="cost"><b>Qué cuesta</b><ul><li>Hay que conocer la caída de presión de cada placa fría, que solo da el fabricante o una prueba.</li><li>Los accesorios (codos, conectores rápidos, tes) agregan pérdidas que este modelo simplifica.</li><li>Un reparto exacto en redes grandes requiere resolver un sistema no lineal (aquí, por iteración).</li></ul></div>
+  </div>
+
+  <h3><span class="lbl">(b)</span> Visualización de datos: velocidad y presión a lo largo del circuito</h3>
+  <p><b>Parámetros declarados del cálculo.</b> Datos calculados para este portafolio con el modelo de arriba; los cuatro primeros se pueden cambiar con los controles.</p>
+  <table class="data">
+    <thead><tr><th>Parámetro</th><th>Valor</th><th class="l">Comentario</th></tr></thead>
+    <tbody>
+      <tr><td>Potencia del rack P</td><td>100 kW</td><td class="l">20 servidores de 5 kW (control)</td></tr>
+      <tr><td>Aumento de temperatura ΔT</td><td>10 K</td><td class="l">Entre la entrada y la salida del agua (control)</td></tr>
+      <tr><td>Tubería principal</td><td>D = 50 mm, 15 m de ida y 15 m de vuelta</td><td class="l">Horizontal, de la CDU al rack (control del diámetro)</td></tr>
+      <tr><td>Colectores del rack</td><td>D = 40 mm, verticales, 2 m</td><td class="l">Uno de suministro y uno de retorno; derivaciones cada 0,09 m desde 0,20 m (control del diámetro)</td></tr>
+      <tr><td>Disposición</td><td>Retorno directo</td><td class="l">El agua entra y sale por abajo: el servidor 20, arriba, tiene el camino más largo</td></tr>
+      <tr><td>Manguera de cada servidor</td><td>D = 9,5 mm, 1,5 m de ida y 1,5 m de vuelta</td><td class="l"></td></tr>
+      <tr><td>Placa fría</td><td>20 kPa a 7,2 L/min</td><td class="l">Supuesto del ejemplo; \(\Delta p=Kq^{2}\)</td></tr>
+      <tr><td>Fluido</td><td>Agua a 30 °C</td><td class="l">\(\rho=995{,}7\) kg/m³, \(c_p=4178\) J/(kg·K), \(\mu=0{,}797\) mPa·s</td></tr>
+      <tr><td>Presión a la salida de la CDU</td><td>250 kPa (manométrica)</td><td class="l">Solo fija el origen de la gráfica de presión</td></tr>
+    </tbody>
+  </table>
+  <div class="card">
+    <div class="controls">
+      <div class="ctl"><label>Potencia del rack <output id="t13POut"></output></label><input type="range" id="t13P" min="20" max="150" step="5" value="100"></div>
+      <div class="ctl"><label>Aumento de temperatura ΔT <output id="t13dTOut"></output></label><input type="range" id="t13dT" min="5" max="20" step="1" value="10"></div>
+      <div class="ctl"><label>Diámetro de la tubería principal <output id="t13DmainOut"></output></label><input type="range" id="t13Dmain" min="25" max="80" step="1" value="50"></div>
+      <div class="ctl"><label>Diámetro de los colectores <output id="t13DmanOut"></output></label><input type="range" id="t13Dman" min="12" max="50" step="1" value="40"></div>
+    </div>
+    <div class="readout" id="t13Readout"></div>
+    <p id="t13Verdict" style="margin-top:12px"></p>
+  </div>
+  <div class="card">
+    <div class="card-title">Velocidad del agua y sección de la tubería a lo largo del recorrido</div>
+    <div class="card-sub">Recorrido completo del agua que llega al servidor 20: tubería principal → colector de suministro (subiendo) → manguera → placa fría → manguera → colector de retorno (bajando) → tubería principal de retorno. La velocidad sale de \(v=Q/A\) con el caudal de cada tramo.</div>
+    <div class="chart-box tall"><canvas id="cT13v"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Presión a lo largo del mismo recorrido</div>
+    <div class="card-sub">En verde, lo que predice Bernoulli solo (sin pérdidas): la presión cambia únicamente por la velocidad y la altura, y vuelve a su valor inicial al cerrar el circuito. En naranja, con las pérdidas por fricción y la placa fría: esa diferencia final es la presión que debe aportar la bomba de la CDU.</div>
+    <div class="chart-box tall"><canvas id="cT13p"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">¿Llega suficiente caudal a cada servidor?</div>
+    <div class="card-sub">Reparto del caudal entre los 20 servidores, resuelto por iteración: la presión disponible en cada derivación (suministro menos retorno, con Bernoulli y fricción en los colectores) define cuánto pasa por cada placa fría con \(q_i=\sqrt{\Delta p_i/K}\), y la suma debe dar el caudal total. En naranja, los que reciben menos del 90 % de lo necesario.</div>
+    <div class="chart-box"><canvas id="cT13q"></canvas></div>
+  </div>
+  <h4 class="sub">Lectura de las gráficas</h4>
+  <p><b>Continuidad.</b> En la tubería principal de 50 mm el agua va a 1,2 m/s. Al entrar al colector de 40 mm acelera a 1,9 m/s, porque el área es \((50/40)^2=1{,}56\) veces menor. Luego, subiendo por el colector, la velocidad baja en escalones: cada servidor se lleva 7,2 L/min y queda menos caudal para la misma sección. En la manguera de 9,5 mm, con solo 7,2 L/min, el agua va a 1,7 m/s. Al bajar por el colector de retorno ocurre lo contrario: cada servidor suma su caudal y la velocidad sube en escalones.</p>
+  <p><b>Bernoulli.</b> La curva verde muestra tres efectos sin pérdidas: la presión baja al subir los 2 m del colector (\(\rho g\,\Delta z\approx19{,}5\) kPa) y se recupera al bajar; baja cuando el agua acelera al angostarse la sección y <b>sube</b> en el colector de suministro cada vez que el agua se frena tras una derivación (la energía cinética vuelve a ser presión). La curva naranja agrega lo que se pierde: la caída grande y concentrada es la placa fría (unos 20 kPa); el resto se reparte en las tuberías según \(\Delta p_f\propto v^{2}L/D\).</p>
+  <p><b>Dimensionamiento.</b> Con colectores de 40 mm el reparto es casi perfecto (el servidor que menos recibe obtiene más del 98 % de lo que necesita). Baje el diámetro del colector a 16 mm: la velocidad en su parte baja pasa de 10 m/s (un valor que ningún diseño real aceptaría), las pérdidas crecen con \(v^{2}\), la presión disponible deja de ser pareja a lo largo del rack y la diferencia entre servidores se hace visible. Por debajo de 14 mm, algunos servidores reciben menos del 90 % de su caudal y quedan marcados en naranja: se calentarían más de 10 K, aunque el caudal total sea el correcto. Esto es exactamente lo que el cálculo permite evitar antes de construir.</p>
+
+  <div class="links"><b>Conexiones</b><ul>
+    <li>Con el <a href="#tema-6">Tema 6</a>: los dos temas son balances de energía. Allá la energía cinética del auto se reparte entre batería y frenos; aquí la energía eléctrica del servidor termina como calor que el agua se lleva, \(P=\rho Qc_p\Delta T\).</li>
+    <li>Con el <a href="#tema-2">Tema 2</a>: el término \(\rho g z\) de Bernoulli es la energía potencial por unidad de volumen, la misma \(mgh\) del salto.</li>
+    <li>Con el <a href="#tema-4">Tema 4</a>: la fricción en la tubería, como la de la llanta, se lleva energía mecánica y la convierte en calor; Darcy–Weisbach es la «ley de fricción» de un fluido.</li>
+    <li>Con la clase: ecuación de continuidad, teorema de Bernoulli, presión hidrostática \(\rho g h\) y caudal.</li>
+  </ul></div>
+  <div class="sources"><b>Fuentes</b><ol>
+    <li>Open Compute Project. <a href="https://www.opencompute.org/documents/oai-system-liquid-cooling-guidelines-in-ocp-template-mar-3-2023-update-pdf" target="_blank" rel="noopener">OAI System Liquid Cooling Guidelines</a> (2023) y <a href="https://opencompute.org/documents/ocp-liquid-cooling-integration-and-logistics-white-paper-revision-1-0-1-pdf" target="_blank" rel="noopener">Liquid Cooling Integration and Logistics White Paper</a> (CDU, colectores, placas frías, caudal y caída de presión).</li>
+    <li>Vertiv. <a href="https://www.vertiv.com/en-us/about/news-and-insights/articles/blog-posts/a-roadmap-for-the-future-chip-coolant-temperature/" target="_blank" rel="noopener">A roadmap for the future chip coolant temperature</a> (requisitos de temperatura del refrigerante a 1,5 L/min por kW, según OCP).</li>
+    <li>CoolIT Systems (2025). <a href="https://www.coolitsystems.com/wp-content/uploads/2025/03/4000W-coldplate-Technical-Brief-f-1.pdf" target="_blank" rel="noopener">4000W Coldplate Technical Brief</a> (pruebas entre 4,28 y 6,06 L/min) y StorageReview, <a href="https://www.storagereview.com/news/coolit-unveils-4000w-cold-plate-setting-new-standard-for-single-phase-direct-liquid-cooling" target="_blank" rel="noopener">CoolIT Unveils 4000W Cold Plate</a> (6 L/min equivale a 1,5 L/min por kW).</li>
+    <li>Propiedades del agua a 30 °C y correlaciones de Darcy–Weisbach y Blasius: Çengel, Y. A. y Cimbala, J. M. <i>Mecánica de fluidos: fundamentos y aplicaciones</i>, McGraw-Hill.</li>
+  </ol></div>
+</section>
+
+<!-- ============================ QUÉ APRENDÍ ============================ -->
+<section class="topic" id="que-aprendi">
+  <div class="topic-head">
+    <div class="num">CIERRE</div>
+    <h2>Qué aprendí</h2>
+    <div class="tags"><span class="tag">Mapa de conexiones</span><span class="tag">Aplicación propia</span></div>
+  </div>
+  <p class="lead">Después de trece casos, lo que más me sorprendió es que no son trece físicas distintas. Son unas pocas leyes (Newton, Hooke, la conservación de la energía y la del momento) que reaparecen en productos que no tienen nada que ver entre sí. Escogí tres pares que lo muestran.</p>
+
+  <h3><span class="lbl">(a)</span> El mapa de conexiones</h3>
+  <div class="card">
+    <div class="card-title">Par 1 · <a href="#tema-5">Tema 5</a> (gatillo háptico) y <a href="#tema-10">Tema 10</a> (spring animations): la ley de Hooke como herramienta de diseño</div>
+    <p>Un control de PlayStation y un iPhone no comparten nada de hardware, pero los dos programan un resorte que no existe. El gatillo adaptativo convierte la posición del gatillo en una fuerza que crece con el recorrido (la pendiente de su modo <code>slopeFeedback</code> es una \(k\)) y se la pide al motor; la animación de iOS calcula \(F=-k(x-x_{\text{fin}})\) a partir de cuánto le falta al elemento para llegar y la usa para moverlo. En los dos casos \(k\) no se elige para imitar un objeto real, sino para que la interacción «se sienta» bien. La diferencia es quién cierra el ciclo: en el gatillo, el dedo del jugador es la masa y la fuerza se siente por la tercera ley; en la pantalla, la masa es virtual y por eso hace falta agregar el amortiguamiento \(c\) para que la tarjeta no rebote sin fin. Lo que aprendí es que la ley de Hooke, que en clase era un resorte colgando de un soporte, en software es un <b>lenguaje para describir sensaciones</b>: rigidez es «qué tan firme», amortiguamiento es «qué tan rápido se calma».</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Par 2 · <a href="#tema-7">Tema 7</a> (coeficiente de restitución) y <a href="#tema-9">Tema 9</a> (asistencia gravitatoria): choques y marcos de referencia</div>
+    <p>Una pelota en un motor de juego y la Voyager frente a Júpiter son el mismo problema: un choque en el que se conserva el momento lineal. La diferencia es el coeficiente de restitución. En el juego, \(e&lt;1\) y la pelota pierde rapidez en cada bote; en el sobrevuelo, visto desde el planeta, \(e=1\) y la sonda sale con la misma rapidez con la que llegó. Lo que une a los dos temas es el <b>cambio de marco</b>: si la pelota del juego golpea una paleta que se mueve hacia ella (como en un juego de tenis), sale más rápido de lo que llegó, igual que la Voyager, porque en el marco de la paleta el choque es el mismo y al volver al marco del suelo se le suma la velocidad de la paleta. Antes pensaba que la asistencia gravitatoria era un truco de la gravedad; ahora la veo como un rebote contra algo enorme que se mueve, y entiendo por qué en el Tema 9 había que separar \(|\Delta\vec v|\) de \(\Delta|\vec v|\).</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Par 3 · <a href="#tema-6">Tema 6</a> (frenado regenerativo) y <a href="#tema-13">Tema 13</a> (enfriamiento líquido): seguir la energía hasta el final</div>
+    <p>Un auto eléctrico que frena y un rack de servidores que calcula parecen opuestos, pero en los dos el trabajo de ingeniería es contestar «¿a dónde se va la energía?». En el Tema 6 la energía cinética del auto se reparte entre la batería (lo que se recupera) y el calor de los frenos y del aire (lo que se pierde); en el Tema 13 los 100 kW eléctricos del rack terminan como calor, y el agua tiene que llevárselo según \(P=\rho Qc_p\Delta T\). Hasta Bernoulli es conservación de la energía, escrita por unidad de volumen, y la fricción en la tubería es la misma «pérdida» que la de las pastillas de freno: energía mecánica que se convierte en calor. Lo que aprendí es que la conservación de la energía es la herramienta más útil para dimensionar: antes de saber los detalles, ya dice cuánta batería, cuánta agua o cuánta bomba hace falta.</p>
+  </div>
+
+  <h3><span class="lbl">(b)</span> La aplicación propia: una hora de llegada honesta para el bus Limón–San José</h3>
+  <p><b>El problema.</b> Viajo con frecuencia en bus entre Limón y San José por la Ruta 32, que cruza el Parque Nacional Braulio Carrillo. Las aplicaciones de mapas calculan la hora de llegada con velocidades promedio de tráfico, pensadas para autos. Para un bus cargado eso falla en los dos sentidos: subiendo hacia San José (que está a unos 1150 m sobre el nivel del mar, mientras Limón está en la costa) el bus va mucho más lento que un auto, y en las curvas cerradas de montaña ningún vehículo grande va a la velocidad que sugiere el promedio. Además, en buena parte del parque no hay señal, así que la aplicación no puede corregirse con el GPS del bus en tiempo real. Me interesa una aplicación que diga a qué hora va a llegar <i>este</i> bus, no un auto promedio.</p>
+  <p><b>El concepto físico que lo resolvería.</b> La segunda ley de Newton aplicada a un vehículo en pendiente, más la aceleración centrípeta en las curvas. La velocidad posible en cada punto de la ruta está limitada por dos cosas. En subida, por la potencia del motor: la fuerza para vencer la pendiente, la rodadura y el aire multiplicada por la velocidad no puede superar la potencia disponible. En curva, por la aceleración lateral: el bus no puede ir más rápido de lo que permite la fricción de las llantas (Tema 4) ni de lo que soportan los pasajeros de pie (Tema 3).</p>
+  <div class="eq">
+  \[P_{\text{disp}}\ \ge\ v\Big(mg\sin\theta+C_{rr}\,mg\cos\theta+\tfrac12\rho_{\text{aire}}C_dA\,v^{2}\Big)\qquad\text{y}\qquad \frac{v^{2}}{r}\le a_{\text{lat,máx}}\]
+  \[v_{\max}(s)=\min\big(v_{\text{potencia}}(s),\ \sqrt{a_{\text{lat,máx}}\,r(s)},\ v_{\text{límite legal}}\big),\qquad t_{\text{llegada}}=\int_{0}^{L}\frac{ds}{v(s)}\]
+  </div>
+  <p><b>Cómo se haría.</b> La ruta se divide en tramos de, por ejemplo, 50 m. De un modelo digital de elevación y del trazado de OpenStreetMap se obtienen la pendiente \(\theta(s)\) y el radio de curvatura \(r(s)\) de cada tramo. Con la masa del bus (según cuántos pasajeros lleva) y su potencia, se calcula \(v_{\max}(s)\) en cada tramo y luego se suaviza con aceleraciones y frenadas posibles, como el perfil del dron del Tema 1. Integrar \(ds/v\) da el tiempo. Un cálculo de orden de magnitud muestra qué tan distinto es esto de un promedio: con un bus de 15 t, unos 200 kW en las ruedas y una pendiente del 6 %, la potencia limita a unos 66 km/h; pero en una curva de 50 m de radio, con \(a_{\text{lat}}=1{,}5\) m/s² para que los pasajeros de pie no se caigan, el límite es \(\sqrt{1{,}5\times50}\approx8{,}7\) m/s \(\approx31\) km/h. En la montaña, entonces, mandan las curvas y no el motor, y eso es algo que un promedio de autos no ve. Donde sí hay señal, la posición GPS corrige el modelo (como el estimador del Tema 1 entre lecturas), y donde no la hay, el modelo físico sigue prediciendo.</p>
+  <p><b>Por qué la física y no solo datos históricos.</b> Un modelo puramente estadístico necesitaría muchos viajes de cada bus con cada carga para aprender lo mismo, y no podría responder «¿qué pasa si el bus va lleno?» o «¿y si cierran un carril?». El modelo físico responde con los mismos parámetros, y los datos históricos quedan para calibrar lo que la física no ve: paradas, presas y cierres por derrumbes. Los valores de este ejemplo (masa, potencia, \(a_{\text{lat}}\)) son supuestos de orden de magnitud para argumentar la idea, no medidos.</p>
+</section>
+
+
 <footer>
-  Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Avance 2, octubre de 2026.<br>
-  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas elaborados para este portafolio; los videos pertenecen a sus autores y se citan en el Tema 5. Datos: EPA, NREL, NASA/JPL Horizons y NASA NSSDCA, citados en cada tema y guardados en <code>data/</code>.
+  Santiago Hernández Quirós · Física I (FUN-18), Universidad CENFOTEC · Entrega final, noviembre de 2026.<br>
+  Gráficas con <a href="https://www.chartjs.org/" target="_blank" rel="noopener">Chart.js</a> y ecuaciones con <a href="https://katex.org/" target="_blank" rel="noopener">KaTeX</a>. Simulaciones, gráficas y diagramas elaborados para este portafolio; los videos pertenecen a sus autores y se citan en los temas 5 y 12. Datos: EPA, NREL, NASA/JPL Horizons, NASA NSSDCA, Pirelli y OCP, citados en cada tema; datos crudos en <code>data/</code> y audios generados en <code>audio/</code>.
 </footer>
 </main>
 </div>
@@ -1164,7 +1528,7 @@ $('themeBtn').onclick=()=>{
 };
 $('menuBtn').onclick=()=>{const s=$('side');s.classList.toggle('open');$('menuBtn').setAttribute('aria-expanded',s.classList.contains('open'));};
 document.querySelectorAll('.side a[href^="#"]').forEach(a=>a.addEventListener('click',()=>$('side').classList.remove('open')));
-const navLinks=[...document.querySelectorAll('.side a[href^="#tema"]')];
+const navLinks=[...document.querySelectorAll('.side a[href^="#tema"], .side a[href="#que-aprendi"]')];
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));}})},{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('section.topic').forEach(s=>obs.observe(s));
 
@@ -1597,6 +1961,227 @@ if($('tema-9') && window.VOYAGER){
   const last=D.v2[D.v2.length-1];
   $('t9Readout').innerHTML=`<div><span>V2, 40 días antes de Júpiter</span><b>${fmt(vb,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(rb*AU)),1)} km/s</b></div><div><span>V2, 40 días después de Júpiter</span><b>${fmt(va,1)} km/s</b></div><div><span>Escape a esa distancia</span><b>${fmt(Math.sqrt(2*GM/(ra*AU)),1)} km/s</b></div><div><span>V2 a fines de 1990</span><b>${fmt(last[1],1)} km/s a ${fmt(last[2],1)} UA</b></div><div><span>Escape ahí</span><b>${fmt(Math.sqrt(2*GM/(last[2]*AU)),1)} km/s</b></div>`;
 }
+
+
+/* =============== TEMA 10: spring animations =============== */
+(function(){
+  const cvs=$('t10track'), g=cvs.getContext('2d');
+  const P=()=>({k:+$('t10k').value,c:+$('t10c').value,m:+$('t10m').value,v0:+$('t10v0').value});
+  let W=600,H=120; const CW=64, pad=24;
+  let side=0;               // 0 = izquierda, 1 = derecha
+  let traj=null;            // trayectoria precalculada del resorte {t0, xs[], vs[], dt}
+  let bz=null;              // curva de duración fija {t0, x0, x1, d}
+  let xS=0, vS=0, xB=0;     // estado actual dibujado
+  let rec=null;             // datos para la gráfica
+  const posOf=s=>s?W-pad-CW:pad;
+  function size(){const dpr=window.devicePixelRatio||1; W=cvs.clientWidth; H=cvs.clientHeight; cvs.width=W*dpr; cvs.height=H*dpr; g.setTransform(dpr,0,0,dpr,0,0);}
+  // integra m x'' = -k (x - xf) - c x'  con paso fijo (Euler semi-implícito, 1 ms)
+  function integrate(x,v,xf,p,T){const dt=0.001,n=Math.round(T/dt),xs=new Float64Array(n+1),vs=new Float64Array(n+1);xs[0]=x;vs[0]=v;
+    for(let i=1;i<=n;i++){const a=(-p.k*(x-xf)-p.c*v)/p.m; v+=a*dt; x+=v*dt; xs[i]=x; vs[i]=v;} return {xs,vs,dt,xf};}
+  // cubic-bezier(0.42,0,0.58,1) = ease-in-out
+  function bez(u){const x1=.42,x2=.58;let s=u;for(let i=0;i<8;i++){const x=3*(1-s)**2*s*x1+3*(1-s)*s*s*x2+s**3-u, dx=3*(1-s)**2*x1+6*(1-s)*s*(x2-x1)+3*s*s*(1-x2);if(Math.abs(dx)<1e-6)break;s-=x/dx;s=Math.min(1,Math.max(0,s));}return 3*(1-s)*s*s+s**3;}
+  const BZD=0.5;
+  function stateAt(now){ if(!traj) return [xS,0]; const i=Math.min(traj.xs.length-1,Math.max(0,Math.round((now-traj.t0)/1000/traj.dt))); return [traj.xs[i],traj.vs[i]]; }
+  function bzAt(now){ if(!bz) return xB; const u=Math.min(1,(now-bz.t0)/1000/bz.d); return bz.x0+(bz.x1-bz.x0)*bez(u); }
+  function go(xf,withGesture){ const now=performance.now(), p=P(); const [x,v]=stateAt(now); const v0=withGesture?(xf>x?1:-1)*Math.abs(p.v0)*(p.v0<0?-1:1):v;
+    traj={...integrate(x,v0,xf,p,4),t0:now}; bz={t0:now,x0:bzAt(now),x1:xf,d:BZD};
+    // datos de la gráfica, normalizados al recorrido de esta orden
+    const span=xf-x||1, N=traj.xs.length; const sp=[],bp=[]; for(let i=0;i<N;i+=10){const t=i*traj.dt; if(t>2.5)break; sp.push({x:t,y:(traj.xs[i]-x)/span}); bp.push({x:t,y:t>=BZD?(bz.x1-bz.x0+bz.x0-x)/span:((bz.x0+(bz.x1-bz.x0)*bez(t/BZD))-x)/span});}
+    rec={sp,bp,stats:stats(traj,x,xf)}; updChart(); readout(); if(!raf) raf=requestAnimationFrame(loop); }
+  function stats(tr,x0,xf){ const span=xf-x0; let over=0, settle=null; const tol=0.02*Math.abs(span||1);
+    for(let i=0;i<tr.xs.length;i++){ const u=(tr.xs[i]-x0)/(span||1); over=Math.max(over,u-1); }
+    for(let i=tr.xs.length-1;i>=0;i--){ if(Math.abs(tr.xs[i]-xf)>tol){ settle=(i+1)*tr.dt; break; } }
+    return {over:Math.max(0,over),settle:settle===null?0:settle}; }
+  let raf=null;
+  function draw(now){ g.clearRect(0,0,W,H); const mid=H/2;
+    g.strokeStyle=css('--line'); g.lineWidth=2; g.beginPath(); g.moveTo(pad,mid); g.lineTo(W-pad,mid); g.stroke();
+    [posOf(0),posOf(1)].forEach(x=>{g.strokeStyle=css('--ink-3');g.setLineDash([4,4]);g.strokeRect(x,mid-CW/2+6,CW,CW-12);g.setLineDash([]);});
+    if(traj){ g.strokeStyle=css('--green'); g.lineWidth=2; g.beginPath(); g.moveTo(traj.xf+CW/2,8); g.lineTo(traj.xf+CW/2,H-8); g.stroke(); }
+    const [x]=stateAt(now); xS=x; xB=bzAt(now);
+    g.globalAlpha=.55; g.fillStyle=css('--ink-3'); rr(xB,mid+4,CW,CW/2-10); g.globalAlpha=1;
+    g.fillStyle=css('--accent'); rr(x,mid-CW/2+6,CW,CW/2-6);
+    g.fillStyle='#fff'; g.font='600 11px Inter'; g.fillText('resorte',x+10,mid-CW/2+26);
+    g.fillStyle=css('--ink'); g.fillText('Bézier fija',xB+4,mid+22);
+  }
+  function rr(x,y,w,h){const r=8;g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();g.fill();}
+  function loop(now){ draw(now); const done=traj&&(now-traj.t0)/1000>=4&&(!bz||(now-bz.t0)/1000>=bz.d); if(done){raf=null;return;} raf=requestAnimationFrame(loop); }
+  function regime(p){const w0=Math.sqrt(p.k/p.m), z=p.c/(2*Math.sqrt(p.k*p.m)); return {w0,z,name:z<0.995?'Subamortiguado':z<=1.005?'Crítico':'Sobreamortiguado'};}
+  function readout(){ const p=P(), r=regime(p), d=2*Math.PI/r.w0; const b=r.z<=1?1-r.z:d*(1/r.z-1)/(4*Math.PI);
+    const Mp=r.z<1?Math.exp(-Math.PI*r.z/Math.sqrt(1-r.z*r.z))*100:0;
+    $('t10Readout').innerHTML=`<div><span>ω₀ = √(k/m)</span><b>${fmt(r.w0,2)} rad/s</b></div><div><span>ζ = c / 2√(km)</span><b>${fmt(r.z,2)}</b></div><div><span>Régimen</span><b>${r.name}</b></div><div><span>c crítico = 2√(km)</span><b>${fmt(2*Math.sqrt(p.k*p.m),1)}</b></div><div><span>Apple: duration d</span><b>${fmt(d,2)} s</b></div><div><span>Apple: bounce</span><b>${fmt(b,2)}</b></div><div><span>Sobrepaso teórico</span><b>${fmt(Mp,1)} %</b></div>`+(rec?`<div><span>Sobrepaso medido</span><b>${fmt(rec.stats.over*100,1)} %</b></div><div><span>Asentamiento (±2 %)</span><b>${rec.stats.settle>3.9?'> 4 s':fmt(rec.stats.settle,2)+' s'}</b></div>`:'');
+  }
+  function refCurve(p,z){ const pts=[]; const c=2*z*Math.sqrt(p.k*p.m); const tr=integrate(0,0,1,{k:p.k,c,m:p.m},2.5); for(let i=0;i<tr.xs.length;i+=10) pts.push({x:i*tr.dt,y:tr.xs[i]}); return pts; }
+  function cfg(){ const p=P(), o=baseOpts('Tiempo desde la orden [s]','Fracción del recorrido [–]'); o.scales.x.min=0;o.scales.x.max=2.5; o.scales.y.min=-0.2;o.scales.y.max=1.8;
+    o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,3)} a ${fmt(c.parsed.x,2)} s`}};
+    const ref=(z,lab,col)=>({label:lab,data:refCurve(p,z),borderColor:css(col),backgroundColor:css(col),borderDash:[3,4],pointRadius:0,borderWidth:1.4});
+    return {type:'line',data:{datasets:[{label:'Resorte (su configuración)',data:rec?rec.sp:[],borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:3},
+      {label:'Bézier ease-in-out de 0,5 s',data:rec?rec.bp:[],borderColor:css('--ink-3'),backgroundColor:css('--ink-3'),pointRadius:0,borderWidth:2},
+      ref(0.3,'ζ = 0,3','--blue'),ref(1,'ζ = 1','--green'),ref(2.5,'ζ = 2,5','--violet')]},options:o}; }
+  const c0=cfg(); c0._build=cfg; const ch=mk('cT10',c0);
+  function updChart(){ if(!ch) return; const n=cfg(); ch.data.datasets.forEach((d,i)=>d.data=n.data.datasets[i].data); ch.update('none'); }
+  function sync(){const p=P();$('t10kOut').textContent=fmt(p.k,0)+' N/m';$('t10cOut').textContent=fmt(p.c,1)+' N·s/m';$('t10mOut').textContent=fmt(p.m,1)+' kg';$('t10v0Out').textContent=fmt(p.v0,0)+' px/s';readout();}
+  ['t10k','t10c','t10m','t10v0'].forEach(id=>$(id).addEventListener('input',()=>{sync();updChart();}));
+  $('t10go').onclick=()=>{side=1-side; go(posOf(side),true);};
+  cvs.addEventListener('pointerdown',e=>{const r=cvs.getBoundingClientRect(); const x=Math.min(W-pad-CW,Math.max(pad,e.clientX-r.left-CW/2)); side=x>W/2?1:0; go(x,false);});
+  document.querySelectorAll('[data-t10z]').forEach(b=>b.onclick=()=>{const p=P(),z=+b.dataset.t10z;$('t10c').value=Math.min(150,2*z*Math.sqrt(p.k*p.m)).toFixed(1);sync();side=1-side;go(posOf(side),true);});
+  $('t10def').onclick=()=>{$('t10k').value=100;$('t10c').value=10;$('t10m').value=1;$('t10v0').value=0;sync();side=1-side;go(posOf(side),true);};
+  size(); xS=xB=posOf(0); sync(); draw(performance.now());
+  addEventListener('resize',()=>{const was=side;size();xS=xB=posOf(was);traj=null;bz=null;draw(performance.now());});
+  window.__t10={go,P,regime,integrate};
+})();
+
+/* =============== TEMA 11: síntesis de sonido =============== */
+(function(){
+  const F0=220, FILES=[{k:'A',url:'audio/muestra_impares.wav',col:'--blue',lab:'A: solo impares'},{k:'B',url:'audio/muestra_todos.wav',col:'--accent',lab:'B: todos'}];
+  const coefs=imp=>{const o=[];for(let n=1;n<=15;n++)o.push((imp&&n%2===0)?0:1/n);return o;};
+  // Respaldo si el navegador no puede leer los WAV (por ejemplo, abriendo el archivo localmente)
+  function synth(c,fs,N){const y=new Float32Array(N);for(let i=0;i<N;i++){let s=0;for(let n=1;n<=c.length;n++)s+=c[n-1]*Math.sin(2*Math.PI*n*F0*i/fs);y[i]=s;}let m=0;for(const v of y)m=Math.max(m,Math.abs(v));for(let i=0;i<N;i++)y[i]*=0.45/m;return y;}
+  function fft(re,im){const n=re.length;for(let i=1,j=0;i<n;i++){let b=n>>1;for(;j&b;b>>=1)j^=b;j^=b;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]];}}
+    for(let len=2;len<=n;len<<=1){const a=-2*Math.PI/len,wr=Math.cos(a),wi=Math.sin(a);for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let j=0;j<len/2;j++){const ur=re[i+j],ui=im[i+j],vr=re[i+j+len/2]*cr-im[i+j+len/2]*ci,vi=re[i+j+len/2]*ci+im[i+j+len/2]*cr;re[i+j]=ur+vr;im[i+j]=ui+vi;re[i+j+len/2]=ur-vr;im[i+j+len/2]=ui-vi;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t;}}}}
+  function analyse(x,fs){const N=8192,s0=Math.round(0.5*fs);const re=new Float64Array(N),im=new Float64Array(N);for(let i=0;i<N;i++){const w=0.5-0.5*Math.cos(2*Math.PI*i/(N-1));re[i]=x[s0+i]*w;}fft(re,im);
+    const mag=[];let mx=0;for(let k=0;k<N/2;k++){const m=Math.hypot(re[k],im[k]);mag.push(m);mx=Math.max(mx,m);}
+    const spec=[];for(let k=1;k<N/2;k++){const f=k*fs/N;if(f>3600)break;spec.push({x:f,y:Math.max(-80,20*Math.log10(mag[k]/mx+1e-12))});}
+    let num=0,den=0;for(let k=1;k<N/2;k++){const f=k*fs/N;if(f>8000)break;const p=mag[k]**2;num+=f*p;den+=p;}
+    const per=fs/F0,wave=[];for(let i=0;i<Math.round(3*per);i++)wave.push({x:i/fs*1000,y:x[s0+i]});
+    // amplitud de cada armónico con una DFT evaluada exactamente en n·f0 (sin el error de rejilla de la FFT)
+    const amp=n=>{let c=0,s=0,ws=0;for(let i=0;i<N;i++){const w=0.5-0.5*Math.cos(2*Math.PI*i/(N-1)),ph=2*Math.PI*n*F0*i/fs;c+=x[s0+i]*w*Math.cos(ph);s+=x[s0+i]*w*Math.sin(ph);ws+=w;}return 2*Math.hypot(c,s)/ws;};
+    const a1=amp(1);let peaks=[];for(let n=1;n<=15;n++)peaks.push(20*Math.log10(amp(n)/a1+1e-12));
+    return {spec,wave,centroid:num/den,peaks};}
+  const res={};
+  const hLines={id:'harm',beforeDatasetsDraw(ch){const g=ch.ctx,a=ch.chartArea;g.save();g.strokeStyle=css('--line');g.setLineDash([2,4]);for(let f=F0;f<=3600;f+=F0){const x=ch.scales.x.getPixelForValue(f);g.beginPath();g.moveTo(x,a.top);g.lineTo(x,a.bottom);g.stroke();}g.restore();}};
+  function wCfg(){const o=baseOpts('Tiempo [ms]','Amplitud [–]');o.scales.x.min=0;o.scales.x.max=13.64;o.scales.y.min=-1;o.scales.y.max=1;o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,3)} a ${fmt(c.parsed.x,2)} ms`}};
+    return {type:'line',data:{datasets:FILES.map(F=>({label:'Muestra '+F.lab,data:res[F.k]?res[F.k].wave:[],borderColor:css(F.col),backgroundColor:css(F.col),pointRadius:0,borderWidth:2}))},options:o};}
+  function sCfg(){const o=baseOpts('Frecuencia [Hz]','Nivel relativo [dB]');o.scales.x.min=0;o.scales.x.max=3600;o.scales.y.min=-80;o.scales.y.max=3;o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,1)} dB a ${fmt(c.parsed.x,0)} Hz`}};
+    return {type:'line',data:{datasets:FILES.map(F=>({label:'Muestra '+F.lab,data:res[F.k]?res[F.k].spec:[],borderColor:css(F.col),backgroundColor:css(F.col),pointRadius:0,borderWidth:1.6}))},options:o,plugins:[hLines]};}
+  const w0=wCfg();w0._build=wCfg;const cw=mk('cT11w',w0); const s0=sCfg();s0._build=sCfg;const cs=mk('cT11s',s0);
+  function show(src){[cw,cs].forEach((c,i)=>{if(!c)return;const n=i?sCfg():wCfg();c.data.datasets.forEach((d,j)=>d.data=n.data.datasets[j].data);c.update('none');});
+    const A=res.A,B=res.B;$('t11Readout').innerHTML=`<div><span>Centroide espectral A</span><b>${fmt(A.centroid,0)} Hz</b></div><div><span>Centroide espectral B</span><b>${fmt(B.centroid,0)} Hz</b></div><div><span>Armónico 2 (440 Hz) respecto al 1.º: A / B</span><b>${A.peaks[1]<-60?'ausente':fmt(A.peaks[1],1)+' dB'} / ${fmt(B.peaks[1],1)} dB</b></div><div><span>Armónico 3 (660 Hz) respecto al 1.º: A / B</span><b>${fmt(A.peaks[2],1)} / ${fmt(B.peaks[2],1)} dB</b></div><div><span>Período (las dos)</span><b>${fmt(1000/F0,3)} ms</b></div><div><span>Datos</span><b>${src}</b></div>`;}
+  async function load(){try{const AC=window.AudioContext||window.webkitAudioContext;const ctx=new (window.OfflineAudioContext||window.webkitOfflineAudioContext)(1,44100,44100);
+      for(const F of FILES){const buf=await fetch(F.url).then(r=>{if(!r.ok)throw new Error(r.status);return r.arrayBuffer();});const ab=await ctx.decodeAudioData(buf);res[F.k]=analyse(ab.getChannelData(0),ab.sampleRate);}
+      show('FFT de los archivos WAV');}
+    catch(e){const fs=44100;FILES.forEach((F,i)=>res[F.k]=analyse(synth(coefs(i===0),fs,fs),fs));show('recalculado (sin acceso a los WAV)');}}
+  load();
+
+  /* Mezclador de armónicos con Web Audio */
+  const NH=8, mix=$('t11mix'); mix.innerHTML=Array.from({length:NH},(_,i)=>`<div class="ctl"><label>Armónico ${i+1} (${(i+1)*F0} Hz) <output id="t11o${i}"></output></label><input type="range" id="t11h${i}" min="0" max="1" step="0.01" value="${i===0?1:0}"></div>`).join('');
+  const amps=()=>Array.from({length:NH},(_,i)=>+$('t11h'+i).value);
+  let actx=null,osc=null,gain=null;
+  function wave(){if(!actx)return null;const a=amps(),re=new Float32Array(NH+1),im=new Float32Array(NH+1);a.forEach((v,i)=>im[i+1]=v);return actx.createPeriodicWave(re,im);}
+  function mCfg(){const a=amps(),o=baseOpts('Tiempo [ms]','y(t) [–]');o.scales.x.min=0;o.scales.x.max=9.09;o.plugins.legend={display:false};const pts=[];for(let i=0;i<=300;i++){const t=i/300*2/F0;let s=0;a.forEach((A,n)=>s+=A*Math.sin(2*Math.PI*(n+1)*F0*t));pts.push({x:t*1000,y:s});}
+    return {type:'line',data:{datasets:[{label:'y(t)',data:pts,borderColor:css('--violet'),backgroundColor:css('--violet'),pointRadius:0,borderWidth:2}]},options:o};}
+  const m0=mCfg();m0._build=mCfg;const cm=mk('cT11m',m0);
+  function updMix(){amps().forEach((v,i)=>$('t11o'+i).textContent=fmt(v,2));if(cm){const n=mCfg();cm.data.datasets[0].data=n.data.datasets[0].data;cm.options.scales.y=n.options.scales.y;cm.update('none');}if(osc)osc.setPeriodicWave(wave());}
+  for(let i=0;i<NH;i++)$('t11h'+i).addEventListener('input',updMix);
+  $('t11play').onclick=()=>{try{if(!actx){actx=new (window.AudioContext||window.webkitAudioContext)();}
+    if(osc){gain.gain.setTargetAtTime(0,actx.currentTime,0.02);const o=osc;setTimeout(()=>o.stop(),150);osc=null;$('t11play').textContent='▶ Escuchar';return;}
+    osc=actx.createOscillator();gain=actx.createGain();gain.gain.value=0;osc.frequency.value=F0;osc.setPeriodicWave(wave());osc.connect(gain).connect(actx.destination);osc.start();gain.gain.setTargetAtTime(0.18,actx.currentTime,0.02);$('t11play').textContent='■ Detener';}catch(e){$('t11play').textContent='Audio no disponible';}};
+  const pre={seno:[1,0,0,0,0,0,0,0],impares:[1,0,1/3,0,1/5,0,1/7,0],todos:[1,1/2,1/3,1/4,1/5,1/6,1/7,1/8],hueco:[1,1,0,0,0,0,0,0]};
+  document.querySelectorAll('[data-t11p]').forEach(b=>b.onclick=()=>{pre[b.dataset.t11p].forEach((v,i)=>$('t11h'+i).value=v);updMix();});
+  updMix();
+})();
+
+/* =============== TEMA 12: resonancia =============== */
+(function(){
+  document.querySelectorAll('[data-t12seek]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault(); const s=+a.dataset.t12seek; $('t12video').src=`https://www.youtube-nocookie.com/embed/XggxeuFDaDU?rel=0&autoplay=1&start=${s}`; $('t12video').scrollIntoView({behavior:'smooth',block:'center'});}));
+  const P=()=>({f0:+$('t12f0').value,z:+$('t12z').value,fs:+$('t12fs').value});
+  const amp=(f,f0,z)=>{const r=f/f0;return 1/Math.sqrt((1-r*r)**2+(2*z*r)**2);};
+  const marchLine={id:'march',afterDatasetsDraw(ch){const p=P(),x=ch.scales.x.getPixelForValue(p.fs),a=ch.chartArea,g=ch.ctx;g.save();g.strokeStyle=css('--accent');g.setLineDash([5,4]);g.lineWidth=2;g.beginPath();g.moveTo(x,a.top);g.lineTo(x,a.bottom);g.stroke();g.fillStyle=css('--accent');g.font='12px Inter';g.fillText('marcha',x+4,a.top+14);g.restore();}};
+  function cfg(){const p=P(),o=baseOpts('Frecuencia de la excitación f [Hz]','Amplificación A(f)/A(0) [–]');o.scales.x.min=0;o.scales.x.max=5;o.scales.y.type='logarithmic';o.scales.y.min=0.1;o.scales.y.max=150;
+    o.plugins.tooltip={callbacks:{label:c=>`${fmt(c.parsed.y,1)}× a ${fmt(c.parsed.x,2)} Hz`}};
+    const pts=[];for(let f=0.01;f<=5;f+=0.005)pts.push({x:f,y:amp(f,p.f0,p.z)});
+    return {type:'line',data:{datasets:[{label:`Modo con f₀ = ${fmt(p.f0,2)} Hz, ζ = ${fmt(p.z,3)}`,data:pts,borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:2.4}]},options:o,plugins:[marchLine]};}
+  const c0=cfg();c0._build=cfg;const ch=mk('cT12',c0);
+  function upd(){const p=P();$('t12f0Out').textContent=fmt(p.f0,2)+' Hz';$('t12zOut').textContent=fmt(p.z*100,1)+' %';$('t12fsOut').textContent=fmt(p.fs,2)+' Hz';
+    if(ch){const n=cfg();ch.data.datasets[0].data=n.data.datasets[0].data;ch.data.datasets[0].label=n.data.datasets[0].label;ch.update('none');}
+    const a=amp(p.fs,p.f0,p.z);$('t12Readout').innerHTML=`<div><span>Amplificación con la marcha</span><b>${fmt(a,1)}×</b></div><div><span>Pico teórico 1/(2ζ)</span><b>${fmt(1/(2*p.z),0)}×</b></div><div><span>f marcha / f₀</span><b>${fmt(p.fs/p.f0,2)}</b></div><div><span>Ciclos para llegar al ~95 % del régimen (≈ 3/(2πζ))</span><b>${fmt(3/(2*Math.PI*p.z),0)}</b></div>`;}
+  ['t12f0','t12z','t12fs'].forEach(id=>$(id).addEventListener('input',upd)); upd();
+})();
+
+/* =============== TEMA 13: enfriamiento líquido =============== */
+const T13=(function(){
+  const RHO=995.7, MU=0.797e-3, CP=4178, G=9.81;                 // agua a 30 °C
+  const N=20, Z0=0.20, DZ=0.09, LMAIN=15, LHOSE=1.5, DHOSE=0.0095, P0=250e3;
+  // Rigidez hidráulica de la placa fría: 20 kPa a 7,2 L/min (supuesto declarado)
+  const QNOM=7.2/60000, KCP=20e3/(QNOM*QNOM);
+  const area=D=>Math.PI*D*D/4;
+  function fric(v,D){const Re=RHO*Math.abs(v)*D/MU; if(Re<1)return 0; const f=Re<2300?64/Re:0.316*Math.pow(Re,-0.25); return f;}
+  const dpf=(q,D,L)=>{const v=q/area(D);return fric(v,D)*L/D*0.5*RHO*v*Math.abs(v);};
+  function solve(p){
+    const Q=p.P*1000/(RHO*CP*p.dT), Dm=p.Dman/1000;
+    let q=new Array(N).fill(Q/N);
+    for(let it=0;it<60;it++){
+      // presión de suministro y de retorno en cada derivación (relativas), con fricción y Bernoulli en el colector
+      const ps=[],pr=[]; let s=0,r=0;
+      let Qs=Q, vPrev=Q/area(Dm);
+      for(let i=0;i<N;i++){ const L=i===0?Z0:DZ; const v=Qs/area(Dm);
+        s+= -dpf(Qs,Dm,L) - RHO*G*L + 0.5*RHO*(vPrev*vPrev - v*v); vPrev=v; ps.push(s); Qs-=q[i]; }
+      // retorno directo: el colector de retorno baja y sale por abajo; el caudal crece hacia la salida
+      let Qr=q.reduce((a,b)=>a+b,0); r=0; const prTop=[]; // integrar desde la salida hacia arriba
+      let acc=0; const flows=[]; let cum=Q; for(let i=0;i<N;i++){flows.push(cum); cum-=q[i];}
+      // presión en el colector de retorno a la altura i, relativa a su salida (abajo)
+      for(let i=0;i<N;i++){ let x=0; for(let j=0;j<=i;j++){ const L=j===0?Z0:DZ; const Qseg=flows[j]; x+= dpf(Qseg,Dm,L) - RHO*G*L; } pr.push(x); }
+      // Δp disponible en cada servidor = D + ps[i] - pr[i]; q_i = sqrt(Δp/Kb); elegir D para que sum q = Q
+      const Kb=KCP+ (dpf(QNOM,DHOSE,2*LHOSE))/(QNOM*QNOM);
+      const flowFor=Dc=>ps.map((x,i)=>{const dp=Dc+x-pr[i];return dp>0?Math.sqrt(dp/Kb):0;});
+      let lo=0,hi=5e6; for(let k=0;k<80;k++){const m=(lo+hi)/2; const sum=flowFor(m).reduce((a,b)=>a+b,0); if(sum>Q)hi=m;else lo=m;}
+      const qn=flowFor((lo+hi)/2); q=q.map((x,i)=>0.5*x+0.5*qn[i]);
+      if(it===59) return {Q,q,Kb,Dc:(lo+hi)/2,ps,pr};
+    }
+  }
+  // perfil a lo largo del recorrido hasta el servidor más alto (el más desfavorable en retorno directo)
+  function path(p,sol){
+    const Dm=p.Dman/1000, Dmain=p.Dmain/1000, Q=sol.Q, iS=N-1, qS=sol.q[iS];
+    const pts=[]; let s=0, z=0, pR=P0, v0=Q/area(Dmain); const H0=P0+0.5*RHO*v0*v0;  // carga total ideal (Bernoulli) en la salida de la CDU
+    const push=(D,qq,zz,lab)=>{const v=qq/area(D); pts.push({s,v,D:D*1000,p:pR,pB:H0-0.5*RHO*v*v-RHO*G*zz,z:zz,lab});};
+    // 1) tubería principal de suministro
+    for(let k=0;k<=15;k++){ if(k>0){s+=LMAIN/15; pR-=dpf(Q,Dmain,LMAIN/15);} push(Dmain,Q,0,'Tubería principal de suministro'); }
+    // 2) colector de suministro hasta el servidor más alto
+    let Qs=Q; pR+=0.5*RHO*(v0*v0-(Q/area(Dm))**2); push(Dm,Q,0,'Colector de suministro');
+    for(let i=0;i<N;i++){ const L=i===0?Z0:DZ, vA=Qs/area(Dm); s+=L; z+=L; pR-=dpf(Qs,Dm,L)+RHO*G*L; push(Dm,Qs,z,'Colector de suministro'); if(i<N-1){ const Qn=Qs-sol.q[i], vB=Qn/area(Dm); pR+=0.5*RHO*(vA*vA-vB*vB); Qs=Qn; push(Dm,Qs,z,'Colector de suministro'); } }
+    // 3) manguera al servidor, placa fría, manguera de vuelta
+    const vm=Qs/area(Dm), vh=qS/area(DHOSE); pR+=0.5*RHO*(vm*vm-vh*vh); push(DHOSE,qS,z,'Manguera del servidor');
+    for(let k=0;k<5;k++){s+=LHOSE/5; pR-=dpf(qS,DHOSE,LHOSE/5); push(DHOSE,qS,z,'Manguera del servidor');}
+    const dcp=KCP*qS*qS; for(let k=1;k<=5;k++){s+=0.06; pR-=dcp/5; push(DHOSE,qS,z,'Placa fría');}
+    for(let k=0;k<5;k++){s+=LHOSE/5; pR-=dpf(qS,DHOSE,LHOSE/5); push(DHOSE,qS,z,'Manguera de retorno');}
+    // 4) colector de retorno hacia abajo (el caudal crece al bajar)
+    let Qr=qS; pR+=0.5*RHO*(vh*vh-(Qr/area(Dm))**2); push(Dm,Qr,z,'Colector de retorno');
+    for(let i=N-1;i>=0;i--){ const L=i===0?Z0:DZ; s+=L; z-=L; pR-=dpf(Qr,Dm,L); pR+=RHO*G*L; push(Dm,Qr,z,'Colector de retorno'); if(i>0){ const Qn=Qr+sol.q[i-1], vA=Qr/area(Dm), vB=Qn/area(Dm); pR+=0.5*RHO*(vA*vA-vB*vB); Qr=Qn; push(Dm,Qr,z,'Colector de retorno'); } }
+    // 5) tubería principal de retorno
+    const vr=Qr/area(Dm); pR+=0.5*RHO*(vr*vr-(Q/area(Dmain))**2); push(Dmain,Q,0,'Tubería principal de retorno');
+    for(let k=0;k<15;k++){s+=LMAIN/15; pR-=dpf(Q,Dmain,LMAIN/15); push(Dmain,Q,0,'Tubería principal de retorno');}
+    return pts;
+  }
+  return {solve,path,N,RHO,MU,CP,QNOM,KCP,DHOSE,LMAIN,LHOSE,P0,area};
+})();
+(function(){
+  const P=()=>({P:+$('t13P').value,dT:+$('t13dT').value,Dmain:+$('t13Dmain').value,Dman:+$('t13Dman').value});
+  let sol=null, pts=[];
+  const LPM=q=>q*60000;
+  function vCfg(){const o=baseOpts('Distancia a lo largo del circuito, hasta el servidor más alto y de vuelta [m]','Velocidad del agua v [m/s]');o.scales.x.min=0;o.scales.y.min=0;
+    o.scales.y2={position:'right',min:0,title:{display:true,text:'Diámetro interior D [mm]',color:css('--ink-2')},ticks:{color:css('--ink-2')},grid:{drawOnChartArea:false}};
+    o.plugins.tooltip={callbacks:{title:it=>pts[it[0].dataIndex]?pts[it[0].dataIndex].lab:'',label:c=>c.datasetIndex===0?`v = ${fmt(c.parsed.y,2)} m/s`:`D = ${fmt(c.parsed.y,1)} mm`}};
+    return {type:'line',data:{datasets:[{label:'Velocidad v = Q/A',data:pts.map(p=>({x:p.s,y:p.v})),borderColor:css('--blue'),backgroundColor:css('--blue'),pointRadius:0,borderWidth:2.6,stepped:false},
+      {label:'Diámetro interior (eje derecho)',data:pts.map(p=>({x:p.s,y:p.D})),yAxisID:'y2',borderColor:css('--ink-3'),backgroundColor:css('--ink-3'),pointRadius:0,borderWidth:1.6,borderDash:[5,4]}]},options:o};}
+  function pCfg(){const o=baseOpts('Distancia a lo largo del circuito [m]','Presión manométrica p [kPa]');o.scales.x.min=0;
+    o.plugins.tooltip={callbacks:{title:it=>pts[it[0].dataIndex]?pts[it[0].dataIndex].lab:'',label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,1)} kPa`}};
+    return {type:'line',data:{datasets:[{label:'Real: Bernoulli + pérdidas por fricción y placa fría',data:pts.map(p=>({x:p.s,y:p.p/1000})),borderColor:css('--accent'),backgroundColor:css('--accent'),pointRadius:0,borderWidth:2.6},
+      {label:'Ideal: solo Bernoulli (p + ½ρv² + ρgz constante)',data:pts.map(p=>({x:p.s,y:p.pB/1000})),borderColor:css('--green'),backgroundColor:css('--green'),pointRadius:0,borderWidth:2,borderDash:[6,4]}]},options:o};}
+  function qCfg(){const o=baseOpts('Servidor (1 = abajo, 20 = arriba)','Caudal por servidor [L/min]');o.scales.x.type='category';o.scales.y.min=0;
+    o.plugins.tooltip={callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y,2)} L/min`}};
+    const need=LPM(sol.Q)/T13.N;
+    return {type:'bar',data:{labels:sol.q.map((_,i)=>String(i+1)),datasets:[{type:'bar',label:'Caudal que recibe',data:sol.q.map(LPM),backgroundColor:sol.q.map(q=>LPM(q)<0.9*need?css('--accent'):css('--blue'))},
+      {type:'line',label:'Caudal necesario (Q/N)',data:sol.q.map(()=>need),borderColor:css('--ink-2'),backgroundColor:css('--ink-2'),pointRadius:0,borderWidth:2,borderDash:[6,4]}]},options:o};}
+  sol=T13.solve(P()); pts=T13.path(P(),sol);
+  const v0=vCfg();v0._build=vCfg;const cv=mk('cT13v',v0); const p0=pCfg();p0._build=pCfg;const cp=mk('cT13p',p0); const q0=qCfg();q0._build=qCfg;const cq=mk('cT13q',q0);
+  function upd(){const p=P();$('t13POut').textContent=fmt(p.P,0)+' kW';$('t13dTOut').textContent=fmt(p.dT,0)+' K';$('t13DmainOut').textContent=fmt(p.Dmain,0)+' mm';$('t13DmanOut').textContent=fmt(p.Dman,0)+' mm';
+    sol=T13.solve(p); pts=T13.path(p,sol);
+    [[cv,vCfg],[cp,pCfg],[cq,qCfg]].forEach(([c,f])=>{if(!c)return;const n=f();if(n.data.labels)c.data.labels=n.data.labels;c.data.datasets.forEach((d,i)=>{d.data=n.data.datasets[i].data;if(n.data.datasets[i].backgroundColor)d.backgroundColor=n.data.datasets[i].backgroundColor;});c.update('none');});
+    const Q=sol.Q, need=Q/T13.N, qmin=Math.min(...sol.q), qmax=Math.max(...sol.q), vmax=Math.max(...pts.map(x=>x.v)), pmin=Math.min(...pts.map(x=>x.p));
+    const ok=qmin>=0.9*need;
+    $('t13Readout').innerHTML=`<div><span>Caudal total Q = P/(ρ c ΔT)</span><b>${fmt(LPM(Q),1)} L/min</b></div><div><span>Relación caudal/potencia</span><b>${fmt(LPM(Q)/p.P,2)} L/min por kW</b></div><div><span>Necesario por servidor</span><b>${fmt(LPM(need),2)} L/min</b></div><div><span>Servidor que menos recibe</span><b class="${ok?'delta-pos':'delta-neg'}">${fmt(LPM(qmin),2)} L/min (${fmt(qmin/need*100,0)} %)</b></div><div><span>Desbalance máx./mín.</span><b>${fmt(qmax/qmin,2)}</b></div><div><span>Velocidad máxima</span><b>${fmt(vmax,2)} m/s</b></div><div><span>Caída de presión del rack</span><b>${fmt(sol.Dc/1000,1)} kPa</b></div><div><span>Presión mínima del recorrido</span><b>${fmt(pmin/1000,0)} kPa</b></div>`;
+    $('t13Verdict').innerHTML=ok?`<b class="delta-pos">Dimensionamiento aceptable:</b> todos los servidores reciben al menos el 90 % del caudal que necesitan.`:`<b class="delta-neg">Dimensionamiento insuficiente:</b> los servidores marcados en naranja reciben menos del 90 % de su caudal; con la misma potencia, su agua de salida se calienta más que ${fmt(p.dT,0)} K. Pruebe un colector más ancho.`;}
+  ['t13P','t13dT','t13Dmain','t13Dman'].forEach(id=>$(id).addEventListener('input',upd)); upd();
+})();
 
 })();
 </script>
